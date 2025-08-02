@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "title": "DNS Cache Poisoning",
+    "question": "What is the main objective of DNS cache poisoning (also known as DNS spoofing)?",
+    "options": [
+      "A) Increasing DNS query speed",
+      "B) Bypassing DNS rate limiting",
+      "C) Redirecting legitimate traffic to malicious websites",
+      "D) Encrypting DNS traffic"
+    ],
+    "correct_answer": "C",
+    "explanation": "DNS cache poisoning, also known as DNS spoofing, is one of the most common and dangerous DNS attacks. The main objective of this attack is **redirecting legitimate traffic to malicious websites** by injecting false DNS information into a DNS resolver's cache.\n\n**How DNS cache poisoning works:**\n\n1. **Targeting**: Attackers identify a DNS resolver they want to compromise\n2. **False responses**: They send fake DNS responses to the resolver before the legitimate response arrives\n3. **Cache pollution**: The resolver stores the false information in its cache\n4. **Traffic redirection**: All future queries for that domain are redirected to the malicious server\n\n**Practical consequences:**\n\n- **Phishing attacks**: Users are redirected to fake websites that look like legitimate sites to steal login credentials\n- **Malware distribution**: Visitors get malware injected through compromised websites\n- **Man-in-the-middle attacks**: Attackers can intercept all traffic between user and website\n\n**Defense measures:**\n\n- **Implement DNSSEC**: This adds digital signatures to DNS records to guarantee authenticity\n- **DNS cache locking**: Prevents cached data from being modified before TTL expires\n- **Monitoring**: Regular checking for unusual DNS patterns and responses"
+  },
+  {
+    "id": 2,
+    "title": "DNSSEC Fundamentals",
+    "question": "Which security measure is specifically designed to authenticate DNS responses and guarantee data integrity?",
+    "options": [
+      "A) HTTPS",
+      "B) DNSSEC",
+      "C) TLS",
+      "D) VPN"
+    ],
+    "correct_answer": "B",
+    "explanation": "**DNSSEC (Domain Name System Security Extensions)** is the security measure specifically designed for DNS that guarantees data integrity and authentication of DNS responses. DNSSEC was developed to address the fundamental security problems of the original DNS protocol.\n\n**How DNSSEC works:**\n\n1. **Digital signatures**: Each DNS record is provided with a digital signature (RRSIG record)\n2. **Cryptographic keys**: Public keys (DNSKEY records) are used to verify signatures\n3. **Chain of trust**: A hierarchical trust chain runs from the root zone to individual domains\n4. **Validation**: DNS resolvers can verify the authenticity of each response\n\n**Why DNSSEC is crucial:**\n\n- **Prevents cache poisoning**: False DNS records cannot be injected because they lack valid signatures\n- **Data integrity**: Guarantees that DNS data has not been manipulated during transport\n- **Authentication**: Confirms that DNS responses come from the authorized source\n\n**Why other options are wrong:**\n\n- **HTTPS**: Encrypts web traffic but has no direct relationship with DNS authentication\n- **TLS**: Encrypts transport layers but is not specific to DNS\n- **VPN**: Creates a secure tunnel but does not authenticate DNS data"
+  },
+  {
+    "id": 3,
+    "title": "DNS Amplification Attacks",
+    "question": "What is a DNS amplification attack?",
+    "options": [
+      "A) A physical attack on DNS servers",
+      "B) A DDoS attack that uses DNS servers for traffic amplification",
+      "C) An attack that modifies DNS configurations",
+      "D) An attack on DNS zone files"
+    ],
+    "correct_answer": "B",
+    "explanation": "A **DNS amplification attack** is a sophisticated form of Distributed Denial of Service (DDoS) attack where attackers abuse DNS servers to send massive amounts of traffic to a target. This attack exploits the asymmetric nature of DNS communication where a small query can generate a much larger response.\n\n**How DNS amplification works:**\n\n1. **Query spoofing**: Attackers send small DNS queries to open DNS resolvers with the target's IP address as source\n2. **Amplification effect**: The DNS server sends a much larger response to the target (amplification factor can be 28-179x)\n3. **Botnet deployment**: Thousands of compromised systems simultaneously perform these queries\n4. **Target flooding**: The target is overwhelmed with unwanted DNS traffic\n\n**Why this is so effective:**\n\n- **Asymmetry**: A 60-byte query can generate a 4000-byte response\n- **Legitimacy**: DNS traffic is rarely blocked by firewalls\n- **Scale**: Millions of open DNS resolvers can be abused\n- **Concealment**: The real IP address of the attacker remains hidden\n\n**Defense measures:**\n\n1. **Traffic monitoring**: Unusual spikes in outgoing DNS traffic\n2. **Rate limiting**: Limiting queries per second per source\n3. **Response rate limiting (RRL)**: Limits responses to suspicious sources\n4. **BCP38 implementation**: Internet Service Providers block spoofed traffic"
+  },
+  {
+    "id": 4,
+    "title": "DNS over HTTPS (DoH)",
+    "question": "Which standard port does DNS over HTTPS (DoH) use?",
+    "options": [
+      "A) Port 53",
+      "B) Port 80",
+      "C) Port 443",
+      "D) Port 8080"
+    ],
+    "correct_answer": "C",
+    "explanation": "**DNS over HTTPS (DoH)** uses **port 443**, the same port as standard HTTPS traffic. This is a fundamental aspect of DoH that distinguishes it from traditional DNS and even DNS over TLS (DoT).\n\n**Why port 443:**\n\n- **Camouflage**: DoH traffic is invisible among regular HTTPS traffic\n- **Firewall bypass**: Port 443 is almost never blocked by firewalls\n- **Standardization**: Makes use of existing HTTPS infrastructure\n\n**DoH vs other DNS implementations:**\n\n- **Traditional DNS**: Uses port 53 (UDP/TCP) - unencrypted\n- **DNS over TLS (DoT)**: Uses port 853 - encrypted but visible\n- **DNS over HTTPS (DoH)**: Uses port 443 - encrypted and hidden\n\n**How DoH works:**\n\n1. **HTTPS wrapper**: DNS queries are wrapped in HTTPS requests\n2. **HTTP/2 protocol**: Often used for efficient communication\n3. **GET/POST methods**: DNS data is encoded in HTTP messages\n4. **TLS encryption**: Complete encryption of DNS communication\n\n**Advantages of DoH:**\n\n- **Privacy protection**: ISPs can no longer intercept DNS queries\n- **Censorship resistance**: Harder to block by authoritarian regimes\n- **Man-in-the-middle prevention**: TLS encryption prevents tampering"
+  },
+  {
+    "id": 5,
+    "title": "DNS Tunneling",
+    "question": "What is the primary reason why DNS tunneling poses a security risk?",
+    "options": [
+      "A) It slows down DNS queries",
+      "B) It makes DNS queries unreadable",
+      "C) It allows attackers to exfiltrate data via DNS queries",
+      "D) It uses too much bandwidth"
+    ],
+    "correct_answer": "C",
+    "explanation": "**DNS tunneling** poses a significant security risk because **it allows attackers to exfiltrate data via DNS queries**, abusing the DNS infrastructure as a hidden communication channel. This technique exploits the fact that DNS traffic is almost always allowed through firewalls and security systems.\n\n**How DNS tunneling works:**\n\n1. **Data encoding**: Sensitive data is encoded in DNS queries or responses\n2. **Subdomain abuse**: Data is hidden in long subdomain names\n3. **TXT record abuse**: Large amounts of data can be hidden in TXT records\n4. **Bidirectional communication**: Both data exfiltration and command & control communication\n\n**Why DNS tunneling is so dangerous:**\n\n- **Firewall bypass**: DNS traffic is rarely blocked or inspected\n- **Stealth communication**: Hides malicious activity in legitimate-looking traffic\n- **Detection evasion**: Difficult to distinguish from normal DNS activity\n- **Persistent access**: Can create long-term backdoors\n\n**Practical applications by attackers:**\n\n1. **Data exfiltration**: Stealing sensitive files via DNS queries\n2. **Command & Control**: Remote control of infected systems\n3. **Malware communication**: Communication between malware and C2 servers\n4. **Persistence mechanism**: Maintaining access after initial compromise\n\n**Detection strategies:**\n\n- **DNS monitoring**: Real-time analysis of DNS traffic\n- **Deep packet inspection**: Detailed inspection of DNS payloads\n- **Behavioral analysis**: Machine learning for anomaly detection\n- **DNS filtering**: Blocking suspicious domains"
+  }
+]

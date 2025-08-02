@@ -1,0 +1,86 @@
+TITLE: Password Security
+QUESTION: What is considered the minimum recommended length for a strong password in 2024?
+A) 6 characters
+B) 8 characters  
+C) 12 characters
+D) 16 characters
+CORRECT: C
+EXPLANATION: Modern security guidelines recommend a minimum of 12 characters for passwords due to advances in computing power and attack methods.
+
+**Why 12+ characters:**
+- Exponential increase in complexity with each additional character
+- Protection against brute force attacks
+- Accommodation for modern hardware capabilities
+- Balance between security and usability
+
+**Best practices:**
+- Use a mix of uppercase, lowercase, numbers, and special characters
+- Avoid dictionary words and personal information
+- Consider using passphrases instead of complex passwords
+- Enable two-factor authentication when possible
+
+---
+
+TITLE: Social Engineering
+QUESTION: Which of the following is the most common type of social engineering attack?
+A) Baiting
+B) Phishing
+C) Pretexting  
+D) Quid pro quo
+CORRECT: B
+EXPLANATION: **Phishing** is by far the most common type of social engineering attack, accounting for over 80% of reported social engineering incidents.
+
+**What makes phishing so prevalent:**
+
+- **Low barrier to entry**: Easy to execute with minimal technical skills
+- **High success rate**: Many users still fall for well-crafted phishing emails
+- **Scalability**: Can target thousands of users simultaneously
+- **Variety of channels**: Email, SMS, social media, phone calls
+
+**Common phishing techniques:**
+- Email phishing (traditional)
+- Spear phishing (targeted)
+- Whaling (targeting executives)
+- Smishing (SMS phishing)
+- Vishing (voice phishing)
+
+**Protection measures:**
+- Email security filters
+- User awareness training
+- Multi-factor authentication
+- URL verification tools
+
+---
+
+TITLE: Malware Types
+QUESTION: What type of malware is designed to spread automatically across networks without user interaction?
+A) Virus
+B) Trojan
+C) Worm
+D) Spyware
+CORRECT: C
+EXPLANATION: A **worm** is a type of malware that can replicate and spread automatically across networks without requiring user interaction or a host program.
+
+**Key characteristics of worms:**
+
+- **Self-replicating**: Creates copies of itself automatically
+- **Network propagation**: Spreads across network connections
+- **No host required**: Unlike viruses, doesn't need to attach to other programs
+- **Autonomous**: Operates independently without user actions
+
+**Famous examples:**
+- Morris Worm (1988) - First major internet worm
+- ILOVEYOU (2000) - Spread via email
+- Conficker (2008) - Infected millions of computers
+- WannaCry (2017) - Ransomware worm that caused global disruption
+
+**How worms differ from other malware:**
+- **Virus**: Requires host program and user action
+- **Trojan**: Disguises itself but doesn't self-replicate
+- **Spyware**: Focuses on data collection, not propagation
+
+**Prevention:**
+- Keep systems updated with security patches
+- Use network segmentation
+- Deploy intrusion detection systems
+- Maintain updated antivirus software

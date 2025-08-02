@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question id="1">
+    <title>Network Security Basics</title>
+    <text>What does the acronym "CIA" stand for in information security?</text>
+    <options>
+      <option key="A">Central Intelligence Agency</option>
+      <option key="B">Confidentiality, Integrity, Availability</option>
+      <option key="C">Computer Information Access</option>
+      <option key="D">Certified Information Analyst</option>
+    </options>
+    <correct>B</correct>
+    <explanation>The CIA triad is a fundamental concept in information security that represents three core principles:
+
+**Confidentiality**: Ensuring that information is accessible only to those authorized to have access. This involves protecting data from unauthorized disclosure through encryption, access controls, and authentication.
+
+**Integrity**: Maintaining the accuracy and completeness of data. This means protecting information from unauthorized modification, deletion, or corruption through checksums, digital signatures, and version control.
+
+**Availability**: Ensuring that information and resources are accessible to authorized users when needed. This involves maintaining system uptime, preventing denial-of-service attacks, and having proper backup and recovery procedures.
+
+These three principles form the foundation of most security policies and frameworks.</explanation>
+  </question>
+  
+  <question id="2">
+    <title>Encryption Methods</title>
+    <text>Which type of encryption uses the same key for both encryption and decryption?</text>
+    <options>
+      <option key="A">Asymmetric encryption</option>
+      <option key="B">Public key encryption</option>
+      <option key="C">Symmetric encryption</option>
+      <option key="D">Hash encryption</option>
+    </options>
+    <correct>C</correct>
+    <explanation>**Symmetric encryption** uses the same key for both encryption and decryption operations. This is also known as private key encryption or secret key encryption.
+
+**Characteristics of symmetric encryption:**
+
+- **Speed**: Generally faster than asymmetric encryption
+- **Key sharing challenge**: Both parties must securely share the same key
+- **Scalability issues**: Each pair of communicating parties needs a unique shared key
+- **Examples**: AES, DES, 3DES, Blowfish
+
+**Why other options are incorrect:**
+
+- **Asymmetric encryption**: Uses different keys (public/private key pairs)
+- **Public key encryption**: Another term for asymmetric encryption
+- **Hash encryption**: Hashing is a one-way function, not encryption that can be decrypted</explanation>
+  </question>
+  
+  <question id="3">
+    <title>Firewall Types</title>
+    <text>What type of firewall operates at the application layer and can inspect the content of data packets?</text>
+    <options>
+      <option key="A">Packet filtering firewall</option>
+      <option key="B">Stateful inspection firewall</option>
+      <option key="C">Application layer firewall (Proxy firewall)</option>
+      <option key="D">Circuit-level gateway</option>
+    </options>
+    <correct>C</correct>
+    <explanation>An **Application layer firewall** (also called a proxy firewall) operates at Layer 7 of the OSI model and can inspect the actual content of data packets, not just headers.
+
+**Key features:**
+
+- **Deep packet inspection**: Can examine application-specific data
+- **Protocol awareness**: Understands specific application protocols (HTTP, FTP, SMTP, etc.)
+- **Content filtering**: Can block based on content, not just addresses and ports
+- **Proxy functionality**: Acts as an intermediary between clients and servers
+
+**Comparison with other firewall types:**
+
+- **Packet filtering**: Only examines headers (Layer 3/4)
+- **Stateful inspection**: Tracks connection states but limited content inspection
+- **Circuit-level gateway**: Works at the session layer, doesn't inspect application data
+
+**Use cases**: Web content filtering, malware detection, data loss prevention</explanation>
+  </question>
+</quiz>
