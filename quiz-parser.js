@@ -165,6 +165,110 @@ class QuizParser {
         
         return questions;
     }
+
+
+    static async parseXMLContent(xmlContent) {
+        try {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlContent, 'text/xml');
+            
+            // Check for parsing errors
+            const parserError = xmlDoc.querySelector('parsererror');
+            if (parserError) {
+                throw new Error('Invalid XML format');
+            }
+            
+            const questions = xmlDoc.querySelectorAll('question');
+            const quizData = [];
+            
+            questions.forEach((q, index) => {
+                const id = q.getAttribute('id') || (index + 1);
+                const title = q.querySelector('title')?.textContent?.trim() || `Question ${id}`;
+                const text = q.querySelector('text')?.textContent?.trim() || '';
+                const correct = q.querySelector('correct')?.textContent?.trim() || '';
+                const explanation = q.querySelector('explanation')?.textContent?.trim() || '';
+                
+                const options = [];
+                const optionElements = q.querySelectorAll('option');
+                optionElements.forEach(opt => {
+                    const key = opt.getAttribute('key') || '';
+                    const value = opt.textContent?.trim() || '';
+                    if (key && value) {
+                        options.push(`${key}) ${value}`);
+                    }
+                });
+                
+                if (text && options.length > 0 && correct) {
+                    quizData.push({
+                        id: parseInt(id),
+                        title: title,
+                        question: text,
+                        options: options,
+                        correct_answer: correct.toUpperCase(),
+                        explanation: explanation
+                    });
+                }
+            });
+            
+            if (quizData.length === 0) {
+                throw new Error('No valid questions found in XML file');
+            }
+            
+            return quizData;
+        } catch (error) {
+            throw new Error(`XML parsing error: ${error.message}`);
+        }
+    }
+
+    static async parseTXTContent(txtContent) {
+        try {
+            const sections = txtContent.split('---').map(s => s.trim()).filter(s => s);
+            const quizData = [];
+            
+            sections.forEach((section, index) => {
+                const lines = section.split('\n').map(l => l.trim()).filter(l => l);
+                let title = `Question ${index + 1}`;
+                let question = '';
+                let correct = '';
+                let explanation = '';
+                const options = [];
+                
+                lines.forEach(line => {
+                    if (line.startsWith('TITLE:')) {
+                        title = line.substring(6).trim();
+                    } else if (line.startsWith('QUESTION:')) {
+                        question = line.substring(9).trim();
+                    } else if (line.startsWith('CORRECT:')) {
+                        correct = line.substring(8).trim().toUpperCase();
+                    } else if (line.startsWith('EXPLANATION:')) {
+                        explanation = line.substring(12).trim();
+                    } else if (/^[A-Z]\)/.test(line)) {
+                        options.push(line);
+                    }
+                });
+                
+                if (question && options.length > 0 && correct) {
+                    quizData.push({
+                        id: index + 1,
+                        title: title,
+                        question: question,
+                        options: options,
+                        correct_answer: correct,
+                        explanation: explanation
+                    });
+                }
+            });
+            
+            if (quizData.length === 0) {
+                throw new Error('No valid questions found in TXT file');
+            }
+            
+            return quizData;
+        } catch (error) {
+            throw new Error(`TXT parsing error: ${error.message}`);
+        }
+    }
+
 }
 
 // Export for use in other files

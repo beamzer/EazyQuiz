@@ -267,8 +267,9 @@ class QuizApp {
 
 // URL Quiz Loader functionality
 class URLQuizLoader {
-    constructor() {
+    constructor(quizApp) {
         this.supportedParams = ['quiz', 'url', 'file'];
+        this.quizApp = quizApp;
     }
 
     // Check if there's a quiz URL parameter on page load
@@ -317,10 +318,11 @@ class URLQuizLoader {
             if (contentType.includes('application/json') || fileExtension === 'json') {
                 quizData = JSON.parse(content);
             } else if (contentType.includes('application/xml') || contentType.includes('text/xml') || fileExtension === 'xml') {
-                quizData = parseXMLQuiz(content);
+                // Use QuizParser for XML parsing
+                quizData = await QuizParser.parseXMLContent(content);
             } else {
-                // Default to text format
-                quizData = parseTXTQuiz(content);
+                // Use QuizParser for TXT parsing
+                quizData = await QuizParser.parseTXTContent(content);
             }
 
             // Validate and load the quiz
@@ -329,12 +331,29 @@ class URLQuizLoader {
                 const urlParams = new URLSearchParams(window.location.search);
                 const title = urlParams.get('title');
                 if (title) {
-                    document.getElementById('quiz-title').textContent = decodeURIComponent(title);
+                    this.quizApp.quizTitle.textContent = decodeURIComponent(title);
+                } else {
+                    // Try to extract filename for title
+                    const filename = this.getFilenameFromURL(url);
+                    if (filename) {
+                        this.quizApp.quizTitle.textContent = this.quizApp.formatTitle(filename.replace(/\.[^/.]+$/, ""));
+                    }
                 }
 
-                // Load the quiz using existing functionality
-                loadQuiz(quizData);
+                // Set quiz data and initialize
+                this.quizApp.quizData = quizData;
+                this.quizApp.currentQuestion = 0;
+                this.quizApp.score = 0;
+                
+                // Hide loading and show quiz
                 this.hideURLLoading();
+                this.quizApp.fileFormatInfo.classList.add('hidden');
+                this.quizApp.quizContent.classList.remove('hidden');
+                this.quizApp.results.classList.add('hidden');
+                this.quizApp.questionSection.style.display = 'block';
+                
+                // Render first question
+                this.quizApp.renderQuestion();
                 
                 // Show success message
                 this.showURLSuccess(url);
@@ -363,6 +382,16 @@ class URLQuizLoader {
         try {
             const pathname = new URL(url).pathname;
             return pathname.split('.').pop().toLowerCase();
+        } catch (_) {
+            return '';
+        }
+    }
+
+    // Get filename from URL
+    getFilenameFromURL(url) {
+        try {
+            const pathname = new URL(url).pathname;
+            return pathname.split('/').pop();
         } catch (_) {
             return '';
         }
@@ -462,11 +491,15 @@ class URLQuizLoader {
     }
 }
 
-// Initialize URL quiz loader
-const urlQuizLoader = new URLQuizLoader();
+// Global variables
+let quizApp;
+let urlQuizLoader;
 
-// Check for URL quiz when page loads
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize the quiz application when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    quizApp = new QuizApp();
+    urlQuizLoader = new URLQuizLoader(quizApp);
+    
     // Check if there's a quiz in the URL parameters
     const hasURLQuiz = urlQuizLoader.checkForURLQuiz();
     
@@ -479,7 +512,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Add this function to create shareable links (optional feature)
+// Add this function to create shareable links (called by the Share button)
 function createShareableLink() {
     const quizUrl = prompt('Enter the URL of your quiz file:');
     if (quizUrl) {
@@ -490,13 +523,11 @@ function createShareableLink() {
         if (navigator.clipboard) {
             navigator.clipboard.writeText(shareableUrl).then(() => {
                 alert(`Shareable URL copied to clipboard:\n${shareableUrl}`);
+            }).catch(() => {
+                alert(`Shareable URL:\n${shareableUrl}`);
             });
         } else {
             alert(`Shareable URL:\n${shareableUrl}`);
         }
     }
 }
-// Initialize the quiz application when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new QuizApp();
-});
