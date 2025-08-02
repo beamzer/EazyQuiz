@@ -265,6 +265,237 @@ class QuizApp {
     }
 }
 
+// URL Quiz Loader functionality
+class URLQuizLoader {
+    constructor() {
+        this.supportedParams = ['quiz', 'url', 'file'];
+    }
+
+    // Check if there's a quiz URL parameter on page load
+    checkForURLQuiz() {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Check for different parameter names
+        const quizUrl = urlParams.get('quiz') || 
+                       urlParams.get('url') || 
+                       urlParams.get('file');
+        
+        if (quizUrl) {
+            this.loadQuizFromURL(quizUrl);
+            return true;
+        }
+        return false;
+    }
+
+    // Load quiz from URL
+    async loadQuizFromURL(url) {
+        try {
+            // Show loading state
+            this.showURLLoading(url);
+            
+            // Validate URL
+            if (!this.isValidURL(url)) {
+                throw new Error('Invalid URL format');
+            }
+
+            // Fetch the quiz file
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch quiz: ${response.status} ${response.statusText}`);
+            }
+
+            // Get the content type or infer from URL
+            const contentType = response.headers.get('content-type') || '';
+            const fileExtension = this.getFileExtension(url);
+            
+            // Get the text content
+            const content = await response.text();
+            
+            // Determine file type and parse
+            let quizData;
+            if (contentType.includes('application/json') || fileExtension === 'json') {
+                quizData = JSON.parse(content);
+            } else if (contentType.includes('application/xml') || contentType.includes('text/xml') || fileExtension === 'xml') {
+                quizData = parseXMLQuiz(content);
+            } else {
+                // Default to text format
+                quizData = parseTXTQuiz(content);
+            }
+
+            // Validate and load the quiz
+            if (quizData && quizData.length > 0) {
+                // Update the quiz title if provided in URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const title = urlParams.get('title');
+                if (title) {
+                    document.getElementById('quiz-title').textContent = decodeURIComponent(title);
+                }
+
+                // Load the quiz using existing functionality
+                loadQuiz(quizData);
+                this.hideURLLoading();
+                
+                // Show success message
+                this.showURLSuccess(url);
+            } else {
+                throw new Error('No valid quiz questions found in the file');
+            }
+
+        } catch (error) {
+            console.error('Error loading quiz from URL:', error);
+            this.showURLError(error.message, url);
+        }
+    }
+
+    // Validate URL format
+    isValidURL(string) {
+        try {
+            const url = new URL(string);
+            return url.protocol === 'http:' || url.protocol === 'https:';
+        } catch (_) {
+            return false;
+        }
+    }
+
+    // Get file extension from URL
+    getFileExtension(url) {
+        try {
+            const pathname = new URL(url).pathname;
+            return pathname.split('.').pop().toLowerCase();
+        } catch (_) {
+            return '';
+        }
+    }
+
+    // Show loading state for URL quiz
+    showURLLoading(url) {
+        const loader = document.getElementById('quiz-loader');
+        const infoSection = document.getElementById('file-format-info');
+        
+        if (loader && infoSection) {
+            // Update loader text
+            const loaderText = loader.querySelector('p');
+            if (loaderText) {
+                loaderText.textContent = `Loading quiz from URL...`;
+            }
+            
+            // Add URL info
+            const urlInfo = document.createElement('div');
+            urlInfo.id = 'url-info';
+            urlInfo.style.marginTop = '10px';
+            urlInfo.style.fontSize = '12px';
+            urlInfo.style.color = '#666';
+            urlInfo.style.wordBreak = 'break-all';
+            urlInfo.textContent = url;
+            loader.appendChild(urlInfo);
+            
+            loader.classList.remove('hidden');
+            infoSection.classList.add('hidden');
+        }
+    }
+
+    // Hide URL loading state
+    hideURLLoading() {
+        const loader = document.getElementById('quiz-loader');
+        const urlInfo = document.getElementById('url-info');
+        
+        if (loader) {
+            loader.classList.add('hidden');
+        }
+        
+        if (urlInfo) {
+            urlInfo.remove();
+        }
+    }
+
+    // Show success message
+    showURLSuccess(url) {
+        // Optional: Show a brief success notification
+        console.log(`Quiz loaded successfully from: ${url}`);
+        
+        // Update browser history to clean URL (optional)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('quiz') || urlParams.has('url') || urlParams.has('file')) {
+            const cleanUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+        }
+    }
+
+    // Show error message
+    showURLError(message, url) {
+        this.hideURLLoading();
+        
+        const errorDiv = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        const infoSection = document.getElementById('file-format-info');
+        
+        if (errorDiv && errorText) {
+            errorText.innerHTML = `
+                <strong>Failed to load quiz from URL:</strong><br>
+                <code style="background: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-size: 12px; word-break: break-all;">${url}</code><br><br>
+                <strong>Error:</strong> ${message}<br><br>
+                Please check that:
+                <ul style="text-align: left; margin-top: 10px;">
+                    <li>The URL is accessible and returns a valid quiz file</li>
+                    <li>The server allows CORS requests (cross-origin resource sharing)</li>
+                    <li>The file format is supported (JSON, XML, or TXT)</li>
+                </ul>
+            `;
+            
+            errorDiv.classList.remove('hidden');
+            infoSection.classList.add('hidden');
+        }
+    }
+
+    // Generate shareable URL
+    static generateShareableURL(quizUrl, title = null) {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const params = new URLSearchParams();
+        
+        params.set('quiz', quizUrl);
+        if (title) {
+            params.set('title', title);
+        }
+        
+        return `${baseUrl}?${params.toString()}`;
+    }
+}
+
+// Initialize URL quiz loader
+const urlQuizLoader = new URLQuizLoader();
+
+// Check for URL quiz when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if there's a quiz in the URL parameters
+    const hasURLQuiz = urlQuizLoader.checkForURLQuiz();
+    
+    // If no URL quiz, show the normal info section
+    if (!hasURLQuiz) {
+        const infoSection = document.getElementById('file-format-info');
+        if (infoSection) {
+            infoSection.classList.remove('hidden');
+        }
+    }
+});
+
+// Add this function to create shareable links (optional feature)
+function createShareableLink() {
+    const quizUrl = prompt('Enter the URL of your quiz file:');
+    if (quizUrl) {
+        const title = prompt('Enter a title for your quiz (optional):');
+        const shareableUrl = URLQuizLoader.generateShareableURL(quizUrl, title);
+        
+        // Copy to clipboard if possible
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(shareableUrl).then(() => {
+                alert(`Shareable URL copied to clipboard:\n${shareableUrl}`);
+            });
+        } else {
+            alert(`Shareable URL:\n${shareableUrl}`);
+        }
+    }
+}
 // Initialize the quiz application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new QuizApp();

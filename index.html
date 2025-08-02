@@ -13,6 +13,7 @@
             <div class="quiz-controls">
                 <input type="file" id="quiz-file-input" accept=".json,.xml,.txt" class="file-input">
                 <label for="quiz-file-input" class="btn file-btn">Load Quiz</label>
+                <button class="btn btn-secondary" id="share-btn" onclick="createShareableLink()" title="Create shareable quiz URL">Share</button>
             </div>
         </div>
         
@@ -29,6 +30,18 @@
                 <li><strong>XML Format:</strong> Well-formed XML with quiz structure</li>
                 <li><strong>TXT Format:</strong> Simple text format with specific delimiters</li>
             </ul>
+            
+            <div class="url-quiz-info">
+                <h3>💡 Pro Tip: Share quizzes via URL!</h3>
+                <p>You can also load quizzes directly from a URL using these formats:</p>
+                <ul>
+                    <li><code>?quiz=https://example.com/my-quiz.json</code></li>
+                    <li><code>?url=https://example.com/quiz.xml&title=My%20Quiz</code></li>
+                    <li><code>?file=https://raw.githubusercontent.com/user/repo/quiz.txt</code></li>
+                </ul>
+                <p><small>Note: The quiz file must be publicly accessible and the server must allow CORS requests.</small></p>
+            </div>
+            
             <details>
                 <summary>View Format Examples</summary>
                 <div class="format-examples">
@@ -128,5 +141,10 @@ TITLE: Next Question
 
     <script src="quiz-parser.js"></script>
     <script src="quiz-app.js"></script>
+    <!-- Add the URL quiz loader script after the existing scripts -->
+    <script>
+        // URL Quiz Loader functionality (add this to your quiz-app.js or as a separate file)
+        // [Include the URLQuizLoader code from the previous artifact here]
+    </script>
 </body>
 </html>
