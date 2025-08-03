@@ -21,6 +21,18 @@ A modern, responsive web-based quiz application that supports multiple file form
 3. **Click** "Load Quiz" and select a quiz file
 4. **Start** taking your quiz!
 
+
+💡 Pro Tip: Share quizzes directly via URL!
+
+You can also load quizzes directly from a URL using these formats:
+
+    ?quiz=https://raw.githubusercontent.com/beamzer/EazyQuiz/refs/heads/main/sample-files/dns-security.json&title=DNS%20Security%20Expert%20Quiz
+    ?url=https://example.com/quiz.xml&title=My%20Quiz
+    ?file=https://raw.githubusercontent.com/user/repo/quiz.txt
+
+Note: The quiz file must be publicly accessible and the server must allow CORS requests.
+
+
 ## 📁 Project Structure
 
 ```
@@ -251,6 +263,8 @@ No warranties are given. The license may not give you all of the permissions nec
 - **Documentation**: Check the built-in format examples in the application
 - **Issues**: Create detailed bug reports with browser and file information
 - **Feature requests**: Describe your use case and expected behavior
+
+## The following part is completely halicinated by AI which I won't be held responsible for ;)
 
 ## 🗺️ Roadmap
 
