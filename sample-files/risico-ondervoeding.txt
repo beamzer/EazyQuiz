@@ -8,7 +8,6 @@ D) 25%
 CORRECT: B
 EXPLANATION: Onderzoek toont aan dat 8,5% van alle thuiswonende 65-plussers een hoog risico heeft op ondervoeding
 . Bij kwetsbare ouderen stijgt dit percentage naar 16%, en bij 85-plussers naar 19%
-
 . Dit benadrukt het belang van vroegtijdige signalering door wijkverpleegkundigen.
 
 ---
@@ -52,7 +51,6 @@ CORRECT: C
 EXPLANATION: Onderzoek toont dat de mortaliteit bij ondervoede verpleeghuisbewoners drie keer hoger is (12,4% versus 4,7% bij goed gevoede bewoners)
 . Ook is de incidentie van complicaties hoger: 27% versus 16%
 
-.
 
 ---
 
@@ -66,8 +64,6 @@ D) 5 vragen
 CORRECT: B
 EXPLANATION: De SNAQ65+ bestaat uit drie vragen die het meest voorspellend zijn voor ondervoeding bij ouderen in de eerstelijnszorg en thuiszorg
 . Deze vragen gaan over gewichtsverlies, verminderde eetlust en gebruik van sonde- of drinkvoeding
-
-.
 
 ---
 
