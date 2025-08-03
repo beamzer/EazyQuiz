@@ -67,17 +67,6 @@ class QuizApp {
         return temp.innerHTML;
     }
     
-    // Create a temporary div to parse HTML
-    const temp = document.createElement('div');
-    temp.innerHTML = html;
-    
-    // Remove script tags and other dangerous elements
-    const scripts = temp.querySelectorAll('script, iframe, object, embed');
-    scripts.forEach(script => script.remove());
-    
-    return temp.innerHTML;
-}
-    
     async handleFileUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -213,7 +202,7 @@ class QuizApp {
         if (!text) return '';
         
         const formatted = text
-        
+
             // Headers: ### text -> <h4>text</h4>
             .replace(/^### (.+)$/gm, '<h4>$1</h4>')
             .replace(/^## (.+)$/gm, '<h3>$1</h3>')
