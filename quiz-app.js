@@ -236,7 +236,7 @@ class QuizApp {
             .replace(/(<li>.*?<\/li>)(\s*<li>.*?<\/li>)*/g, '<ol>$&</ol>')
 
             // Fix nested ol tags
-            .replace(/<\/ol>\s*<ol>/g, '');
+            .replace(/<\/ol>\s*<ol>/g, '')
 
             // Line breaks (last to preserve other formatting)
             .replace(/\n/g, '<br>');
