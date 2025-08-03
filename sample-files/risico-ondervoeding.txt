@@ -1,0 +1,150 @@
+TITLE: Risico op Ondervoeding
+
+QUESTION: Welk percentage van de thuiswonende ouderen (65+) heeft een hoog risico op ondervoeding?
+A) 3-5%
+B) 8,5%
+C) 15%
+D) 25%
+CORRECT: B
+EXPLANATION: Onderzoek toont aan dat 8,5% van alle thuiswonende 65-plussers een hoog risico heeft op ondervoeding
+. Bij kwetsbare ouderen stijgt dit percentage naar 16%, en bij 85-plussers naar 19%
+
+. Dit benadrukt het belang van vroegtijdige signalering door wijkverpleegkundigen.
+
+---
+
+TITLE: Prevalentie in Zorginstellingen
+
+QUESTION: Wat is de prevalentie van ondervoeding in verpleeghuizen volgens de Landelijke Prevalentiemeting Zorgproblemen?
+A) 15%
+B) 20%
+C) 25%
+D) 35%
+CORRECT: C
+EXPLANATION: De LPZ-onderzoeken tonen dat ondervoeding in verpleeghuizen voorkomt bij circa 25% van de cliënten en in verzorgingshuizen bij ongeveer 26%
+
+. Deze cijfers blijven de laatste jaren relatief stabiel, wat de noodzaak van systematische aanpak benadrukt.
+
+---
+
+TITLE: Belangrijkste Oorzaak Ondervoeding
+
+QUESTION: Welke factor wordt het meest genoemd als onderliggende oorzaak van ondervoeding bij thuiswonende ouderen?
+A) Financiële problemen
+B) Gebrek aan sociaal netwerk
+C) Tandproblemen
+D) Medicijngebruik
+CORRECT: B
+EXPLANATION: Wijkverpleegkundigen in Friesland gaven aan dat veel onderliggende oorzaken van ondervoeding te maken hebben met een gebrek aan een sociaal netwerk
+
+. Dit omvat mantelzorgers die hulp kunnen bieden bij het kopen of bereiden van eten en drinken.
+
+---
+
+TITLE: Gevolgen Ondervoeding - Sterfte
+
+QUESTION: Met welke factor verhoogt ondervoeding het sterfterisico bij verpleeghuisbewoners?
+A) 1,5 keer
+B) 2 keer
+C) 3 keer
+D) 4 keer
+CORRECT: C
+EXPLANATION: Onderzoek toont dat de mortaliteit bij ondervoede verpleeghuisbewoners drie keer hoger is (12,4% versus 4,7% bij goed gevoede bewoners)
+. Ook is de incidentie van complicaties hoger: 27% versus 16%
+
+.
+
+---
+
+TITLE: SNAQ65+ Screening
+
+QUESTION: Uit hoeveel vragen bestaat de SNAQ65+ vragenlijst voor screening op ondervoeding?
+A) 2 vragen
+B) 3 vragen
+C) 4 vragen
+D) 5 vragen
+CORRECT: B
+EXPLANATION: De SNAQ65+ bestaat uit drie vragen die het meest voorspellend zijn voor ondervoeding bij ouderen in de eerstelijnszorg en thuiszorg
+. Deze vragen gaan over gewichtsverlies, verminderde eetlust en gebruik van sonde- of drinkvoeding
+
+.
+
+---
+
+TITLE: Lichamelijke Gevolgen
+
+QUESTION: Welk percentage spiermassa verliest een persoon gemiddeld per jaar vanaf het 70e levensjaar?
+A) 1%
+B) 2%
+C) 3%
+D) 5%
+CORRECT: C
+EXPLANATION: Vanaf het 70e levensjaar verliest een mens ongeveer 3% van zijn spiermassa en spierkracht per jaar
+
+. Dit is een verdubbeling ten opzichte van de 1% per jaar vanaf het 40e levensjaar, wat ouderen extra kwetsbaar maakt voor ondervoeding.
+
+---
+
+TITLE: Signalering Ondervoeding
+
+QUESTION: Welk percentage van alle ouderen die in het ziekenhuis worden opgenomen is ondervoed volgens onderzoek van prof. dr. Navis?
+A) 25%
+B) 30%
+C) 35%
+D) 40%
+CORRECT: D
+EXPLANATION: Onderzoek van prof. dr. Navis (2018) toonde aan dat plusminus 40% van de ouderen die in het ziekenhuis worden opgenomen ondervoed is
+
+. Dit benadrukt het belang van screening bij opname en de rol van wijkverpleegkundigen in vroegsignalering.
+
+---
+
+TITLE: Minimale Eiwitbehoefte
+
+QUESTION: Wat is de aanbevolen minimale eiwitinname per dag voor een ondervoede oudere van 75 kg?
+A) 60-75 gram
+B) 75-90 gram
+C) 90-110 gram
+D) 110-125 gram
+CORRECT: C
+EXPLANATION: Bij ziektegerelateerde ondervoeding is de eiwitbehoefte 1,2-1,5 gram per kg lichaamsgewicht
+
+. Voor iemand van 75 kg betekent dit 90-110 gram eiwit per dag, aanzienlijk meer dan de 60 gram die bij gezondheid wordt aanbevolen.
+
+---
+
+TITLE: Behandeling Ondervoeding
+
+QUESTION: Hoeveel extra kilocalorieën per dag worden minimaal aanbevolen boven op de normale voeding voor herstel van ondervoeding?
+A) 200 kcal
+B) 300 kcal
+C) 400 kcal
+D) 600 kcal
+CORRECT: C
+EXPLANATION: Voor herstel van ondervoeding wordt tenminste 400 kcal per dag extra aanbevolen, boven op de normale voeding
+. Het SNAQ-behandelplan adviseert daarnaast dagelijks 12 gram eiwit en 600 kcal extra via tussenmaaltijden
+
+.
+
+---
+
+TITLE: Rol Wijkverpleegkundige
+
+QUESTION: Volgens de LESA is het signaleren van risico op ondervoeding een taak van:
+A) Alleen de diëtist
+B) Alleen de huisarts
+C) De wijkverpleegkundige
+D) Het sociaal wijkteam
+CORRECT: C
+EXPLANATION: Volgens de LESA (Landelijke Eerstelijns Samenwerkings Afspraak) is het geven van voedingsvoorlichting bij het signaleren van risico op ondervoeding een taak van de wijkverpleegkundigen
+
+. Zij spelen een cruciale rol in de vroegsignalering en kunnen interventies indelen via de Zvw en Wlz.
+
+Waarom deze rol zo belangrijk is:
+
+    Wijkverpleegkundigen komen regelmatig bij cliënten thuis
+    Zij kunnen veranderingen in eetpatroon en gewicht vroegtijdig signaleren
+    Zij hebben directe toegang tot de leefsituatie van de oudere
+    Zij kunnen de link maken tussen verschillende gezondheidsproblemen en voeding
+    Zij werken samen met andere disciplines zoals huisarts en diëtist voor integrale zorg
+
