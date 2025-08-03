@@ -48,6 +48,35 @@ class QuizApp {
         this.newQuizBtn.addEventListener('click', () => this.loadNewQuiz());
         this.tryAgainBtn.addEventListener('click', () => this.clearError());
     }
+
+    // method for basic HTML sanitization
+    sanitizeHTML(html) {
+        const allowedTags = ['strong', 'em', 'u', 'del', 'code', 'br', 'li', 'ol', 'ul', 'h2', 'h3', 'h4', 'a'];
+        const allowedAttributes = {
+            'a': ['href', 'target', 'rel']
+        };
+
+        // Create a temporary div to parse HTML
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        
+        // Remove script tags and other dangerous elements
+        const scripts = temp.querySelectorAll('script, iframe, object, embed');
+        scripts.forEach(script => script.remove());
+        
+        return temp.innerHTML;
+    }
+    
+    // Create a temporary div to parse HTML
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    
+    // Remove script tags and other dangerous elements
+    const scripts = temp.querySelectorAll('script, iframe, object, embed');
+    scripts.forEach(script => script.remove());
+    
+    return temp.innerHTML;
+}
     
     async handleFileUpload(event) {
         const file = event.target.files[0];
@@ -97,20 +126,21 @@ class QuizApp {
         
         const q = this.quizData[this.currentQuestion];
         
-        this.questionTitle.textContent = `${q.id}. ${q.title}`;
-        this.questionText.textContent = q.question;
+        // Format title and question text with markup
+        this.questionTitle.innerHTML = `${q.id}. ${this.formatMarkup(q.title)}`;
+        this.questionText.innerHTML = this.formatMarkup(q.question);
         this.progress.textContent = `Question ${this.currentQuestion + 1} of ${this.quizData.length}`;
         
         // Clear options container
         this.optionsContainer.innerHTML = '';
         
-        // Render options
+        // Render options with markup formatting
         q.options.forEach(option => {
             const letter = option.charAt(0);
             const text = option.substring(3);
             const button = document.createElement('button');
             button.className = 'btn-option';
-            button.textContent = text;
+            button.innerHTML = this.formatMarkup(text); // Changed from textContent to innerHTML
             button.addEventListener('click', () => 
                 this.handleAnswer(button, letter, q.correct_answer, q.explanation)
             );
@@ -168,16 +198,65 @@ class QuizApp {
     
     findButtonLetter(button) {
         const currentQ = this.quizData[this.currentQuestion];
+        const buttonText = button.textContent; // textContent strips HTML tags
         for (const option of currentQ.options) {
-            if (option.substring(3) === button.textContent) {
+            const optionText = option.substring(3);
+            // Compare the plain text versions
+            if (optionText === buttonText) {
                 return option.charAt(0);
             }
         }
         return '';
     }
     
+    formatMarkup(text) {
+        if (!text) return '';
+        
+        const formatted = text
+        
+            // Headers: ### text -> <h4>text</h4>
+            .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+            .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+            .replace(/^# (.+)$/gm, '<h2>$1</h2>')
+
+            // Bold formatting: **text** -> <strong>text</strong>
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+
+            // Italic formatting: *text* -> <em>text</em>
+            .replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g, '<em>$1</em>')
+
+            // Code formatting: `text` -> <code>text</code>
+            .replace(/`([^`]+?)`/g, '<code>$1</code>')
+
+            // Underline formatting: __text__ -> <u>text</u>
+            .replace(/__(.*?)__/g, '<u>$1</u>')
+
+            // Strikethrough formatting: ~~text~~ -> <del>text</del>
+            .replace(/~~(.*?)~~/g, '<del>$1</del>')
+
+            // Links: [text](url) -> <a href="url" target="_blank">text</a>
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+
+            // Simple bullet points: - item -> • item
+            .replace(/^- (.+)$/gm, '• $1')
+
+            // Numbered lists: 1. item -> 1. item (keep as is but could be enhanced)
+            .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+
+            // Wrap consecutive <li> items in <ol>
+            .replace(/(<li>.*?<\/li>)(\s*<li>.*?<\/li>)*/g, '<ol>$&</ol>')
+
+            // Fix nested ol tags
+            .replace(/<\/ol>\s*<ol>/g, '');
+
+            // Line breaks (last to preserve other formatting)
+            .replace(/\n/g, '<br>');
+
+            return this.sanitizeHTML(formatted);       
+    }
+
     formatExplanation(explanation) {
-        return explanation.replace(/\n/g, '<br>');
+        return this.formatMarkup(explanation);
     }
     
     nextQuestion() {
