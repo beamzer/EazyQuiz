@@ -241,7 +241,7 @@ class QuizApp {
             // Line breaks (last to preserve other formatting)
             .replace(/\n/g, '<br>');
 
-            return this.sanitizeHTML(formatted);       
+        return this.sanitizeHTML(formatted);       
     }
 
     formatExplanation(explanation) {
