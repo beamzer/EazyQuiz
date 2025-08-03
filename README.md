@@ -22,7 +22,7 @@ A modern, responsive web-based quiz application that supports multiple file form
 4. **Start** taking your quiz!
 
 
-💡 Pro Tip: Share quizzes directly via URL!
+## 💡 Pro Tip: Share quizzes directly via URL!
 
 You can also load quizzes directly from a URL using these formats:
 
