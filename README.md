@@ -264,7 +264,7 @@ No warranties are given. The license may not give you all of the permissions nec
 - **Issues**: Create detailed bug reports with browser and file information
 - **Feature requests**: Describe your use case and expected behavior
 
-## The following part is completely halicinated by AI which I won't be held responsible for ;)
+## The following part is completely hallucinated by AI which I won't be held responsible for ;)
 
 ## 🗺️ Roadmap
 
