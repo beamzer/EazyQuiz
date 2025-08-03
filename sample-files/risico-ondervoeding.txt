@@ -21,7 +21,6 @@ C) 25%
 D) 35%
 CORRECT: C
 EXPLANATION: De LPZ-onderzoeken tonen dat ondervoeding in verpleeghuizen voorkomt bij circa 25% van de cliënten en in verzorgingshuizen bij ongeveer 26%
-
 . Deze cijfers blijven de laatste jaren relatief stabiel, wat de noodzaak van systematische aanpak benadrukt.
 
 ---
@@ -35,7 +34,6 @@ C) Tandproblemen
 D) Medicijngebruik
 CORRECT: B
 EXPLANATION: Wijkverpleegkundigen in Friesland gaven aan dat veel onderliggende oorzaken van ondervoeding te maken hebben met een gebrek aan een sociaal netwerk
-
 . Dit omvat mantelzorgers die hulp kunnen bieden bij het kopen of bereiden van eten en drinken.
 
 ---
@@ -76,7 +74,6 @@ C) 3%
 D) 5%
 CORRECT: C
 EXPLANATION: Vanaf het 70e levensjaar verliest een mens ongeveer 3% van zijn spiermassa en spierkracht per jaar
-
 . Dit is een verdubbeling ten opzichte van de 1% per jaar vanaf het 40e levensjaar, wat ouderen extra kwetsbaar maakt voor ondervoeding.
 
 ---
@@ -90,7 +87,6 @@ C) 35%
 D) 40%
 CORRECT: D
 EXPLANATION: Onderzoek van prof. dr. Navis (2018) toonde aan dat plusminus 40% van de ouderen die in het ziekenhuis worden opgenomen ondervoed is
-
 . Dit benadrukt het belang van screening bij opname en de rol van wijkverpleegkundigen in vroegsignalering.
 
 ---
@@ -104,7 +100,6 @@ C) 90-110 gram
 D) 110-125 gram
 CORRECT: C
 EXPLANATION: Bij ziektegerelateerde ondervoeding is de eiwitbehoefte 1,2-1,5 gram per kg lichaamsgewicht
-
 . Voor iemand van 75 kg betekent dit 90-110 gram eiwit per dag, aanzienlijk meer dan de 60 gram die bij gezondheid wordt aanbevolen.
 
 ---
@@ -120,8 +115,6 @@ CORRECT: C
 EXPLANATION: Voor herstel van ondervoeding wordt tenminste 400 kcal per dag extra aanbevolen, boven op de normale voeding
 . Het SNAQ-behandelplan adviseert daarnaast dagelijks 12 gram eiwit en 600 kcal extra via tussenmaaltijden
 
-.
-
 ---
 
 TITLE: Rol Wijkverpleegkundige
@@ -133,11 +126,8 @@ C) De wijkverpleegkundige
 D) Het sociaal wijkteam
 CORRECT: C
 EXPLANATION: Volgens de LESA (Landelijke Eerstelijns Samenwerkings Afspraak) is het geven van voedingsvoorlichting bij het signaleren van risico op ondervoeding een taak van de wijkverpleegkundigen
-
 . Zij spelen een cruciale rol in de vroegsignalering en kunnen interventies indelen via de Zvw en Wlz.
-
 Waarom deze rol zo belangrijk is:
-
     Wijkverpleegkundigen komen regelmatig bij cliënten thuis
     Zij kunnen veranderingen in eetpatroon en gewicht vroegtijdig signaleren
     Zij hebben directe toegang tot de leefsituatie van de oudere
