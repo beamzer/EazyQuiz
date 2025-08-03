@@ -144,3 +144,149 @@ TITLE: Next Question
     <!-- Add the URL quiz loader script after the existing scripts -->
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EazyQuiz</title>
+    <link rel="stylesheet" href="quiz-styles.css">
+</head>
+<body>
+    <div class="quiz-card">
+        <div class="quiz-header">
+            <h1 id="quiz-title">Quiz Application</h1>
+            <div class="quiz-controls">
+                <input type="file" id="quiz-file-input" accept=".json,.xml,.txt" class="file-input">
+                <label for="quiz-file-input" class="btn file-btn">Load Quiz</label>
+                <button class="btn btn-secondary" id="share-btn" onclick="createShareableLink()" title="Create shareable quiz URL">Share</button>
+            </div>
+        </div>
+        
+        <div id="quiz-loader" class="loader hidden">
+            <div class="loader-spinner"></div>
+            <p>Loading quiz...</p>
+        </div>
+
+        <div id="file-format-info" class="info-section">
+            <h2>How to Use</h2>
+            <p>Load a quiz file in one of the supported formats:</p>
+            <ul>
+                <li><strong>JSON Format:</strong> Structured data with questions, options, and explanations</li>
+                <li><strong>XML Format:</strong> Well-formed XML with quiz structure</li>
+                <li><strong>TXT Format:</strong> Simple text format with specific delimiters</li>
+            </ul>
+            
+            <div class="url-quiz-info">
+                <h3>💡 Pro Tip: Share quizzes via URL!</h3>
+                <p>You can also load quizzes directly from a URL using these formats:</p>
+                <ul>
+                    <li><code>?quiz=https://example.com/my-quiz.json</code></li>
+                    <li><code>?url=https://example.com/quiz.xml&title=My%20Quiz</code></li>
+                    <li><code>?file=https://raw.githubusercontent.com/user/repo/quiz.txt</code></li>
+                </ul>
+                <p><small>Note: The quiz file must be publicly accessible and the server must allow CORS requests.</small></p>
+            </div>
+            
+            <details>
+                <summary>View Format Examples</summary>
+                <div class="format-examples">
+                    <h4>JSON Format Example:</h4>
+                    <pre>[
+  {
+    "id": 1,
+    "title": "Question Title",
+    "question": "What is your question?",
+    "options": [
+      "A) Option 1",
+      "B) Option 2", 
+      "C) Option 3",
+      "D) Option 4"
+    ],
+    "correct_answer": "A",
+    "explanation": "Detailed explanation here..."
+  }
+]</pre>
+                    
+                    <h4>XML Format Example:</h4>
+                    <pre>&lt;quiz&gt;
+  &lt;question id="1"&gt;
+    &lt;title&gt;Question Title&lt;/title&gt;
+    &lt;text&gt;What is your question?&lt;/text&gt;
+    &lt;options&gt;
+      &lt;option key="A"&gt;Option 1&lt;/option&gt;
+      &lt;option key="B"&gt;Option 2&lt;/option&gt;
+    &lt;/options&gt;
+    &lt;correct&gt;A&lt;/correct&gt;
+    &lt;explanation&gt;Detailed explanation here...&lt;/explanation&gt;
+  &lt;/question&gt;
+&lt;/quiz&gt;</pre>
+
+                    <h4>TXT Format Example:</h4>
+                    <pre>TITLE: Question Title
+QUESTION: What is your question?
+A) Option 1
+B) Option 2
+C) Option 3
+D) Option 4
+CORRECT: A
+EXPLANATION: Detailed explanation here...
+---
+TITLE: Next Question
+...</pre>
+                </div>
+            </details>
+        </div>
+
+        <div id="quiz-content" class="hidden">
+            <div id="progress">Question 1 of 10</div>
+            
+            <div class="question-section" id="question-section">
+                <h2 class="question-title" id="question-title"></h2>
+                <p class="question-text" id="question-text"></p>
+                <div class="options-container" id="options-container"></div>
+
+                <div class="feedback hidden" id="feedback">
+                    <h3>Explanation</h3>
+                    <div class="explanation-container">
+                        <div id="explanation"></div>
+                    </div>
+                    <button class="btn" id="next-btn">Next Question</button>
+                </div>
+            </div>
+
+            <div class="results hidden" id="results">
+                <h2>Quiz Results</h2>
+                <div class="score-display">
+                    <div id="score-number"></div>
+                    <div id="score-percentage"></div>
+                    <div id="score-message"></div>
+                </div>
+                <div class="result-actions">
+                    <button class="btn" id="restart-btn">Restart Quiz</button>
+                    <button class="btn btn-secondary" id="new-quiz-btn">Load New Quiz</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="error-message" class="error hidden">
+            <h3>Error Loading Quiz</h3>
+            <p id="error-text"></p>
+            <button class="btn" id="try-again-btn">Try Again</button>
+        </div>
+    </div>
+
+    <footer class="github-footer">
+        <span>Made with </span>
+        <a href="https://github.com/beamzer/EazyQuiz" target="_blank" rel="noopener noreferrer" class="github-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            EazyQuiz
+        </a>
+    </footer>
+
+    <script src="quiz-parser.js"></script>
+    <script src="quiz-app.js"></script>
+</body>
+</html>
