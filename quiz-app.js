@@ -497,14 +497,26 @@ let urlQuizLoader;
 
 // Initialize the quiz application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing quiz app...');
+    
     quizApp = new QuizApp();
+    console.log('QuizApp created:', quizApp);
+    
     urlQuizLoader = new URLQuizLoader(quizApp);
+    console.log('URLQuizLoader created:', urlQuizLoader);
+    
+    // Make them globally accessible for debugging
+    window.quizApp = quizApp;
+    window.urlQuizLoader = urlQuizLoader;
     
     // Check if there's a quiz in the URL parameters
+    console.log('Checking for URL quiz...');
     const hasURLQuiz = urlQuizLoader.checkForURLQuiz();
+    console.log('URL quiz found:', hasURLQuiz);
     
     // If no URL quiz, show the normal info section
     if (!hasURLQuiz) {
+        console.log('No URL quiz, showing info section');
         const infoSection = document.getElementById('file-format-info');
         if (infoSection) {
             infoSection.classList.remove('hidden');
