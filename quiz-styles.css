@@ -22,11 +22,30 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--bg);
     display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Add a wrapper for the main content */
+.main-content {
+    flex: 1;
+    display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh;
     padding: 20px 0;
-    line-height: 1.6;
+}
+
+/* Update footer styles */
+.github-footer {
+    margin-top: auto;
+    padding: 1rem 0;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    background: #fff;
 }
 
 .quiz-card {
@@ -399,15 +418,6 @@ summary {
 .error p {
     color: var(--text);
     margin-bottom: 20px;
-}
-
-.github-footer {
-    margin-top: 2rem;
-    padding: 1rem 0;
-    text-align: center;
-    border-top: 1px solid #e0e0e0;
-    color: var(--text-light);
-    font-size: 0.9rem;
 }
 
 .github-link {
