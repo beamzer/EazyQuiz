@@ -201,6 +201,7 @@ h1 {
     background: #fafbfc;
     margin-bottom: 20px;
     scroll-behavior: smooth;
+    line-height: 1.7;
 }
 
 .explanation-container::-webkit-scrollbar {
@@ -226,18 +227,44 @@ h1 {
     color: #444;
 }
 
-#explanation strong {
-    color: var(--primary);
-    font-weight: 600;
+/* Style for bullet points in explanations */
+#explanation br + • {
+    margin-top: 8px;
 }
 
-#explanation ul, #explanation ol {
-    margin-left: 24px;
+/* Better spacing for formatted lists */
+#explanation {
+    white-space: pre-line; /* Preserves line breaks and spaces */
+}
+
+/* Better formatting for explanation content */
+#explanation p {
     margin-bottom: 16px;
 }
 
-#explanation li {
+#explanation strong {
+    color: var(--primary);
+    font-weight: 600;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+/* Style bullet points */
+.explanation-container ul,
+.explanation-container ol {
+    margin: 12px 0;
+    padding-left: 24px;
+}
+
+.explanation-container li {
     margin-bottom: 6px;
+    line-height: 1.6;
+}
+
+/* Custom bullet styling */
+.explanation-container {
+    font-family: inherit;
 }
 
 #explanation h4 {

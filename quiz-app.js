@@ -55,14 +55,33 @@ class QuizApp {
         const allowedAttributes = {
             'a': ['href', 'target', 'rel']
         };
-
+        
         // Create a temporary div to parse HTML
         const temp = document.createElement('div');
         temp.innerHTML = html;
         
         // Remove script tags and other dangerous elements
-        const scripts = temp.querySelectorAll('script, iframe, object, embed');
+        const scripts = temp.querySelectorAll('script, iframe, object, embed, style');
         scripts.forEach(script => script.remove());
+        
+        // Remove any tags not in allowedTags
+        const allElements = temp.querySelectorAll('*');
+        allElements.forEach(element => {
+            if (!allowedTags.includes(element.tagName.toLowerCase())) {
+                // Replace the element with its text content
+                element.replaceWith(document.createTextNode(element.textContent));
+            } else {
+                // Remove any attributes not in allowedAttributes
+                const tagName = element.tagName.toLowerCase();
+                const allowedAttrs = allowedAttributes[tagName] || [];
+                const attrs = Array.from(element.attributes);
+                attrs.forEach(attr => {
+                    if (!allowedAttrs.includes(attr.name)) {
+                        element.removeAttribute(attr.name);
+                    }
+                });
+            }
+        });
         
         return temp.innerHTML;
     }
@@ -201,8 +220,7 @@ class QuizApp {
     formatMarkup(text) {
         if (!text) return '';
         
-        const formatted = text
-
+        let formatted = text
             // Headers: ### text -> <h4>text</h4>
             .replace(/^### (.+)$/gm, '<h4>$1</h4>')
             .replace(/^## (.+)$/gm, '<h3>$1</h3>')
@@ -224,22 +242,65 @@ class QuizApp {
             .replace(/~~(.*?)~~/g, '<del>$1</del>')
 
             // Links: [text](url) -> <a href="url" target="_blank">text</a>
-            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
-            // Simple bullet points: - item -> • item
-            .replace(/^- (.+)$/gm, '• $1')
+        // Handle lists more carefully
+        // Split into lines for better list processing
+        const lines = formatted.split('\n');
+        const processedLines = [];
+        let inBulletList = false;
+        let inNumberedList = false;
 
-            // Numbered lists: 1. item -> 1. item (keep as is but could be enhanced)
-            .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            const isBulletItem = /^- (.+)$/.test(line);
+            const isNumberedItem = /^\d+\. (.+)$/.test(line);
 
-            // Wrap consecutive <li> items in <ol>
-            .replace(/(<li>.*?<\/li>)(\s*<li>.*?<\/li>)*/g, '<ol>$&</ol>')
+            if (isBulletItem) {
+                if (!inBulletList) {
+                    if (inNumberedList) {
+                        processedLines.push('</ol>');
+                        inNumberedList = false;
+                    }
+                    processedLines.push('<ul>');
+                    inBulletList = true;
+                }
+                processedLines.push(`<li>${line.substring(2)}</li>`);
+            } else if (isNumberedItem) {
+                if (!inNumberedList) {
+                    if (inBulletList) {
+                        processedLines.push('</ul>');
+                        inBulletList = false;
+                    }
+                    processedLines.push('<ol>');
+                    inNumberedList = true;
+                }
+                const match = line.match(/^\d+\. (.+)$/);
+                processedLines.push(`<li>${match[1]}</li>`);
+            } else {
+                // Not a list item
+                if (inBulletList) {
+                    processedLines.push('</ul>');
+                    inBulletList = false;
+                }
+                if (inNumberedList) {
+                    processedLines.push('</ol>');
+                    inNumberedList = false;
+                }
+                processedLines.push(line);
+            }
+        }
 
-            // Fix nested ol tags
-            .replace(/<\/ol>\s*<ol>/g, '')
+        // Close any open lists
+        if (inBulletList) {
+            processedLines.push('</ul>');
+        }
+        if (inNumberedList) {
+            processedLines.push('</ol>');
+        }
 
-            // Line breaks (last to preserve other formatting)
-            .replace(/\n/g, '<br>');
+        // Join back and add line breaks
+        formatted = processedLines.join('\n').replace(/\n/g, '<br>');
 
         return this.sanitizeHTML(formatted);       
     }

@@ -93,22 +93,57 @@ class QuizParser {
                 
                 let currentSection = '';
                 let explanationLines = [];
+                let questionLines = [];
                 
-                for (const line of lines) {
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    
                     if (line.startsWith('TITLE:')) {
                         question.title = line.substring(6).trim();
+                        currentSection = '';
                     } else if (line.startsWith('QUESTION:')) {
-                        question.question = line.substring(9).trim();
+                        const questionText = line.substring(9).trim();
+                        if (questionText) {
+                            questionLines.push(questionText);
+                        }
+                        currentSection = 'question';
                     } else if (line.startsWith('CORRECT:')) {
                         question.correct_answer = line.substring(8).trim();
+                        currentSection = '';
                     } else if (line.startsWith('EXPLANATION:')) {
+                        const explanationText = line.substring(12).trim();
+                        if (explanationText) {
+                            explanationLines.push(explanationText);
+                        }
                         currentSection = 'explanation';
-                        explanationLines.push(line.substring(12).trim());
                     } else if (line.match(/^[A-Z]\)/)) {
+                        // This is an option
                         question.options.push(line);
-                    } else if (currentSection === 'explanation') {
-                        explanationLines.push(line);
+                        currentSection = '';
+                    } else {
+                        // This is a continuation line
+                        if (currentSection === 'explanation') {
+                            explanationLines.push(line);
+                        } else if (currentSection === 'question') {
+                            questionLines.push(line);
+                        }
+                        // If no current section and line doesn't start with a keyword,
+                        // it might be part of explanation (common case)
+                        else if (!line.startsWith('TITLE:') && 
+                                 !line.startsWith('QUESTION:') && 
+                                 !line.startsWith('CORRECT:') && 
+                                 !line.startsWith('EXPLANATION:') && 
+                                 !line.match(/^[A-Z]\)/) && 
+                                 explanationLines.length > 0) {
+                            explanationLines.push(line);
+                            currentSection = 'explanation';
+                        }
                     }
+                }
+                
+                // Join multi-line content
+                if (questionLines.length > 0) {
+                    question.question = questionLines.join('\n');
                 }
                 
                 question.explanation = explanationLines.join('\n') || 'No explanation provided.';
@@ -233,19 +268,58 @@ class QuizParser {
                 let explanation = '';
                 const options = [];
                 
+                let currentSection = '';
+                let explanationLines = [];
+                let questionLines = [];
+                
                 lines.forEach(line => {
                     if (line.startsWith('TITLE:')) {
                         title = line.substring(6).trim();
+                        currentSection = '';
                     } else if (line.startsWith('QUESTION:')) {
-                        question = line.substring(9).trim();
+                        const questionText = line.substring(9).trim();
+                        if (questionText) {
+                            questionLines.push(questionText);
+                        }
+                        currentSection = 'question';
                     } else if (line.startsWith('CORRECT:')) {
                         correct = line.substring(8).trim().toUpperCase();
+                        currentSection = '';
                     } else if (line.startsWith('EXPLANATION:')) {
-                        explanation = line.substring(12).trim();
+                        const explanationText = line.substring(12).trim();
+                        if (explanationText) {
+                            explanationLines.push(explanationText);
+                        }
+                        currentSection = 'explanation';
                     } else if (/^[A-Z]\)/.test(line)) {
                         options.push(line);
+                        currentSection = '';
+                    } else {
+                        // Handle continuation lines
+                        if (currentSection === 'explanation') {
+                            explanationLines.push(line);
+                        } else if (currentSection === 'question') {
+                            questionLines.push(line);
+                        }
+                        // If no current section, assume it's part of explanation if we have explanation content
+                        else if (!line.startsWith('TITLE:') && 
+                                 !line.startsWith('QUESTION:') && 
+                                 !line.startsWith('CORRECT:') && 
+                                 !line.startsWith('EXPLANATION:') && 
+                                 !/^[A-Z]\)/.test(line) && 
+                                 explanationLines.length > 0) {
+                            explanationLines.push(line);
+                            currentSection = 'explanation';
+                        }
                     }
                 });
+                
+                // Join multi-line content
+                if (questionLines.length > 0) {
+                    question = questionLines.join('\n');
+                }
+                
+                explanation = explanationLines.join('\n');
                 
                 if (question && options.length > 0 && correct) {
                     quizData.push({
