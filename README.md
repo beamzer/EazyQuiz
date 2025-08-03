@@ -2,7 +2,8 @@
 
 A modern, responsive web-based quiz application that supports multiple file formats and topics. Create unlimited quizzes by simply loading different data files - no coding required!
 
-![Quiz Application Screenshot](https://github.com/beamzer/EazyQuiz/blob/main/screenshot.png)
+Example screenshot:
+<img src="https://github.com/beamzer/EazyQuiz/blob/main/screenshot.png" alt="Quiz Application Screenshot" width="400"/>
 
 ## ✨ Features
 
