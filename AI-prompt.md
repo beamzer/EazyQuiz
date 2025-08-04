@@ -13,6 +13,9 @@ C) [Option C]
 D) [Option D]
 CORRECT: [A/B/C/D]
 EXPLANATION: [Extensive explanation with markdown formatting]
+**=>** [Additional point on new line]
+**=>** [Another point on new line]
+**=>** [Optional third point on new line]
 
 ---
 ```
@@ -48,8 +51,9 @@ EXPLANATION: [Extensive explanation with markdown formatting]
 - Use markdown formatting including:
   - **Bold text** for emphasis on key points
   - [Link text](URL) for external references when available
-  - **=>** bullet points for additional important information
+  - **=>** bullet points for additional important information (EACH ON A NEW LINE)
 - Add 2-3 bullet points using **=>** format with supplementary information
+- **IMPORTANT**: Each **=>** bullet point must start on a new line
 - Include at least one markdown URL to a credible source for further reading
 - Make the explanation valuable for learning, not just answer justification
 
@@ -67,7 +71,10 @@ EXPLANATION: [Extensive explanation with markdown formatting]
 
 ## Example Reference Structure:
 ```
-EXPLANATION: [Opening statement with correct answer and source link] **=>** [Additional relevant fact or statistic] **=>** [Practical implication or importance] **=>** [Optional third supporting point]
+EXPLANATION: [Opening statement with correct answer and source link]
+**=>** [Additional relevant fact or statistic]
+**=>** [Practical implication or importance]
+**=>** [Optional third supporting point]
 ```
 
 Generate **[NUMBER]** questions following this exact format about **[TOPIC]**.
