@@ -109,6 +109,9 @@ class QuizApp {
         // Update quiz title with file name
         const baseName = fileName.replace(/\.[^/.]+$/, "");
         this.quizTitle.textContent = this.formatTitle(baseName);
+
+        // Hide the Load Quiz button when quiz is active
+        document.querySelector('.file-btn').style.display = 'none';
         
         // Hide info section and show quiz content
         this.fileFormatInfo.classList.add('hidden');
@@ -376,6 +379,9 @@ class QuizApp {
         
         // Reset file input
         this.fileInput.value = '';
+
+        // Show the Load Quiz button again
+        document.querySelector('.file-btn').style.display = 'inline-block';
         
         // Show file selection interface
         this.quizContent.classList.add('hidden');
