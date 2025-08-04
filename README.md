@@ -23,13 +23,13 @@ Example screenshot:
 4. **Start** taking your quiz!
 
 
-## 💡 Pro Tip: Share quizzes directly via URL!
+## 💡 Easy: Share quizzes directly via URL!
 
 You can also load quizzes directly from a URL using these formats:
 
-    ?quiz=https://raw.githubusercontent.com/beamzer/EazyQuiz/refs/heads/main/sample-files/dns-security.json&title=DNS%20Security%20Expert%20Quiz
-    ?url=https://example.com/quiz.xml&title=My%20Quiz
-    ?file=https://raw.githubusercontent.com/user/repo/quiz.txt
+    index.html?quiz=https://raw.githubusercontent.com/beamzer/EazyQuiz/refs/heads/main/sample-files/dns-security.json&title=DNS%20Security%20Expert%20Quiz
+    index.html?url=https://example.com/quiz.xml&title=My%20Quiz
+    index.html?file=https://raw.githubusercontent.com/user/repo/quiz.txt
 
 Note: The quiz file must be publicly accessible and the server must allow CORS requests.
 
@@ -232,11 +232,8 @@ Contributions are welcome! Please:
 5. Submit a pull request
 
 ### Areas for Contribution
-- Additional file format support
-- Accessibility improvements
-- Mobile experience enhancements
+- Additional Quiz files on various topics
 - New question types (multiple select, drag-and-drop)
-- Progress tracking and analytics
 
 ## 📄 License
 
