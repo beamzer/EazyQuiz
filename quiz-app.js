@@ -495,6 +495,9 @@ class URLQuizLoader {
                 this.quizApp.quizData = quizData;
                 this.quizApp.currentQuestion = 0;
                 this.quizApp.score = 0;
+
+                // Hide the Load Quiz button when quiz is loaded via URL
+                document.querySelector('.file-btn').style.display = 'none';
                 
                 // Hide loading and show quiz
                 this.hideURLLoading();
