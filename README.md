@@ -23,7 +23,7 @@ Example screenshot:
 4. **Start** taking your quiz!
 
 
-## :star: Share: Share quizzes directly via URL!
+## :star: Share quizzes directly via URL!
 
 You can also load quizzes directly from a URL using these formats:
 
