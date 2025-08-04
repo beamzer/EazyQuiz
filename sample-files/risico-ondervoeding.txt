@@ -6,7 +6,7 @@ B) 8,5%
 C) 15%
 D) 25%
 CORRECT: B
-EXPLANATION: Onderzoek toont aan dat 8,5% van alle thuiswonende 65-plussers een hoog risico heeft op ondervoeding [[Kenniscentrum Ondervoeding]](https://www.kenniscentrumondervoeding.nl/domeinoverstijgende-netwerkaanpak-ondervoeding-ouderen-2/)
+EXPLANATION: Onderzoek toont aan dat 8,5% van alle thuiswonende 65-plussers een hoog risico heeft op ondervoeding [Kenniscentrum Ondervoeding](https://www.kenniscentrumondervoeding.nl/domeinoverstijgende-netwerkaanpak-ondervoeding-ouderen-2/)
 . Bij kwetsbare ouderen stijgt dit percentage naar 16%, en bij 85-plussers naar 19%
 . Dit benadrukt het belang van vroegtijdige signalering door wijkverpleegkundigen.
 
@@ -20,7 +20,7 @@ B) 20%
 C) 25%
 D) 35%
 CORRECT: C
-EXPLANATION: De LPZ-onderzoeken tonen dat ondervoeding in verpleeghuizen voorkomt bij circa 25% van de cliënten en in verzorgingshuizen bij ongeveer 26% [[Aanpak ondervoeding in verpleeg- en verzorgingshuizen]](https://www.kenniscentrumondervoeding.nl/wp-content/uploads/2020/04/Aanpak_ondervoeding_in_verpleeg-_en_verzorgingshuizen-TvV.pdf).
+EXPLANATION: De LPZ-onderzoeken tonen dat ondervoeding in verpleeghuizen voorkomt bij circa 25% van de cliënten en in verzorgingshuizen bij ongeveer 26% [Aanpak ondervoeding in verpleeg- en verzorgingshuizen](https://www.kenniscentrumondervoeding.nl/wp-content/uploads/2020/04/Aanpak_ondervoeding_in_verpleeg-_en_verzorgingshuizen-TvV.pdf).
 . Deze cijfers blijven de laatste jaren relatief stabiel, wat de noodzaak van systematische aanpak benadrukt.
 
 ---
@@ -33,7 +33,7 @@ B) Gebrek aan sociaal netwerk
 C) Tandproblemen
 D) Medicijngebruik
 CORRECT: B
-EXPLANATION: Wijkverpleegkundigen in Friesland gaven aan dat veel onderliggende oorzaken van ondervoeding te maken hebben met een gebrek aan een sociaal netwerk [[V\&VN: Ondervoeding groot probleem]](https://www.venvn.nl/media/bywnc0qd/19362-vvn-mg-nr1-2018-los-lr-defff.pdf).
+EXPLANATION: Wijkverpleegkundigen in Friesland gaven aan dat veel onderliggende oorzaken van ondervoeding te maken hebben met een gebrek aan een sociaal netwerk [V\&VN: Ondervoeding groot probleem](https://www.venvn.nl/media/bywnc0qd/19362-vvn-mg-nr1-2018-los-lr-defff.pdf).
 . Dit omvat mantelzorgers die hulp kunnen bieden bij het kopen of bereiden van eten en drinken.
 
 ---
@@ -46,7 +46,7 @@ B) 2 keer
 C) 3 keer
 D) 4 keer
 CORRECT: C
-EXPLANATION: Onderzoek toont dat de mortaliteit bij ondervoede verpleeghuisbewoners drie keer hoger is (12,4% versus 4,7% bij goed gevoede bewoners) [[What Are the Risk Factors for Malnutrition in Older-Aged?]](https://pmc.ncbi.nlm.nih.gov/articles/PMC7551464/).
+EXPLANATION: Onderzoek toont dat de mortaliteit bij ondervoede verpleeghuisbewoners drie keer hoger is (12,4% versus 4,7% bij goed gevoede bewoners) [What Are the Risk Factors for Malnutrition in Older-Aged?](https://pmc.ncbi.nlm.nih.gov/articles/PMC7551464/).
 . Ook is de incidentie van complicaties hoger: 27% versus 16%
 
 
@@ -60,7 +60,7 @@ B) 3 vragen
 C) 4 vragen
 D) 5 vragen
 CORRECT: B
-EXPLANATION: De SNAQ65+ bestaat uit drie vragen die het meest voorspellend zijn voor ondervoeding bij ouderen in de eerstelijnszorg en thuiszorg [[SNAQ65+ uitleg en onderbouwing]](https://www.kenniscentrumondervoeding.nl/wp-content/uploads/2020/04/Uitleg-en-onderbouwing-SNAQ65-2.pdf).
+EXPLANATION: De SNAQ65+ bestaat uit drie vragen die het meest voorspellend zijn voor ondervoeding bij ouderen in de eerstelijnszorg en thuiszorg [SNAQ65+ uitleg en onderbouwing](https://www.kenniscentrumondervoeding.nl/wp-content/uploads/2020/04/Uitleg-en-onderbouwing-SNAQ65-2.pdf).
 . Deze vragen gaan over gewichtsverlies, verminderde eetlust en gebruik van sonde- of drinkvoeding
 
 ---
@@ -73,7 +73,7 @@ B) 2%
 C) 3%
 D) 5%
 CORRECT: C
-EXPLANATION: Vanaf het 70e levensjaar verliest een mens ongeveer 3% van zijn spiermassa en spierkracht per jaar [[Goed gevoed ouder worden]](https://www.kenniscentrumondervoeding.nl/wp-content/uploads/2022/10/WMO-Doen-Ondervoeding_Deel1.pdf).
+EXPLANATION: Vanaf het 70e levensjaar verliest een mens ongeveer 3% van zijn spiermassa en spierkracht per jaar [Goed gevoed ouder worden](https://www.kenniscentrumondervoeding.nl/wp-content/uploads/2022/10/WMO-Doen-Ondervoeding_Deel1.pdf).
 . Dit is een verdubbeling ten opzichte van de 1% per jaar vanaf het 40e levensjaar, wat ouderen extra kwetsbaar maakt voor ondervoeding.
 
 ---
@@ -86,7 +86,7 @@ B) 30%
 C) 35%
 D) 40%
 CORRECT: D
-EXPLANATION: Onderzoek van prof. dr. Navis (2018) toonde aan dat plusminus 40% van de ouderen die in het ziekenhuis worden opgenomen ondervoed is [[Ondervoeding wijkverpleegkundige?]](https://hbo-kennisbank.nl/details/sharekit_hhs:oai:surfsharekit.nl:096b022e-1439-4d2d-a5f4-605fc5d01174).
+EXPLANATION: Onderzoek van prof. dr. Navis (2018) toonde aan dat plusminus 40% van de ouderen die in het ziekenhuis worden opgenomen ondervoed is [Ondervoeding wijkverpleegkundige?](https://hbo-kennisbank.nl/details/sharekit_hhs:oai:surfsharekit.nl:096b022e-1439-4d2d-a5f4-605fc5d01174).
 . Dit benadrukt het belang van screening bij opname en de rol van wijkverpleegkundigen in vroegsignalering.
 
 ---
@@ -99,7 +99,7 @@ B) 75-90 gram
 C) 90-110 gram
 D) 110-125 gram
 CORRECT: C
-EXPLANATION: Bij ziektegerelateerde ondervoeding is de eiwitbehoefte 1,2-1,5 gram per kg lichaamsgewicht [[SNAQ tegen ondervoeding]](https://www.mcl.nl/praktische-informatie/werk-mee-aan-veilige-zorg/kwaliteit-en-patientveiligheid/snaq-tegen-ondervoeding).
+EXPLANATION: Bij ziektegerelateerde ondervoeding is de eiwitbehoefte 1,2-1,5 gram per kg lichaamsgewicht [SNAQ tegen ondervoeding](https://www.mcl.nl/praktische-informatie/werk-mee-aan-veilige-zorg/kwaliteit-en-patientveiligheid/snaq-tegen-ondervoeding).
 . Voor iemand van 75 kg betekent dit 90-110 gram eiwit per dag, aanzienlijk meer dan de 60 gram die bij gezondheid wordt aanbevolen.
 
 ---
@@ -112,7 +112,7 @@ B) 300 kcal
 C) 400 kcal
 D) 600 kcal
 CORRECT: C
-EXPLANATION: Voor herstel van ondervoeding wordt tenminste 400 kcal per dag extra aanbevolen, boven op de normale voeding [[Voedingsinterventies bij ondervoeding]](https://richtlijnendatabase.nl/richtlijn/ondervoeding_bij_de_geriatrische_patient/voedingsinterventies_bij_ondervoeding.html).
+EXPLANATION: Voor herstel van ondervoeding wordt tenminste 400 kcal per dag extra aanbevolen, boven op de normale voeding [Voedingsinterventies bij ondervoeding](https://richtlijnendatabase.nl/richtlijn/ondervoeding_bij_de_geriatrische_patient/voedingsinterventies_bij_ondervoeding.html).
 . Het SNAQ-behandelplan adviseert daarnaast dagelijks 12 gram eiwit en 600 kcal extra via tussenmaaltijden
 
 ---
@@ -125,7 +125,7 @@ B) Alleen de huisarts
 C) De wijkverpleegkundige
 D) Het sociaal wijkteam
 CORRECT: C
-EXPLANATION: Volgens de LESA (Landelijke Eerstelijns Samenwerkings Afspraak) is het geven van voedingsvoorlichting bij het signaleren van risico op ondervoeding een taak van de wijkverpleegkundigen [[Onderzoek naar voorlichting bij complexe zorgvraag]](https://www.wcs.nl/wp-content/uploads/Onderzoek-naar-voorlichting-bij-complexe-zorgvraag_WCS-Nieuws-1-2019.pdf).
+EXPLANATION: Volgens de LESA (Landelijke Eerstelijns Samenwerkings Afspraak) is het geven van voedingsvoorlichting bij het signaleren van risico op ondervoeding een taak van de wijkverpleegkundigen [Onderzoek naar voorlichting bij complexe zorgvraag](https://www.wcs.nl/wp-content/uploads/Onderzoek-naar-voorlichting-bij-complexe-zorgvraag_WCS-Nieuws-1-2019.pdf).
 . Zij spelen een cruciale rol in de vroegsignalering en kunnen interventies indelen via de Zvw en Wlz.
 **Waarom deze rol zo belangrijk is:**
 -   Wijkverpleegkundigen komen regelmatig bij cliënten thuis
