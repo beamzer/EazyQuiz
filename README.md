@@ -34,7 +34,7 @@ You can also load quizzes directly from a URL using these formats:
 Note: The quiz file must be publicly accessible and the server must allow CORS requests.
 
 ## 💡 Easy: let AI generate the quiz for you
-[ AI Prompt ] (https://github.com/beamzer/EazyQuiz/blob/main/AI-prompt.md)
+[AI Prompt](https://github.com/beamzer/EazyQuiz/blob/main/AI-prompt.md)
 
 
 ## 📁 Project Structure
