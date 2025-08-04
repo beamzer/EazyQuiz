@@ -253,7 +253,7 @@ class QuizApp {
 
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i].trim();
-            const isBulletItem = /^- (.+)$/.test(line);
+            const isBulletItem = /^-\s+(.+)$/.test(line);
             const isNumberedItem = /^\d+\. (.+)$/.test(line);
 
             if (isBulletItem) {
@@ -265,7 +265,9 @@ class QuizApp {
                     processedLines.push('<ul>');
                     inBulletList = true;
                 }
-                processedLines.push(`<li>${line.substring(2)}</li>`);
+                const match = line.match(/^-\s+(.+)$/);
+                processedLines.push(`<li>${match[1]}</li>`);
+                // processedLines.push(`<li>${line.substring(2)}</li>`);
             } else if (isNumberedItem) {
                 if (!inNumberedList) {
                     if (inBulletList) {
