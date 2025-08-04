@@ -1,0 +1,133 @@
+# Quiz File Generation for TCP/IP - Junior IT Administrator Level
+
+TITLE: TCP/IP Fundamentals for IT Administrators
+
+QUESTION: What are the four layers of the TCP/IP model, listed from top to bottom?
+A) Physical, Data Link, Network, Transport
+B) Application, Transport, Internet, Network Access
+C) Session, Presentation, Application, Transport
+D) Network, Internet, Transport, Application
+CORRECT: B
+EXPLANATION: The TCP/IP model consists of four layers: Application, Transport, Internet, and Network Access (from top to bottom) [RFC 1122](https://tools.ietf.org/html/rfc1122). 
+**=>** The Application layer includes protocols like HTTP, FTP, and SMTP that end users interact with directly 
+**=>** The Transport layer (TCP/UDP) provides reliable or unreliable data delivery between applications 
+**=>** The Internet layer (IP) handles routing between networks, while the Network Access layer manages the physical transmission of data over network media.
+
+---
+
+QUESTION: What is the default subnet mask for a Class B IP address?
+A) 255.0.0.0
+B) 255.255.0.0
+C) 255.255.255.0
+D) 255.255.255.255
+CORRECT: B
+EXPLANATION: Class B networks use a default subnet mask of 255.255.0.0 (/16 in CIDR notation), which provides 16 bits for the network portion and 16 bits for host addresses [RFC 950](https://tools.ietf.org/html/rfc950). 
+**=>** This allows for 65,534 host addresses per Class B network (2^16 - 2, subtracting network and broadcast addresses) 
+**=>** Class B addresses range from 128.0.0.0 to 191.255.255.255, making them suitable for medium to large organizations 
+**=>** While classful addressing is largely obsolete due to CIDR, understanding these concepts helps with legacy network configurations and subnetting fundamentals.
+
+---
+
+QUESTION: Which port number does HTTP use by default, and what transport protocol does it run on?
+A) Port 80, UDP
+B) Port 443, TCP
+C) Port 80, TCP
+D) Port 8080, UDP
+CORRECT: C
+EXPLANATION: HTTP (Hypertext Transfer Protocol) uses port 80 by default and runs on TCP as its transport protocol [RFC 2616](https://tools.ietf.org/html/rfc2616). 
+**=>** TCP is used because HTTP requires reliable, ordered delivery of data to ensure web pages load correctly and completely 
+**=>** Port 443 is used for HTTPS (HTTP Secure), which adds SSL/TLS encryption to HTTP communications 
+**=>** As an IT administrator, you'll commonly see port 80 traffic in firewall rules and network monitoring tools when managing web server access.
+
+---
+
+QUESTION: What command would you use in Windows to display the current IP configuration of all network adapters?
+A) ping localhost
+B) ipconfig /all
+C) netstat -a
+D) tracert 8.8.8.8
+CORRECT: B
+EXPLANATION: The `ipconfig /all` command displays comprehensive IP configuration information for all network adapters on a Windows system [Microsoft Documentation](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/ipconfig). 
+**=>** This includes IP addresses, subnet masks, default gateways, DNS servers, DHCP lease information, and MAC addresses 
+**=>** The basic `ipconfig` command shows only IP address, subnet mask, and default gateway for active adapters 
+**=>** This is one of the most essential troubleshooting commands for IT administrators when diagnosing network connectivity issues.
+
+---
+
+QUESTION: What is the purpose of a default gateway in IP networking?
+A) To assign IP addresses to devices automatically
+B) To provide a path for traffic destined to networks outside the local subnet
+C) To resolve domain names to IP addresses
+D) To encrypt network traffic for security
+CORRECT: B
+EXPLANATION: A default gateway provides a route for network traffic that is destined for IP addresses outside the local subnet, typically pointing to a router that connects to other networks [Cisco Networking Basics](https://www.cisco.com/c/en/us/support/docs/ip/routing-information-protocol-rip/13769-5.html). 
+**=>** When a device needs to communicate with an IP address not on its local network, it forwards the packet to the default gateway 
+**=>** Without a properly configured default gateway, devices can only communicate with other devices on the same local subnet 
+**=>** IT administrators must ensure all network devices have the correct default gateway configured, either manually or through DHCP, to enable internet and inter-network communication.
+
+---
+
+QUESTION: Which of the following IP addresses is a private (non-routable) address according to RFC 1918?
+A) 8.8.8.8
+B) 172.16.50.100
+C) 203.0.113.5
+D) 224.0.0.1
+CORRECT: B
+EXPLANATION: The IP address 172.16.50.100 falls within the private address range 172.16.0.0 to 172.31.255.255 as defined in RFC 1918 [RFC 1918](https://tools.ietf.org/html/rfc1918). 
+**=>** Private IP addresses are not routed on the public internet and are reserved for internal network use within organizations 
+**=>** The three private address ranges are: 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 
+**=>** IT administrators use these addresses for internal networks and rely on NAT (Network Address Translation) to enable internet access for devices using private addresses.
+
+---
+
+QUESTION: What does DNS stand for, and what is its primary function?
+A) Dynamic Network Service - automatically assigns IP addresses
+B) Domain Name System - translates domain names to IP addresses
+C) Data Network Security - encrypts network communications
+D) Distributed Network Storage - provides file sharing capabilities
+CORRECT: B
+EXPLANATION: DNS (Domain Name System) is a hierarchical naming system that translates human-readable domain names like www.google.com into IP addresses that computers use for communication [RFC 1034](https://tools.ietf.org/html/rfc1034). 
+**=>** Without DNS, users would need to memorize IP addresses like 142.250.191.14 instead of simply typing google.com 
+**=>** DNS operates on port 53 and uses both UDP for standard queries and TCP for zone transfers and large responses 
+**=>** IT administrators must configure DNS servers correctly on all network devices to ensure proper name resolution for web browsing, email, and other network services.
+
+---
+
+QUESTION: What is the difference between TCP and UDP protocols?
+A) TCP is faster, UDP is more reliable
+B) TCP is connection-oriented and reliable, UDP is connectionless and unreliable
+C) TCP uses port numbers, UDP does not
+D) TCP is for internet traffic, UDP is for local network traffic only
+CORRECT: B
+EXPLANATION: TCP (Transmission Control Protocol) is connection-oriented and provides reliable, ordered delivery with error checking, while UDP (User Datagram Protocol) is connectionless and provides fast but unreliable delivery [RFC 793](https://tools.ietf.org/html/rfc793) and [RFC 768](https://tools.ietf.org/html/rfc768). 
+**=>** TCP establishes a connection before data transfer and guarantees that all data arrives in the correct order, making it suitable for web browsing, email, and file transfers 
+**=>** UDP sends data without establishing a connection and doesn't guarantee delivery, making it ideal for real-time applications like video streaming, online gaming, and DNS queries where speed is more important than perfect reliability 
+**=>** Both protocols use port numbers to identify specific applications and services on a device.
+
+---
+
+QUESTION: What tool would you use to test network connectivity between your computer and a remote server?
+A) ipconfig
+B) ping
+C) netstat
+D) nslookup
+CORRECT: B
+EXPLANATION: The ping command tests basic network connectivity between your computer and a remote host by sending ICMP Echo Request packets and measuring the response time [RFC 792](https://tools.ietf.org/html/rfc792). 
+**=>** A successful ping shows that the network path is functional and provides round-trip time measurements that help identify latency issues 
+**=>** Ping is available on virtually all operating systems and is typically the first diagnostic tool IT administrators use when troubleshooting connectivity problems 
+**=>** While ping tests basic reachability, it may not work if ICMP traffic is blocked by firewalls, so additional testing with tools like telnet or traceroute might be necessary.
+
+---
+
+QUESTION: What does DHCP stand for, and what is its main purpose in a network?
+A) Dynamic Host Configuration Protocol - automatically assigns IP addresses to devices
+B) Distributed Hardware Control Protocol - manages network equipment remotely
+C) Data Handling and Control Protocol - manages file transfers
+D) Digital Host Communication Protocol - encrypts network traffic
+CORRECT: A
+EXPLANATION: DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses, subnet masks, default gateways, and other network configuration parameters to devices on a network [RFC 2131](https://tools.ietf.org/html/rfc2131). 
+**=>** This eliminates the need for IT administrators to manually configure IP settings on every device, reducing configuration errors and simplifying network management 
+**=>** DHCP servers maintain a pool of available IP addresses and lease them to clients for a specified period, automatically renewing or reclaiming addresses as needed 
+**=>** DHCP also provides additional configuration options like DNS server addresses, domain names, and time servers, making it essential for automated network administration in modern environments.
+
+---
