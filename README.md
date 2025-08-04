@@ -1,4 +1,4 @@
-# Generic Quiz Application
+# Eazy Quiz Application for all kinds of quiz files
 
 A modern, responsive web-based quiz application that supports multiple file formats and topics. Create unlimited quizzes by simply loading different data files - no coding required!
 Example screenshot:
@@ -23,7 +23,7 @@ Example screenshot:
 4. **Start** taking your quiz!
 
 
-## 💡 Easy: Share quizzes directly via URL!
+## 💡 Share: Share quizzes directly via URL!
 
 You can also load quizzes directly from a URL using these formats:
 
@@ -32,6 +32,9 @@ You can also load quizzes directly from a URL using these formats:
     index.html?file=https://raw.githubusercontent.com/user/repo/quiz.txt
 
 Note: The quiz file must be publicly accessible and the server must allow CORS requests.
+
+## 💡 Easy: let AI generate the quiz for you
+[ AI Prompt ] (https://github.com/beamzer/EazyQuiz/blob/main/AI-prompt.md)
 
 
 ## 📁 Project Structure
