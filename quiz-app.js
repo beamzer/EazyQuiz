@@ -227,7 +227,8 @@ class QuizApp {
             .replace(/^# (.+)$/gm, '<h2>$1</h2>')
 
             // Bold formatting: **text** -> <strong>text</strong>
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+            //.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 
             // Italic formatting: *text* -> <em>text</em>
             .replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g, '<em>$1</em>')
