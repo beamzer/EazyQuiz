@@ -254,7 +254,7 @@ class QuizApp {
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i].trim();
             const isBulletItem = /^-\s+(.+)$/.test(line);
-            const isNumberedItem = /^\d+\. (.+)$/.test(line);
+            const isNumberedItem = /^\d+\.\s+(.+)$/.test(line);
 
             if (isBulletItem) {
                 if (!inBulletList) {
@@ -267,7 +267,6 @@ class QuizApp {
                 }
                 const match = line.match(/^-\s+(.+)$/);
                 processedLines.push(`<li>${match[1]}</li>`);
-                // processedLines.push(`<li>${line.substring(2)}</li>`);
             } else if (isNumberedItem) {
                 if (!inNumberedList) {
                     if (inBulletList) {
@@ -277,7 +276,7 @@ class QuizApp {
                     processedLines.push('<ol>');
                     inNumberedList = true;
                 }
-                const match = line.match(/^\d+\. (.+)$/);
+                const match = line.match(/^\d+\.\s+(.+)$/);
                 processedLines.push(`<li>${match[1]}</li>`);
             } else {
                 // Not a list item
@@ -289,7 +288,11 @@ class QuizApp {
                     processedLines.push('</ol>');
                     inNumberedList = false;
                 }
-                processedLines.push(line);
+                
+                // Only add non-empty lines as regular content
+                if (line) {
+                    processedLines.push(line);
+                }
             }
         }
 
@@ -301,8 +304,18 @@ class QuizApp {
             processedLines.push('</ol>');
         }
 
-        // Join back and add line breaks
-        formatted = processedLines.join('\n').replace(/\n/g, '<br>');
+        // Join back but handle line breaks more carefully
+        formatted = processedLines.join('\n');
+        
+        // Convert line breaks to <br> but avoid adding them inside lists
+        formatted = formatted.replace(/\n(?![<\/]?[uo]l>|<li>|<\/li>)/g, '<br>');
+        
+        // Clean up any remaining newlines around list elements
+        formatted = formatted
+            .replace(/\n(<\/?[uo]l>)/g, '$1')
+            .replace(/(<\/?[uo]l>)\n/g, '$1')
+            .replace(/\n(<\/?li>)/g, '$1')
+            .replace(/(<\/?li>)\n/g, '$1');
 
         return this.sanitizeHTML(formatted);       
     }
