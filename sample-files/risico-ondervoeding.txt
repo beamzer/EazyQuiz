@@ -128,9 +128,9 @@ CORRECT: C
 EXPLANATION: Volgens de LESA (Landelijke Eerstelijns Samenwerkings Afspraak) is het geven van voedingsvoorlichting bij het signaleren van risico op ondervoeding een taak van de wijkverpleegkundigen [Onderzoek naar voorlichting bij complexe zorgvraag](https://www.wcs.nl/wp-content/uploads/Onderzoek-naar-voorlichting-bij-complexe-zorgvraag_WCS-Nieuws-1-2019.pdf).
 . Zij spelen een cruciale rol in de vroegsignalering en kunnen interventies indelen via de Zvw en Wlz.
 **Waarom deze rol zo belangrijk is:**
--   Wijkverpleegkundigen komen regelmatig bij cliënten thuis
--   Zij kunnen veranderingen in eetpatroon en gewicht vroegtijdig signaleren
--   Zij hebben directe toegang tot de leefsituatie van de oudere
--   Zij kunnen de link maken tussen verschillende gezondheidsproblemen en voeding
--   Zij werken samen met andere disciplines zoals huisarts en diëtist voor integrale zorg
+- Wijkverpleegkundigen komen regelmatig bij cliënten thuis
+- Zij kunnen veranderingen in eetpatroon en gewicht vroegtijdig signaleren
+- Zij hebben directe toegang tot de leefsituatie van de oudere
+- Zij kunnen de link maken tussen verschillende gezondheidsproblemen en voeding
+- Zij werken samen met andere disciplines zoals huisarts en diëtist voor integrale zorg
 
