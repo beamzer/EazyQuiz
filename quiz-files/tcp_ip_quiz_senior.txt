@@ -1,6 +1,6 @@
-# Quiz File Generation for TCP/IP - Medior IT Engineer Level
+# Quiz File Generation for TCP/IP - Senior IT Engineer Level
 
-TITLE: TCP/IP Protocol Suite for IT Engineers
+TITLE: TCP/IP Protocol Suite for IT Network Engineers
 
 QUESTION: What is the maximum segment size (MSS) that TCP can negotiate during the three-way handshake, and how is it determined?
 A) Fixed at 1460 bytes based on Ethernet MTU
