@@ -703,6 +703,13 @@ summary {
     font-weight: 700;
 }
 
+.question-text b,
+.explanation-container b,
+.btn-option b {
+    color: var(--primary);
+    font-weight: 700;
+}
+
 .question-text em,
 .explanation-container em,
 .btn-option em {

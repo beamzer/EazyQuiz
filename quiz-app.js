@@ -51,7 +51,7 @@ class QuizApp {
 
     // method for basic HTML sanitization
     sanitizeHTML(html) {
-        const allowedTags = ['strong', 'em', 'u', 'del', 'code', 'br', 'li', 'ol', 'ul', 'h2', 'h3', 'h4', 'a'];
+        const allowedTags = ['strong', 'em', 'u', 'del', 'code', 'br', 'li', 'ol', 'ul', 'h2', 'h3', 'h4', 'a', 'b'];
         const allowedAttributes = {
             'a': ['href', 'target', 'rel']
         };
