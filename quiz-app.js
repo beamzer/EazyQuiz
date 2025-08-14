@@ -1,10 +1,11 @@
 // quiz-app.js
+// Main controller for the interactive quiz application.
 
 class QuizApp {
     constructor() {
-        this.quizData = [];
-        this.currentQuestion = 0;
-        this.score = 0;
+        this.quizData = [];         // Parsed quiz questions
+        this.currentQuestion = 0;   // Index of the question being displayed
+        this.score = 0;             // User's running score
         this.initializeElements();
         this.attachEventListeners();
     }
@@ -49,7 +50,7 @@ class QuizApp {
         this.tryAgainBtn.addEventListener('click', () => this.clearError());
     }
 
-    // method for basic HTML sanitization
+    // Sanitize raw HTML/markdown to prevent XSS while allowing safe formatting tags.
     sanitizeHTML(html) {
         const allowedTags = ['strong', 'em', 'u', 'del', 'code', 'br', 'li', 'ol', 'ul', 'h2', 'h3', 'h4', 'a', 'b'];
         const allowedAttributes = {
@@ -86,11 +87,12 @@ class QuizApp {
         return temp.innerHTML;
     }
     
+    // Handle local file upload; parse and validate the selected quiz file.
     async handleFileUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
         
-        this.showLoader();
+        this.showLoader(); // Display loading spinner
         
         try {
             this.quizData = await QuizParser.parseFile(file);
@@ -102,11 +104,12 @@ class QuizApp {
         }
     }
     
+    // Set up the quiz UI and state after a file has been successfully parsed.
     initializeQuiz(fileName) {
         this.currentQuestion = 0;
         this.score = 0;
         
-        // Update quiz title with file name
+        // Derive a friendly title from the filename
         const baseName = fileName.replace(/\.[^/.]+$/, "");
         this.quizTitle.textContent = this.formatTitle(baseName);
 
@@ -129,6 +132,7 @@ class QuizApp {
             + ' Quiz';
     }
     
+    // Display the current question and its multiple-choice options.
     renderQuestion() {
         if (this.currentQuestion >= this.quizData.length) {
             this.showResults();
@@ -168,10 +172,11 @@ class QuizApp {
         }
     }
     
+    // Process the user's selected answer, provide feedback, and show explanation.
     handleAnswer(selectedButton, selectedAnswer, correctAnswer, explanation) {
         const isCorrect = selectedAnswer.toLowerCase() === correctAnswer.toLowerCase();
         
-        // Disable all option buttons
+        // Disable all option buttons to prevent multiple selections
         const allButtons = this.optionsContainer.querySelectorAll('.btn-option');
         allButtons.forEach(button => {
             button.classList.add('disabled');
@@ -337,6 +342,7 @@ class QuizApp {
         }
     }
     
+    // Display final score, percentage, and a tailored message.
     showResults() {
         this.questionSection.style.display = 'none';
         this.results.classList.remove('hidden');
@@ -417,6 +423,7 @@ class QuizApp {
 }
 
 // URL Quiz Loader functionality
+// Loads quizzes directly from external URLs via URL parameters.
 class URLQuizLoader {
     constructor(quizApp) {
         this.supportedParams = ['quiz', 'url', 'file'];
@@ -649,7 +656,7 @@ class URLQuizLoader {
 let quizApp;
 let urlQuizLoader;
 
-// Initialize the quiz application when the DOM is loaded
+// Initialize the quiz application when the DOM is fully loaded.
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing quiz app...');
     
