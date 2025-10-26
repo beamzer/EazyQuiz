@@ -6,8 +6,11 @@ class QuizApp {
         this.quizData = [];         // Parsed quiz questions
         this.currentQuestion = 0;   // Index of the question being displayed
         this.score = 0;             // User's running score
+        this.language = 'en';       // Default language
+        this.translations = {};     // Language translations
         this.initializeElements();
         this.attachEventListeners();
+        this.initializeLanguage();
     }
     
     initializeElements() {
@@ -48,6 +51,86 @@ class QuizApp {
         this.restartBtn.addEventListener('click', () => this.restartQuiz());
         this.newQuizBtn.addEventListener('click', () => this.loadNewQuiz());
         this.tryAgainBtn.addEventListener('click', () => this.clearError());
+    }
+
+    // Initialize language support
+    async initializeLanguage() {
+        // Check URL parameters for language
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get('lang') || urlParams.get('language');
+        
+        if (langParam) {
+            this.language = langParam.toLowerCase();
+        }
+        
+        // Load language file
+        await this.loadLanguage(this.language);
+    }
+
+    // Load language translations
+    async loadLanguage(lang) {
+        try {
+            const response = await fetch(`languages/${lang}.json`);
+            if (!response.ok) {
+                // Fallback to English if language file not found
+                if (lang !== 'en') {
+                    console.warn(`Language file for '${lang}' not found, falling back to English`);
+                    return this.loadLanguage('en');
+                }
+                throw new Error(`Failed to load language file: ${response.status}`);
+            }
+            
+            this.translations = await response.json();
+            this.language = lang;
+            
+            // Update UI with new language
+            this.updateUILanguage();
+        } catch (error) {
+            console.error('Error loading language:', error);
+            // Use English as fallback
+            if (lang !== 'en') {
+                this.loadLanguage('en');
+            }
+        }
+    }
+
+    // Get translated text
+    t(key, replacements = {}) {
+        let text = this.translations[key] || key;
+        
+        // Handle nested keys like scoreMessages.excellent
+        if (key.includes('.')) {
+            const keys = key.split('.');
+            let current = this.translations;
+            for (const k of keys) {
+                current = current[k];
+                if (!current) break;
+            }
+            text = current || key;
+        }
+        
+        // Replace placeholders
+        Object.keys(replacements).forEach(placeholder => {
+            text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+        });
+        
+        return text;
+    }
+
+    // Update UI elements with current language
+    updateUILanguage() {
+        // Update static text elements
+        const restartBtn = document.getElementById('restart-btn');
+        const newQuizBtn = document.getElementById('new-quiz-btn');
+        const tryAgainBtn = document.getElementById('try-again-btn');
+        
+        if (restartBtn) restartBtn.textContent = this.t('restart');
+        if (newQuizBtn) newQuizBtn.textContent = this.t('newQuiz');
+        if (tryAgainBtn) tryAgainBtn.textContent = this.t('tryAgain');
+        
+        // Update loader text
+        const loaderText = document.querySelector('#quiz-loader p');
+        if (loaderText) loaderText.textContent = this.t('loading');
     }
 
     // Sanitize raw HTML/markdown to prevent XSS while allowing safe formatting tags.
@@ -144,7 +227,10 @@ class QuizApp {
         // Format title and question text with markup
         this.questionTitle.innerHTML = `${q.id}. ${this.formatMarkup(q.title)}`;
         this.questionText.innerHTML = this.formatMarkup(q.question);
-        this.progress.textContent = `Question ${this.currentQuestion + 1} of ${this.quizData.length}`;
+        this.progress.textContent = this.t('progress', {
+            current: this.currentQuestion + 1,
+            total: this.quizData.length
+        });
         
         // Clear options container
         this.optionsContainer.innerHTML = '';
@@ -203,7 +289,7 @@ class QuizApp {
         
         // Update next button text
         this.nextBtn.textContent = 
-            this.currentQuestion + 1 === this.quizData.length ? 'Finish Quiz' : 'Next Question';
+            this.currentQuestion + 1 === this.quizData.length ? this.t('finishQuiz') : this.t('nextQuestion');
         
         // Reset explanation scroll
         const explanationContainer = document.querySelector('.explanation-container');
@@ -353,20 +439,20 @@ class QuizApp {
         this.scorePercentage.textContent = `${percentage}%`;
         
         // Generate score message
-        let message = '';
+        let messageKey = '';
         if (percentage >= 90) {
-            message = 'Outstanding! You have excellent knowledge of this topic! 🎉';
+            messageKey = 'scoreMessages.excellent';
         } else if (percentage >= 80) {
-            message = 'Great job! You have very good understanding of this subject! 👏';
+            messageKey = 'scoreMessages.veryGood';
         } else if (percentage >= 70) {
-            message = 'Good work! You have solid knowledge with room for improvement. 👍';
+            messageKey = 'scoreMessages.good';
         } else if (percentage >= 60) {
-            message = 'Not bad! Review the explanations to strengthen your understanding. 📖';
+            messageKey = 'scoreMessages.fair';
         } else {
-            message = 'Keep studying! Review the explanations and try again to improve your knowledge. 📚';
+            messageKey = 'scoreMessages.poor';
         }
         
-        this.scoreMessage.textContent = message;
+        this.scoreMessage.textContent = this.t(messageKey);
     }
     
     restartQuiz() {
@@ -393,7 +479,7 @@ class QuizApp {
         this.quizContent.classList.add('hidden');
         this.results.classList.add('hidden');
         this.fileFormatInfo.classList.remove('hidden');
-        this.quizTitle.textContent = 'Quiz Application';
+        this.quizTitle.textContent = this.t('quiz') + ' Application';
         
         this.clearError();
     }
@@ -426,7 +512,7 @@ class QuizApp {
 // Loads quizzes directly from external URLs via URL parameters.
 class URLQuizLoader {
     constructor(quizApp) {
-        this.supportedParams = ['quiz', 'url', 'file'];
+        this.supportedParams = ['quiz', 'url', 'file', 'lang', 'language'];
         this.quizApp = quizApp;
     }
 
@@ -567,7 +653,7 @@ class URLQuizLoader {
             // Update loader text
             const loaderText = loader.querySelector('p');
             if (loaderText) {
-                loaderText.textContent = `Loading quiz from URL...`;
+                loaderText.textContent = this.quizApp.t('loading');
             }
             
             // Add URL info
@@ -639,13 +725,16 @@ class URLQuizLoader {
     }
 
     // Generate shareable URL
-    static generateShareableURL(quizUrl, title = null) {
+    static generateShareableURL(quizUrl, title = null, language = null) {
         const baseUrl = window.location.origin + window.location.pathname;
         const params = new URLSearchParams();
         
         params.set('quiz', quizUrl);
         if (title) {
             params.set('title', title);
+        }
+        if (language && language !== 'en') {
+            params.set('lang', language);
         }
         
         return `${baseUrl}?${params.toString()}`;

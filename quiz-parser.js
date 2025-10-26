@@ -98,20 +98,24 @@ class QuizParser {
                 for (let i = 0; i < lines.length; i++) {
                     const line = lines[i];
                     
-                    if (line.startsWith('TITLE:')) {
-                        question.title = line.substring(6).trim();
+                    if (line.startsWith('TITLE:') || line.startsWith('TITEL:')) {
+                        const prefix = line.startsWith('TITLE:') ? 'TITLE:' : 'TITEL:';
+                        question.title = line.substring(prefix.length).trim();
                         currentSection = '';
-                    } else if (line.startsWith('QUESTION:')) {
-                        const questionText = line.substring(9).trim();
+                    } else if (line.startsWith('QUESTION:') || line.startsWith('VRAAG:')) {
+                        const prefix = line.startsWith('QUESTION:') ? 'QUESTION:' : 'VRAAG:';
+                        const questionText = line.substring(prefix.length).trim();
                         if (questionText) {
                             questionLines.push(questionText);
                         }
                         currentSection = 'question';
-                    } else if (line.startsWith('CORRECT:')) {
-                        question.correct_answer = line.substring(8).trim();
+                    } else if (line.startsWith('CORRECT:') || line.startsWith('ANTWOORD:')) {
+                        const prefix = line.startsWith('CORRECT:') ? 'CORRECT:' : 'ANTWOORD:';
+                        question.correct_answer = line.substring(prefix.length).trim();
                         currentSection = '';
-                    } else if (line.startsWith('EXPLANATION:')) {
-                        const explanationText = line.substring(12).trim();
+                    } else if (line.startsWith('EXPLANATION:') || line.startsWith('TOELICHTING:')) {
+                        const prefix = line.startsWith('EXPLANATION:') ? 'EXPLANATION:' : 'TOELICHTING:';
+                        const explanationText = line.substring(prefix.length).trim();
                         if (explanationText) {
                             explanationLines.push(explanationText);
                         }
@@ -129,10 +133,10 @@ class QuizParser {
                         }
                         // If no current section and line doesn't start with a keyword,
                         // it might be part of explanation (common case)
-                        else if (!line.startsWith('TITLE:') && 
-                                 !line.startsWith('QUESTION:') && 
-                                 !line.startsWith('CORRECT:') && 
-                                 !line.startsWith('EXPLANATION:') && 
+                        else if (!line.startsWith('TITLE:') && !line.startsWith('TITEL:') &&
+                                 !line.startsWith('QUESTION:') && !line.startsWith('VRAAG:') &&
+                                 !line.startsWith('CORRECT:') && !line.startsWith('ANTWOORD:') &&
+                                 !line.startsWith('EXPLANATION:') && !line.startsWith('TOELICHTING:') &&
                                  !line.match(/^[A-Z]\)/) && 
                                  explanationLines.length > 0) {
                             explanationLines.push(line);
@@ -273,20 +277,24 @@ class QuizParser {
                 let questionLines = [];
                 
                 lines.forEach(line => {
-                    if (line.startsWith('TITLE:')) {
-                        title = line.substring(6).trim();
+                    if (line.startsWith('TITLE:') || line.startsWith('TITEL:')) {
+                        const prefix = line.startsWith('TITLE:') ? 'TITLE:' : 'TITEL:';
+                        title = line.substring(prefix.length).trim();
                         currentSection = '';
-                    } else if (line.startsWith('QUESTION:')) {
-                        const questionText = line.substring(9).trim();
+                    } else if (line.startsWith('QUESTION:') || line.startsWith('VRAAG:')) {
+                        const prefix = line.startsWith('QUESTION:') ? 'QUESTION:' : 'VRAAG:';
+                        const questionText = line.substring(prefix.length).trim();
                         if (questionText) {
                             questionLines.push(questionText);
                         }
                         currentSection = 'question';
-                    } else if (line.startsWith('CORRECT:')) {
-                        correct = line.substring(8).trim().toUpperCase();
+                    } else if (line.startsWith('CORRECT:') || line.startsWith('ANTWOORD:')) {
+                        const prefix = line.startsWith('CORRECT:') ? 'CORRECT:' : 'ANTWOORD:';
+                        correct = line.substring(prefix.length).trim().toUpperCase();
                         currentSection = '';
-                    } else if (line.startsWith('EXPLANATION:')) {
-                        const explanationText = line.substring(12).trim();
+                    } else if (line.startsWith('EXPLANATION:') || line.startsWith('TOELICHTING:')) {
+                        const prefix = line.startsWith('EXPLANATION:') ? 'EXPLANATION:' : 'TOELICHTING:';
+                        const explanationText = line.substring(prefix.length).trim();
                         if (explanationText) {
                             explanationLines.push(explanationText);
                         }
@@ -302,10 +310,10 @@ class QuizParser {
                             questionLines.push(line);
                         }
                         // If no current section, assume it's part of explanation if we have explanation content
-                        else if (!line.startsWith('TITLE:') && 
-                                 !line.startsWith('QUESTION:') && 
-                                 !line.startsWith('CORRECT:') && 
-                                 !line.startsWith('EXPLANATION:') && 
+                        else if (!line.startsWith('TITLE:') && !line.startsWith('TITEL:') &&
+                                 !line.startsWith('QUESTION:') && !line.startsWith('VRAAG:') &&
+                                 !line.startsWith('CORRECT:') && !line.startsWith('ANTWOORD:') &&
+                                 !line.startsWith('EXPLANATION:') && !line.startsWith('TOELICHTING:') &&
                                  !/^[A-Z]\)/.test(line) && 
                                  explanationLines.length > 0) {
                             explanationLines.push(line);

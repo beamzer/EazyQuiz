@@ -1,0 +1,25 @@
+{
+  "title": "Title",
+  "question": "Question",
+  "correct": "Correct Answer",
+  "explanation": "Explanation",
+  "quiz": "Quiz",
+  "progress": "Question {current} of {total}",
+  "nextQuestion": "Next Question",
+  "finishQuiz": "Finish Quiz",
+  "results": "Results",
+  "score": "Score",
+  "percentage": "Percentage",
+  "restart": "Restart Quiz",
+  "newQuiz": "Load New Quiz",
+  "loading": "Loading quiz...",
+  "error": "Error",
+  "tryAgain": "Try Again",
+  "scoreMessages": {
+    "excellent": "Outstanding! You have excellent knowledge of this topic! 🎉",
+    "veryGood": "Great job! You have very good understanding of this subject! 👏",
+    "good": "Good work! You have solid knowledge with room for improvement. 👍",
+    "fair": "Not bad! Review the explanations to strengthen your understanding. 📖",
+    "poor": "Keep studying! Review the explanations and try again to improve your knowledge. 📚"
+  }
+}

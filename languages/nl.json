@@ -1,0 +1,25 @@
+{
+  "title": "Titel",
+  "question": "Vraag",
+  "correct": "Juist Antwoord",
+  "explanation": "Toelichting",
+  "quiz": "Quiz",
+  "progress": "Vraag {current} van {total}",
+  "nextQuestion": "Volgende Vraag",
+  "finishQuiz": "Quiz Voltooien",
+  "results": "Resultaten",
+  "score": "Score",
+  "percentage": "Percentage",
+  "restart": "Quiz Herstarten",
+  "newQuiz": "Nieuwe Quiz Laden",
+  "loading": "Quiz laden...",
+  "error": "Fout",
+  "tryAgain": "Probeer Opnieuw",
+  "scoreMessages": {
+    "excellent": "Uitstekend! Je hebt uitstekende kennis van dit onderwerp! 🎉",
+    "veryGood": "Goed gedaan! Je hebt een zeer goed begrip van dit onderwerp! 👏",
+    "good": "Goed werk! Je hebt solide kennis met ruimte voor verbetering. 👍",
+    "fair": "Niet slecht! Bekijk de toelichtingen om je begrip te versterken. 📖",
+    "poor": "Blijf studeren! Bekijk de toelichtingen en probeer opnieuw om je kennis te verbeteren. 📚"
+  }
+}
