@@ -34,6 +34,9 @@ You can also load quizzes directly from a URL using these formats:
     index.html?url=https://example.com/quiz.xml&title=My%20Quiz
     index.html?file=https://raw.githubusercontent.com/user/repo/quiz.txt
 
+**Specify different language via lang=xx, for instance:**
+    index.html?quiz=https://raw.githubusercontent.com/beamzer/EazyQuiz/refs/heads/main/quiz-files/dns-security.json&lang=nl
+
 Note: The quiz file must be publicly accessible and the server must allow CORS requests.
 
 ## 💡 Easy: let AI generate the quiz for you
