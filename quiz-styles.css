@@ -306,7 +306,7 @@ h1 {
 }
 
 /* Style for bullet points in explanations */
-#explanation br + • {
+#explanation br + li {
     margin-top: 8px;
 }
 
