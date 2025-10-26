@@ -263,10 +263,11 @@ class QuizApp {
         // Hide feedback
         this.feedback.classList.add('hidden');
         
-        // Reset explanation scroll
+        // Reset explanation scroll and setup scroll detection
         const explanationContainer = document.querySelector('.explanation-container');
         if (explanationContainer) {
             explanationContainer.scrollTop = 0;
+            this.setupScrollDetection(explanationContainer);
         }
     }
     
@@ -429,6 +430,50 @@ class QuizApp {
 
     formatExplanation(explanation) {
         return this.formatMarkup(explanation);
+    }
+    
+    // Setup scroll detection for explanation container
+    setupScrollDetection(container) {
+        // Remove existing scroll indicator if present
+        const existingIndicator = container.querySelector('.scroll-indicator');
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+        
+        // Check if content is scrollable
+        const isScrollable = container.scrollHeight > container.clientHeight;
+        
+        if (isScrollable) {
+            // Add scroll indicator
+            const scrollIndicator = document.createElement('div');
+            scrollIndicator.className = 'scroll-indicator';
+            scrollIndicator.textContent = '↓ ' + this.t('scrollForMore');
+            container.appendChild(scrollIndicator);
+            
+            // Add scroll detection class
+            container.classList.add('has-scroll');
+            container.classList.remove('scrolled-to-bottom');
+            
+            // Add scroll event listener
+            const scrollHandler = () => {
+                const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 5;
+                
+                if (isAtBottom) {
+                    container.classList.add('scrolled-to-bottom');
+                } else {
+                    container.classList.remove('scrolled-to-bottom');
+                }
+            };
+            
+            // Remove existing listeners to prevent duplicates
+            container.removeEventListener('scroll', container._scrollHandler);
+            container._scrollHandler = scrollHandler;
+            container.addEventListener('scroll', scrollHandler);
+            
+        } else {
+            // Content fits, remove scroll classes
+            container.classList.remove('has-scroll', 'scrolled-to-bottom');
+        }
     }
     
     nextQuestion() {
