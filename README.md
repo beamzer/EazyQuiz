@@ -22,6 +22,7 @@ Example screenshot:
 2. **Open** `index.html` in your web browser
 3. **Click** "Load Quiz" and select a quiz file
 4. **Start** taking your quiz!
+**Or...,** put the files on a webserver and run from there
 
 
 ## :star: Share quizzes directly via URL!
