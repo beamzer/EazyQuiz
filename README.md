@@ -8,6 +8,7 @@ Example screenshot:
 ## ✨ Features
 
 - **Multi-format support**: JSON, XML, and TXT file formats
+- **Multi language support**: easy extensible language support, English and Dutch provided.
 - **Responsive design**: Works seamlessly on desktop, tablet, and mobile
 - **Real-time scoring**: Instant feedback with detailed explanations
 - **Professional UI**: Modern design with smooth animations
