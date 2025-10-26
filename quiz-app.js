@@ -134,6 +134,12 @@ class QuizApp {
             this.explanationHeading.textContent = this.t('explanation');
         }
         
+        // Update results heading
+        const resultsHeading = document.getElementById('results-heading');
+        if (resultsHeading) {
+            resultsHeading.textContent = this.t('results');
+        }
+        
         // Update loader text
         const loaderText = document.querySelector('#quiz-loader p');
         if (loaderText) loaderText.textContent = this.t('loading');

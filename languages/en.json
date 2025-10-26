@@ -7,7 +7,7 @@
   "progress": "Question {current} of {total}",
   "nextQuestion": "Next Question",
   "finishQuiz": "Finish Quiz",
-  "results": "Results",
+  "results": "Quiz Score",
   "score": "Score",
   "percentage": "Percentage",
   "restart": "Restart Quiz",
