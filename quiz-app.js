@@ -263,12 +263,14 @@ class QuizApp {
         // Hide feedback
         this.feedback.classList.add('hidden');
         
-        // Reset explanation scroll and setup scroll detection
-        const explanationContainer = document.querySelector('.explanation-container');
-        if (explanationContainer) {
-            explanationContainer.scrollTop = 0;
-            this.setupScrollDetection(explanationContainer);
-        }
+        // Reset explanation scroll and setup scroll detection after DOM update
+        setTimeout(() => {
+            const explanationContainer = document.querySelector('.explanation-container');
+            if (explanationContainer) {
+                explanationContainer.scrollTop = 0;
+                this.setupScrollDetection(explanationContainer);
+            }
+        }, 0);
     }
     
     // Process the user's selected answer, provide feedback, and show explanation.
@@ -304,11 +306,14 @@ class QuizApp {
         this.nextBtn.textContent = 
             this.currentQuestion + 1 === this.quizData.length ? this.t('finishQuiz') : this.t('nextQuestion');
         
-        // Reset explanation scroll
-        const explanationContainer = document.querySelector('.explanation-container');
-        if (explanationContainer) {
-            explanationContainer.scrollTop = 0;
-        }
+        // Reset explanation scroll and setup scroll detection after DOM update
+        setTimeout(() => {
+            const explanationContainer = document.querySelector('.explanation-container');
+            if (explanationContainer) {
+                explanationContainer.scrollTop = 0;
+                this.setupScrollDetection(explanationContainer);
+            }
+        }, 0);
     }
     
     findButtonLetter(button) {
