@@ -35,6 +35,7 @@ You can also load quizzes directly from a URL using these formats:
     index.html?file=https://raw.githubusercontent.com/user/repo/quiz.txt
 
 **Specify different language via lang=xx, for instance:**
+
     index.html?quiz=https://raw.githubusercontent.com/beamzer/EazyQuiz/refs/heads/main/quiz-files/dns-security.json&lang=nl
 
 Note: The quiz file must be publicly accessible and the server must allow CORS requests.
