@@ -28,6 +28,7 @@ class QuizApp {
         this.optionsContainer = document.getElementById('options-container');
         this.feedback = document.getElementById('feedback');
         this.explanation = document.getElementById('explanation');
+        this.explanationHeading = document.getElementById('explanation-heading');
         this.nextBtn = document.getElementById('next-btn');
         
         // Results elements
@@ -127,6 +128,11 @@ class QuizApp {
         if (restartBtn) restartBtn.textContent = this.t('restart');
         if (newQuizBtn) newQuizBtn.textContent = this.t('newQuiz');
         if (tryAgainBtn) tryAgainBtn.textContent = this.t('tryAgain');
+        
+        // Update explanation heading
+        if (this.explanationHeading) {
+            this.explanationHeading.textContent = this.t('explanation');
+        }
         
         // Update loader text
         const loaderText = document.querySelector('#quiz-loader p');
