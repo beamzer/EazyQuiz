@@ -266,6 +266,7 @@ h1 {
     opacity: 1;
 }
 
+.explanation-container.has-scrolled .scroll-indicator,
 .explanation-container.scrolled-to-bottom .scroll-indicator {
     opacity: 0;
 }

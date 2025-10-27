@@ -457,12 +457,18 @@ class QuizApp {
             
             // Add scroll detection class
             container.classList.add('has-scroll');
-            container.classList.remove('scrolled-to-bottom');
+            container.classList.remove('scrolled-to-bottom', 'has-scrolled');
             
             // Add scroll event listener
             const scrollHandler = () => {
+                const hasScrolled = container.scrollTop > 0;
                 const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 5;
-                
+
+                // Hide indicator as soon as user starts scrolling
+                if (hasScrolled) {
+                    container.classList.add('has-scrolled');
+                }
+
                 if (isAtBottom) {
                     container.classList.add('scrolled-to-bottom');
                 } else {
@@ -477,7 +483,7 @@ class QuizApp {
             
         } else {
             // Content fits, remove scroll classes
-            container.classList.remove('has-scroll', 'scrolled-to-bottom');
+            container.classList.remove('has-scroll', 'scrolled-to-bottom', 'has-scrolled');
         }
     }
     
