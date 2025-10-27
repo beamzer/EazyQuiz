@@ -470,11 +470,12 @@ class QuizApp {
             container.classList.add('has-scroll');
             
             // Add scroll event listener
+            const SCROLL_THRESHOLD = 15; // pixels scrolled before hiding indicator
             const scrollHandler = () => {
-                const hasScrolled = container.scrollTop > 0;
+                const hasScrolled = container.scrollTop > SCROLL_THRESHOLD;
                 const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 5;
 
-                // Hide indicator as soon as user starts scrolling
+                // Hide indicator after scrolling past threshold
                 if (hasScrolled) {
                     container.classList.add('has-scrolled');
                 }
