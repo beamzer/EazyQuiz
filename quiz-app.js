@@ -444,7 +444,10 @@ class QuizApp {
         if (existingIndicator) {
             existingIndicator.remove();
         }
-        
+
+        // Always reset scroll-related classes at the start
+        container.classList.remove('has-scroll', 'scrolled-to-bottom', 'has-scrolled');
+
         // Check if content is scrollable
         const isScrollable = container.scrollHeight > container.clientHeight;
         
@@ -457,7 +460,6 @@ class QuizApp {
             
             // Add scroll detection class
             container.classList.add('has-scroll');
-            container.classList.remove('scrolled-to-bottom', 'has-scrolled');
             
             // Add scroll event listener
             const scrollHandler = () => {
@@ -481,10 +483,8 @@ class QuizApp {
             container._scrollHandler = scrollHandler;
             container.addEventListener('scroll', scrollHandler);
             
-        } else {
-            // Content fits, remove scroll classes
-            container.classList.remove('has-scroll', 'scrolled-to-bottom', 'has-scrolled');
         }
+        // Note: scroll classes are already removed at the start of this function
     }
     
     nextQuestion() {
