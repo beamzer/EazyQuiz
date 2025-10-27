@@ -260,17 +260,25 @@ class QuizApp {
             this.optionsContainer.appendChild(button);
         });
         
-        // Hide feedback
+        // Hide feedback and clean up explanation container
         this.feedback.classList.add('hidden');
-        
-        // Reset explanation scroll and setup scroll detection after DOM update
-        setTimeout(() => {
-            const explanationContainer = document.querySelector('.explanation-container');
-            if (explanationContainer) {
-                explanationContainer.scrollTop = 0;
-                this.setupScrollDetection(explanationContainer);
+
+        // Clean up the explanation container when hiding feedback
+        const explanationContainer = document.querySelector('.explanation-container');
+        if (explanationContainer) {
+            explanationContainer.scrollTop = 0;
+            explanationContainer.classList.remove('has-scroll', 'scrolled-to-bottom', 'has-scrolled');
+            // Remove scroll event listener
+            if (explanationContainer._scrollHandler) {
+                explanationContainer.removeEventListener('scroll', explanationContainer._scrollHandler);
+                explanationContainer._scrollHandler = null;
             }
-        }, 0);
+            // Remove scroll indicator
+            const scrollIndicator = explanationContainer.querySelector('.scroll-indicator');
+            if (scrollIndicator) {
+                scrollIndicator.remove();
+            }
+        }
     }
     
     // Process the user's selected answer, provide feedback, and show explanation.
