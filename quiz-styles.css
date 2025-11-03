@@ -20,12 +20,30 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg);
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a0a 100%);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     padding: 0;
     line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Static background grid */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
 }
 
 /* Add a wrapper for the main content */
@@ -35,6 +53,8 @@ body {
     justify-content: center;
     align-items: flex-start;
     padding: 20px 0;
+    position: relative;
+    z-index: 10;
 }
 
 /* Update footer styles */
@@ -42,20 +62,29 @@ body {
     margin-top: auto;
     padding: 1rem 0;
     text-align: center;
-    border-top: 1px solid #e0e0e0;
-    color: var(--text-light);
+    border-top: 1px solid rgba(224, 224, 224, 0.3);
+    color: #b8f3b8;
     font-size: 0.9rem;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10;
 }
 
 .quiz-card {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.95);
     max-width: 900px;
     width: 95%;
     border-radius: 12px;
-    box-shadow: 0 8px 24px var(--shadow);
+    box-shadow: 
+        0 8px 24px var(--shadow),
+        0 0 30px rgba(0, 255, 65, 0.1);
     padding: 32px;
     margin: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+    position: relative;
+    z-index: 10;
 }
 
 .quiz-header {
