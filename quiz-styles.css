@@ -98,9 +98,21 @@ body::before {
 
 h1 {
     margin: 0;
-    color: var(--primary);
+    color: #00ff41;
     font-size: 28px;
     font-weight: 600;
+    text-shadow: 
+        0 0 10px #00ff41,
+        0 0 20px #00ff41,
+        0 0 30px #00ff41;
+    animation: glitch 3s infinite;
+}
+
+@keyframes glitch {
+    0%, 90%, 100% { transform: translateX(0); }
+    92% { transform: translateX(-2px); }
+    94% { transform: translateX(2px); }
+    96% { transform: translateX(-2px); }
 }
 
 .quiz-controls {
