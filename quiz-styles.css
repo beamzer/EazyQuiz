@@ -106,6 +106,10 @@ h1 {
         0 0 20px #00ff41,
         0 0 30px #00ff41;
     animation: glitch 3s infinite;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
 }
 
 @keyframes glitch {
