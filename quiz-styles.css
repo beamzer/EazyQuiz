@@ -1,19 +1,16 @@
-/* quiz-styles.css - Cyberpunk Theme */
+/* quiz-styles.css */
 
 :root {
-    --primary: #00ff41;
-    --accent: #00ffff;  
-    --success: #00ff41;
-    --error: #ff0040;
-    --warning: #ffff00;
-    --bg: #0a0a0a;
-    --bg-secondary: #1a0a2e;
-    --text: #00ff41;
-    --text-light: #b8f3b8;
-    --text-secondary: #ff00ff;
-    --border: #00ff41;
-    --shadow: rgba(0, 255, 65, 0.3);
-    --card-bg: rgba(10, 10, 30, 0.85);
+    --primary: #0d47a1;
+    --accent: #1976d2;  
+    --success: #388e3c;
+    --error: #d32f2f;
+    --warning: #f57c00;
+    --bg: #f5f5f5;
+    --text: #333;
+    --text-light: #666;
+    --border: #e1e5e9;
+    --shadow: rgba(0, 0, 0, 0.12);
 }
 
 * {
@@ -22,55 +19,13 @@
 
 body {
     margin: 0;
-    font-family: 'Courier New', monospace;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a0a 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     padding: 0;
     line-height: 1.6;
-    color: var(--text);
-    position: relative;
-    overflow-x: hidden;
-}
-
-/* Animated background grid */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: gridMove 20s linear infinite;
-    pointer-events: none;
-    z-index: -1;
-}
-
-@keyframes gridMove {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(50px); }
-}
-
-/* Floating particles */
-.particle {
-    position: fixed;
-    width: 2px;
-    height: 2px;
-    background: #00ff41;
-    border-radius: 50%;
-    animation: float 15s infinite;
-    opacity: 0.6;
-    z-index: -1;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-100vh) translateX(100px); }
 }
 
 /* Add a wrapper for the main content */
@@ -80,8 +35,6 @@ body::before {
     justify-content: center;
     align-items: flex-start;
     padding: 20px 0;
-    position: relative;
-    z-index: 10;
 }
 
 /* Update footer styles */
@@ -89,50 +42,20 @@ body::before {
     margin-top: auto;
     padding: 1rem 0;
     text-align: center;
-    border-top: 2px solid var(--border);
+    border-top: 1px solid #e0e0e0;
     color: var(--text-light);
     font-size: 0.9rem;
-    background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    background: #fff;
 }
 
 .quiz-card {
-    background: var(--card-bg);
+    background: #fff;
     max-width: 900px;
     width: 95%;
-    border-radius: 15px;
-    border: 2px solid var(--border);
-    box-shadow: 
-        0 0 30px var(--shadow),
-        inset 0 0 50px rgba(0, 255, 65, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px var(--shadow);
     padding: 32px;
     margin: 20px;
-    position: relative;
-    backdrop-filter: blur(10px);
-}
-
-/* Cyberpunk corner decorations */
-.quiz-card::before,
-.quiz-card::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--text-secondary);
-}
-
-.quiz-card::before {
-    top: -2px;
-    left: -2px;
-    border-right: none;
-    border-bottom: none;
-}
-
-.quiz-card::after {
-    bottom: -2px;
-    right: -2px;
-    border-left: none;
-    border-top: none;
 }
 
 .quiz-header {
@@ -149,18 +72,6 @@ h1 {
     color: var(--primary);
     font-size: 28px;
     font-weight: 600;
-    text-shadow: 
-        0 0 10px var(--primary),
-        0 0 20px var(--primary),
-        0 0 30px var(--primary);
-    animation: glitch 3s infinite;
-}
-
-@keyframes glitch {
-    0%, 90%, 100% { transform: translateX(0); }
-    92% { transform: translateX(-2px); }
-    94% { transform: translateX(2px); }
-    96% { transform: translateX(-2px); }
 }
 
 .quiz-controls {
@@ -174,44 +85,23 @@ h1 {
 }
 
 .file-btn {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-    color: #0a0a0a;
-    border: 2px solid var(--primary);
+    background: var(--accent);
+    color: white;
+    border: none;
     padding: 12px 24px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 700;
-    font-family: 'Courier New', monospace;
+    font-weight: 500;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-}
-
-.file-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s;
 }
 
 .file-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 
-        0 0 30px var(--shadow),
-        0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-.file-btn:hover::before {
-    left: 100%;
+    background: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(13, 71, 161, 0.3);
 }
 
 #progress {
@@ -221,7 +111,6 @@ h1 {
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    text-shadow: 0 0 10px var(--accent);
 }
 
 .question-title {
@@ -229,14 +118,13 @@ h1 {
     margin-bottom: 16px;
     font-size: 20px;
     font-weight: 600;
-    text-shadow: 0 0 10px var(--primary);
 }
 
 .question-text {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 24px;
-    color: #000000 !important;
+    color: var(--text);
 }
 
 .options-container {
@@ -249,42 +137,35 @@ h1 {
 .btn-option {
     padding: 16px 20px;
     border: 2px solid var(--border);
-    background: rgba(10, 10, 30, 0.7);
+    background: #fff;
     cursor: pointer;
     border-radius: 8px;
     text-align: left;
     transition: all 0.3s ease;
     font-size: 15px;
-    color: var(--text-light);
-    font-family: 'Courier New', monospace;
-    backdrop-filter: blur(5px);
+    color: var(--text);
+    font-family: inherit;
 }
 
 .btn-option:hover:not(.disabled) {
-    background: rgba(0, 255, 65, 0.1);
+    background: #f8f9fa;
     border-color: var(--accent);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--shadow);
-    color: var(--text);
-    text-shadow: 0 0 5px var(--text);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.15);
 }
 
 .btn-option.correct {
     background: var(--success);
-    color: #0a0a0a;
+    color: #fff;
     border-color: var(--success);
-    box-shadow: 0 4px 12px rgba(0, 255, 65, 0.5);
-    text-shadow: none;
-    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(56, 142, 60, 0.3);
 }
 
 .btn-option.wrong {
     background: var(--error);
     color: #fff;
     border-color: var(--error);
-    box-shadow: 0 4px 12px rgba(255, 0, 64, 0.5);
-    text-shadow: none;
-    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
 }
 
 .btn-option.disabled {
@@ -293,7 +174,7 @@ h1 {
 }
 
 .feedback {
-    border-top: 3px solid var(--border);
+    border-top: 3px solid #e0e0e0;
     padding-top: 24px;
     margin-top: 24px;
     animation: fadeIn 0.5s ease-in;
@@ -309,42 +190,37 @@ h1 {
     margin-bottom: 16px;
     font-size: 18px;
     font-weight: 600;
-    text-shadow: 0 0 10px var(--primary);
 }
 
 .explanation-container {
     max-height: 350px;
     overflow-y: auto;
-    border: 2px solid var(--border);
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 20px;
-    background: rgba(10, 10, 30, 0.7);
+    background: #fafbfc;
     margin-bottom: 20px;
     scroll-behavior: smooth;
     line-height: 1.7;
     position: relative;
-    backdrop-filter: blur(5px);
-    color: #ffffff !important;
 }
 
 .explanation-container::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .explanation-container::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
+    background: #f1f1f1;
+    border-radius: 3px;
 }
 
 .explanation-container::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 4px;
-    transition: background 0.3s ease;
+    background: #c1c1c1;
+    border-radius: 3px;
 }
 
 .explanation-container::-webkit-scrollbar-thumb:hover {
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
+    background: #a1a1a1;
 }
 
 /* Scroll indicator for explanation container */
@@ -355,7 +231,7 @@ h1 {
     left: 0;
     right: 0;
     height: 20px;
-    background: linear-gradient(transparent, rgba(10, 10, 30, 0.9));
+    background: linear-gradient(transparent, rgba(250, 251, 252, 0.9));
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -375,17 +251,15 @@ h1 {
     bottom: 5px;
     right: 15px;
     background: var(--accent);
-    color: #0a0a0a;
+    color: white;
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 500;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: 10;
-    text-shadow: none;
-    box-shadow: 0 0 10px var(--accent);
 }
 
 .explanation-container.has-scroll .scroll-indicator {
@@ -420,7 +294,7 @@ h1 {
 
 #explanation {
     line-height: 1.7;
-    color: #ffffff !important;
+    color: #444;
 }
 
 /* Style for bullet points in explanations */
@@ -472,52 +346,29 @@ h1 {
 
 .btn {
     padding: 14px 28px;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
-    color: #0a0a0a;
-    border: 2px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 500;
     transition: all 0.3s ease;
-    font-family: 'Courier New', monospace;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s;
+    font-family: inherit;
 }
 
 .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 
-        0 0 30px var(--shadow),
-        0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-.btn:hover::before {
-    left: 100%;
+    background: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(13, 71, 161, 0.3);
 }
 
 .btn-secondary {
-    background: linear-gradient(135deg, var(--text-secondary) 0%, #8a2be2 100%);
-    border-color: var(--text-secondary);
+    background: var(--text-light);
 }
 
 .btn-secondary:hover {
-    box-shadow: 
-        0 0 30px rgba(255, 0, 255, 0.3),
-        0 8px 20px rgba(0, 0, 0, 0.4);
+    background: var(--text);
 }
 
 .hidden {
@@ -533,17 +384,14 @@ h1 {
     color: var(--primary);
     margin-bottom: 24px;
     font-size: 24px;
-    text-shadow: 0 0 10px var(--primary);
 }
 
 .score-display {
     margin: 24px 0;
     padding: 24px;
-    background: rgba(10, 10, 30, 0.7);
+    background: #f8f9fa;
     border-radius: 12px;
-    border: 2px solid var(--border);
-    backdrop-filter: blur(5px);
-    box-shadow: 0 0 20px var(--shadow);
+    border: 2px solid #e9ecef;
 }
 
 .score-display div {
@@ -556,14 +404,12 @@ h1 {
     font-weight: 700;
     color: var(--primary);
     margin-bottom: 8px;
-    text-shadow: 0 0 15px var(--primary);
 }
 
 #score-percentage {
     font-size: 20px;
     font-weight: 600;
     color: var(--accent);
-    text-shadow: 0 0 10px var(--accent);
 }
 
 #score-message {
@@ -582,20 +428,16 @@ h1 {
 }
 
 .info-section {
-    background: rgba(10, 10, 30, 0.7);
-    border: 2px solid var(--border);
+    background: #f8f9fa;
     border-radius: 8px;
     padding: 24px;
     margin-bottom: 20px;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 0 20px var(--shadow);
 }
 
 .info-section h2 {
     color: var(--primary);
     margin-bottom: 16px;
     font-size: 20px;
-    text-shadow: 0 0 10px var(--primary);
 }
 
 .info-section ul {
@@ -628,15 +470,13 @@ summary {
 }
 
 .format-examples pre {
-    background: rgba(0, 0, 0, 0.8);
-    color: var(--text);
-    border: 1px solid var(--border);
+    background: #2d3748;
+    color: #e2e8f0;
     padding: 16px;
     border-radius: 6px;
     overflow-x: auto;
     font-size: 14px;
     line-height: 1.4;
-    box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.1);
 }
 
 .loader {
@@ -645,14 +485,13 @@ summary {
 }
 
 .loader-spinner {
-    border: 4px solid rgba(0, 255, 65, 0.2);
+    border: 4px solid #f3f3f3;
     border-top: 4px solid var(--accent);
     border-radius: 50%;
     width: 40px;
     height: 40px;
     animation: spin 1s linear infinite;
     margin: 0 auto 16px;
-    box-shadow: 0 0 20px var(--accent);
 }
 
 @keyframes spin {
@@ -661,23 +500,20 @@ summary {
 }
 
 .error {
-    background: rgba(255, 0, 64, 0.1);
+    background: #ffebee;
     border: 2px solid var(--error);
     border-radius: 8px;
     padding: 24px;
     text-align: center;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 0 20px rgba(255, 0, 64, 0.3);
 }
 
 .error h3 {
     color: var(--error);
     margin-bottom: 12px;
-    text-shadow: 0 0 10px var(--error);
 }
 
 .error p {
-    color: var(--text-light);
+    color: var(--text);
     margin-bottom: 20px;
 }
 
@@ -702,11 +538,6 @@ summary {
 
 .github-link:hover svg {
     transform: scale(1.1);
-}
-
-/* Initialize particles when page loads */
-.particles-initialized .particle {
-    animation-play-state: running;
 }
 
 @media (max-width: 768px) {
@@ -843,24 +674,6 @@ summary {
         font-size: 14px;
     }
 }
-
-/* Particle initialization - add this script to your HTML */
-/*
-<script>
-// Initialize floating particles
-document.addEventListener('DOMContentLoaded', function() {
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-        document.body.appendChild(particle);
-    }
-    document.body.classList.add('particles-initialized');
-});
-</script>
-*/
 
 /* URL Quiz Feature Styles - outside media query */
 .url-quiz-info {
