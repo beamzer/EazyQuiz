@@ -236,7 +236,7 @@ h1 {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 24px;
-    color: var(--text-light);
+    color: #000000;
 }
 
 .options-container {
@@ -324,7 +324,7 @@ h1 {
     line-height: 1.7;
     position: relative;
     backdrop-filter: blur(5px);
-    color: var(--text-light);
+    color: #ffffff;
 }
 
 .explanation-container::-webkit-scrollbar {
