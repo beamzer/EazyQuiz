@@ -22,5 +22,7 @@
     "good": "Good work! You have solid knowledge with room for improvement. 👍",
     "fair": "Not bad! Review the explanations to strengthen your understanding. 📖",
     "poor": "Keep studying! Review the explanations and try again to improve your knowledge. 📚"
-  }
+  },
+  "prizeDraw": "Enter Prize Draw",
+  "prizeDrawDescription": "Want a chance to win? Click below to enter our prize draw!"
 }

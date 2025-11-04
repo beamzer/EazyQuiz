@@ -8,6 +8,7 @@ class QuizApp {
         this.score = 0;             // User's running score
         this.language = 'en';       // Default language
         this.translations = {};     // Language translations
+        this.showPrizeDraw = false; // Default to not showing prize draw
         this.initializeElements();
         this.attachEventListeners();
         this.initializeLanguage();
@@ -56,12 +57,18 @@ class QuizApp {
 
     // Initialize language support
     async initializeLanguage() {
-        // Check URL parameters for language
+        // Check URL parameters for language and prize draw
         const urlParams = new URLSearchParams(window.location.search);
         const langParam = urlParams.get('lang') || urlParams.get('language');
+        const prizeDrawParam = urlParams.get('prizeDraw') || urlParams.get('prize');
         
         if (langParam) {
             this.language = langParam.toLowerCase();
+        }
+        
+        // Set prize draw visibility (default to true if not specified)
+        if (prizeDrawParam !== null) {
+            this.showPrizeDraw = prizeDrawParam.toLowerCase() === 'true';
         }
         
         // Load language file
@@ -530,8 +537,89 @@ class QuizApp {
         }
         
         this.scoreMessage.textContent = this.t(messageKey);
+        
+        // Add prize draw section
+        this.addPrizeDrawSection();
     }
     
+    // Add prize draw section to results
+    addPrizeDrawSection() {
+        // Check if prize draw should be shown
+        if (!this.showPrizeDraw) {
+            return; // Prize draw is disabled
+        }
+        
+        // Check if prize draw section already exists
+        let prizeDrawSection = document.getElementById('prize-draw-section');
+        if (prizeDrawSection) {
+            return; // Already exists
+        }
+        
+        // Create prize draw section
+        prizeDrawSection = document.createElement('div');
+        prizeDrawSection.id = 'prize-draw-section';
+        prizeDrawSection.style.cssText = `
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        `;
+        
+        // Create description
+        const description = document.createElement('p');
+        description.textContent = this.t('prizeDrawDescription');
+        description.style.cssText = `
+            margin: 0 0 15px 0;
+            font-size: 16px;
+        `;
+        
+        // Create prize draw button
+        const prizeDrawBtn = document.createElement('button');
+        prizeDrawBtn.textContent = this.t('prizeDraw');
+        prizeDrawBtn.style.cssText = `
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        `;
+        
+        // Add hover effect
+        prizeDrawBtn.addEventListener('mouseenter', () => {
+            prizeDrawBtn.style.transform = 'scale(1.05)';
+        });
+        prizeDrawBtn.addEventListener('mouseleave', () => {
+            prizeDrawBtn.style.transform = 'scale(1)';
+        });
+        
+        // Add click handler for mailto
+        prizeDrawBtn.addEventListener('click', () => {
+            this.openPrizeDrawEmail();
+        });
+        
+        // Assemble the section
+        prizeDrawSection.appendChild(description);
+        prizeDrawSection.appendChild(prizeDrawBtn);
+        
+        // Add to results section
+        this.results.appendChild(prizeDrawSection);
+    }
+    
+    // Open email client for prize draw entry
+    openPrizeDrawEmail() {
+        const subject = 'cyberpubquiz completed';
+        const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}`;
+        
+        // Open email client
+        window.location.href = mailtoUrl;
+    }
+
     restartQuiz() {
         this.currentQuestion = 0;
         this.score = 0;
@@ -589,7 +677,7 @@ class QuizApp {
 // Loads quizzes directly from external URLs via URL parameters.
 class URLQuizLoader {
     constructor(quizApp) {
-        this.supportedParams = ['quiz', 'url', 'file', 'lang', 'language'];
+        this.supportedParams = ['quiz', 'url', 'file', 'lang', 'language', 'prizeDraw', 'prize'];
         this.quizApp = quizApp;
     }
 
@@ -802,7 +890,7 @@ class URLQuizLoader {
     }
 
     // Generate shareable URL
-    static generateShareableURL(quizUrl, title = null, language = null) {
+    static generateShareableURL(quizUrl, title = null, language = null, showPrizeDraw = true) {
         const baseUrl = window.location.origin + window.location.pathname;
         const params = new URLSearchParams();
         
@@ -812,6 +900,9 @@ class URLQuizLoader {
         }
         if (language && language !== 'en') {
             params.set('lang', language);
+        }
+        if (!showPrizeDraw) {
+            params.set('prizeDraw', 'false');
         }
         
         return `${baseUrl}?${params.toString()}`;

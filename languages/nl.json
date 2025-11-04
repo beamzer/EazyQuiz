@@ -22,5 +22,7 @@
     "good": "Goed werk! Je hebt solide kennis met ruimte voor verbetering. 👍",
     "fair": "Niet slecht! Bekijk de toelichtingen om je begrip te versterken. 📖",
     "poor": "Blijf studeren! Bekijk de toelichtingen en probeer opnieuw om je kennis te verbeteren. 📚"
-  }
+  },
+  "prizeDraw": "Deelnemen aan Prijstrekking",
+  "prizeDrawDescription": "Kans op een prijs? Klik hieronder om deel te nemen aan onze prijstrekking!"
 }
