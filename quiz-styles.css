@@ -835,3 +835,31 @@ summary {
 .landing .btn {
     margin-top: 16px;
 }
+
+/* Next question button: indigo box, same bold style as the explanation heading */
+#next-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 18px 8px 14px;
+    min-height: 44px;
+    background: #3949ab;
+    color: #fff;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#next-btn::before {
+    content: '\1F449'; /* backhand index pointing right */
+    font-size: 22px;
+    line-height: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    #next-btn {
+        background: #9fa8da;
+        color: #0b1320;
+    }
+}
