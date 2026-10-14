@@ -296,6 +296,29 @@ class QuizApp {
         this.feedback.classList.add('hidden');
     }
     
+    // Small confetti burst from a correct answer (skipped for reduced motion)
+    celebrate(button) {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+        const colors = ['#00778a', '#f07a14', '#e30613', '#1b7a3a', '#003741', '#f2c200'];
+        const pieces = [];
+        for (let i = 0; i < 18; i++) {
+            const piece = document.createElement('span');
+            piece.className = 'confetti-piece';
+            piece.setAttribute('aria-hidden', 'true');
+            const angle = (-90 + (Math.random() - 0.5) * 160) * Math.PI / 180;
+            const distance = 60 + Math.random() * 90;
+            piece.style.background = colors[i % colors.length];
+            piece.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+            piece.style.setProperty('--dy', `${Math.sin(angle) * distance + 30}px`);
+            piece.style.setProperty('--rot', `${Math.round((Math.random() - 0.5) * 720)}deg`);
+            button.appendChild(piece);
+            pieces.push(piece);
+        }
+        setTimeout(() => pieces.forEach(p => p.remove()), 1000);
+    }
+
     // Process the user's selected answer, provide feedback, and show explanation.
     handleAnswer(selectedButton, selectedAnswer, correctAnswer, explanation) {
         const isCorrect = selectedAnswer === correctAnswer;
@@ -316,6 +339,7 @@ class QuizApp {
             selectedButton.classList.add('wrong');
         } else {
             this.score++;
+            this.celebrate(selectedButton);
         }
         
         // Show explanation
