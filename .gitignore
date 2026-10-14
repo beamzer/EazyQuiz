@@ -1,1 +1,5 @@
 .aider*
+
+# Prize draw registrations (personal data)
+data/*.sqlite*
+data/*.csv

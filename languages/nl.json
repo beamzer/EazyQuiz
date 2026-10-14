@@ -24,5 +24,12 @@
     "poor": "Blijf studeren! Bekijk de toelichtingen en probeer opnieuw om je kennis te verbeteren. 📚"
   },
   "prizeDraw": "Deelnemen aan Prijstrekking",
-  "prizeDrawDescription": "Kans op een prijs? Klik hieronder om deel te nemen aan onze prijstrekking!"
+  "prizeDrawDescription": "Kans op een prijs? Vul je e-mailadres in om deel te nemen aan onze prijstrekking!",
+  "noExplanation": "Geen toelichting beschikbaar.",
+  "prizeDrawEmail": "Je e-mailadres",
+  "prizeDrawEmailPlaceholder": "naam@bedrijf.nl",
+  "prizeDrawDone": "Bedankt! Je doet mee aan de prijstrekking.",
+  "prizeDrawDuplicate": "Dit e-mailadres is al geregistreerd voor de prijstrekking.",
+  "prizeDrawInvalid": "Vul een geldig e-mailadres in.",
+  "prizeDrawError": "Registreren is mislukt. Probeer het later opnieuw."
 }

@@ -28,17 +28,30 @@ Example screenshot:
 
 ## :star: Share quizzes directly via URL!
 
-You can also load quizzes directly from a URL using these formats:
+You can also load a quiz directly via the URL. For security the quiz file must be hosted on the **same server** as `index.html` (relative path or full URL on the same origin):
 
-    index.html?quiz=https://raw.githubusercontent.com/beamzer/EazyQuiz/refs/heads/main/sample-files/dns-security.json&title=DNS%20Security%20Expert%20Quiz
-    index.html?url=https://example.com/quiz.xml&title=My%20Quiz
-    index.html?file=https://raw.githubusercontent.com/user/repo/quiz.txt
+    index.html?quiz=quiz-files/dns-security.json&title=DNS%20Security%20Expert%20Quiz
+    index.html?quiz=quiz-files/cybersecurity.xml
+    index.html?quiz=quiz-files/tcp_ip_easy.txt
 
-**Specify different language via lang=xx, for instance:**
+**Specify a different language via lang=xx, for instance:**
 
-    index.html?quiz=https://raw.githubusercontent.com/beamzer/EazyQuiz/refs/heads/main/quiz-files/dns-security.json&lang=nl
+    index.html?quiz=quiz-files/dns-security.json&lang=nl
 
-Note: The quiz file must be publicly accessible and the server must allow CORS requests.
+## 🎁 Prize draw
+
+Add `&prize=true` to the URL to show an e-mail registration form after the quiz:
+
+    index.html?quiz=quiz-files/security-awareness.json&lang=nl&prize=true
+
+Entries are posted to `register.php` and stored in `data/prizedraw.sqlite` (one entry per e-mail address and quiz; a second attempt gets a "already registered" message).
+
+Requirements and notes:
+
+- PHP with `pdo_sqlite`; the `data/` directory must be writable by the web server user.
+- Set `ALLOWED_DOMAINS` in `register.php` to restrict entries to company addresses.
+- `.htaccess` files deny web access to `data/` and add security headers (Apache, `mod_headers`). With nginx, add the equivalent rules yourself.
+- The score is calculated in the browser, so it cannot be fully trusted; use it to pick participants, not as proof.
 
 ## 💡 Easy: let AI generate the quiz for you
 You can generate a quiz about a certain topic with the use of AI, this [AI Prompt](https://github.com/beamzer/EazyQuiz/blob/main/AI-prompt.md) helps to get to quiz file directly in the right format (disclaimer: your mileage may vary depending on the model used.).

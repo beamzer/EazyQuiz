@@ -9,6 +9,9 @@ class QuizApp {
         this.language = 'en';       // Default language
         this.translations = {};     // Language translations
         this.showPrizeDraw = false; // Default to not showing prize draw
+        this.quizName = '';         // Identifier of the loaded quiz (sent with prize draw entry)
+        this.registered = false;    // True once this browser registered for the prize draw
+        this.registerEndpoint = 'register.php';
         this.initializeElements();
         this.attachEventListeners();
         this.initializeLanguage();
@@ -62,7 +65,7 @@ class QuizApp {
         const langParam = urlParams.get('lang') || urlParams.get('language');
         const prizeDrawParam = urlParams.get('prizeDraw') || urlParams.get('prize');
         
-        if (langParam) {
+        if (langParam && /^[a-z]{2}(-[a-z]{2})?$/i.test(langParam)) {
             this.language = langParam.toLowerCase();
         }
         
@@ -102,26 +105,17 @@ class QuizApp {
         }
     }
 
-    // Get translated text
+    // Get translated text; supports nested keys (scoreMessages.excellent) and {placeholders}
     t(key, replacements = {}) {
-        let text = this.translations[key] || key;
-        
-        // Handle nested keys like scoreMessages.excellent
-        if (key.includes('.')) {
-            const keys = key.split('.');
-            let current = this.translations;
-            for (const k of keys) {
-                current = current[k];
-                if (!current) break;
-            }
-            text = current || key;
-        }
-        
-        // Replace placeholders
+        let text = key.split('.').reduce(
+            (obj, k) => (obj && typeof obj === 'object' ? obj[k] : undefined),
+            this.translations
+        );
+        if (typeof text !== 'string') text = key;
+
         Object.keys(replacements).forEach(placeholder => {
-            text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+            text = text.split(`{${placeholder}}`).join(replacements[placeholder]);
         });
-        
         return text;
     }
 
@@ -152,41 +146,53 @@ class QuizApp {
         if (loaderText) loaderText.textContent = this.t('loading');
     }
 
-    // Sanitize raw HTML/markdown to prevent XSS while allowing safe formatting tags.
+    // Sanitize HTML to prevent XSS while allowing safe formatting tags.
+    // Parsed with DOMParser so nothing (e.g. <img onerror>) executes while sanitizing.
     sanitizeHTML(html) {
-        const allowedTags = ['strong', 'em', 'u', 'del', 'code', 'br', 'li', 'ol', 'ul', 'h2', 'h3', 'h4', 'a', 'b'];
-        const allowedAttributes = {
-            'a': ['href', 'target', 'rel']
-        };
-        
-        // Create a temporary div to parse HTML
-        const temp = document.createElement('div');
-        temp.innerHTML = html;
-        
-        // Remove script tags and other dangerous elements
-        const scripts = temp.querySelectorAll('script, iframe, object, embed, style');
-        scripts.forEach(script => script.remove());
-        
-        // Remove any tags not in allowedTags
-        const allElements = temp.querySelectorAll('*');
-        allElements.forEach(element => {
-            if (!allowedTags.includes(element.tagName.toLowerCase())) {
-                // Replace the element with its text content
-                element.replaceWith(document.createTextNode(element.textContent));
-            } else {
-                // Remove any attributes not in allowedAttributes
-                const tagName = element.tagName.toLowerCase();
-                const allowedAttrs = allowedAttributes[tagName] || [];
-                const attrs = Array.from(element.attributes);
-                attrs.forEach(attr => {
-                    if (!allowedAttrs.includes(attr.name)) {
-                        element.removeAttribute(attr.name);
+        const allowedTags = new Set(['strong', 'em', 'u', 'del', 'code', 'br', 'li', 'ol', 'ul', 'h2', 'h3', 'h4', 'a', 'b']);
+        const doc = new DOMParser().parseFromString(`<body>${html}</body>`, 'text/html');
+
+        const clean = (node) => {
+            Array.from(node.childNodes).forEach(child => {
+                if (child.nodeType === Node.TEXT_NODE) return;
+                if (child.nodeType !== Node.ELEMENT_NODE) {
+                    child.remove();
+                    return;
+                }
+                const tag = child.tagName.toLowerCase();
+                if (!allowedTags.has(tag)) {
+                    // Drop the element; keep only its text (dangerous elements: drop entirely)
+                    const dangerous = ['script', 'style', 'iframe', 'object', 'embed', 'template', 'noscript'];
+                    child.replaceWith(dangerous.includes(tag)
+                        ? document.createTextNode('')
+                        : document.createTextNode(child.textContent));
+                    return;
+                }
+                Array.from(child.attributes).forEach(attr => {
+                    if (tag !== 'a' || attr.name !== 'href') {
+                        child.removeAttribute(attr.name);
                     }
                 });
-            }
-        });
-        
-        return temp.innerHTML;
+                if (tag === 'a') {
+                    const href = child.getAttribute('href') || '';
+                    let safe = false;
+                    try {
+                        const u = new URL(href, window.location.href);
+                        safe = ['http:', 'https:', 'mailto:'].includes(u.protocol);
+                    } catch (_) { /* invalid URL */ }
+                    if (safe) {
+                        child.setAttribute('target', '_blank');
+                        child.setAttribute('rel', 'noopener noreferrer');
+                    } else {
+                        child.removeAttribute('href');
+                    }
+                }
+                clean(child);
+            });
+        };
+
+        clean(doc.body);
+        return doc.body.innerHTML;
     }
     
     // Handle local file upload; parse and validate the selected quiz file.
@@ -213,6 +219,7 @@ class QuizApp {
         
         // Derive a friendly title from the filename
         const baseName = fileName.replace(/\.[^/.]+$/, "");
+        this.quizName = baseName;
         this.quizTitle.textContent = this.formatTitle(baseName);
 
         // Hide the Load Quiz button when quiz is active
@@ -234,6 +241,16 @@ class QuizApp {
             + ' Quiz';
     }
     
+    // Fisher-Yates shuffle; returns a new array
+    shuffle(items) {
+        const result = [...items];
+        for (let i = result.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+        return result;
+    }
+
     // Display the current question and its multiple-choice options.
     renderQuestion() {
         if (this.currentQuestion >= this.quizData.length) {
@@ -254,15 +271,14 @@ class QuizApp {
         // Clear options container
         this.optionsContainer.innerHTML = '';
         
-        // Render options with markup formatting
-        q.options.forEach(option => {
-            const letter = option.charAt(0);
-            const text = option.substring(3);
+        // Render options in random order; the letters stay attached to the options
+        this.shuffle(q.options).forEach(option => {
             const button = document.createElement('button');
             button.className = 'btn-option';
-            button.innerHTML = this.formatMarkup(text); // Changed from textContent to innerHTML
-            button.addEventListener('click', () => 
-                this.handleAnswer(button, letter, q.correct_answer, q.explanation)
+            button.dataset.key = option.key;
+            button.innerHTML = this.formatMarkup(option.text);
+            button.addEventListener('click', () =>
+                this.handleAnswer(button, option.key, q.correct_answer, q.explanation)
             );
             this.optionsContainer.appendChild(button);
         });
@@ -290,7 +306,7 @@ class QuizApp {
     
     // Process the user's selected answer, provide feedback, and show explanation.
     handleAnswer(selectedButton, selectedAnswer, correctAnswer, explanation) {
-        const isCorrect = selectedAnswer.toLowerCase() === correctAnswer.toLowerCase();
+        const isCorrect = selectedAnswer === correctAnswer;
         
         // Disable all option buttons to prevent multiple selections
         const allButtons = this.optionsContainer.querySelectorAll('.btn-option');
@@ -298,10 +314,7 @@ class QuizApp {
             button.classList.add('disabled');
             button.disabled = true;
             
-            // Find the letter for this button
-            const buttonLetter = this.findButtonLetter(button);
-            
-            if (buttonLetter.toLowerCase() === correctAnswer.toLowerCase()) {
+            if (button.dataset.key === correctAnswer) {
                 button.classList.add('correct');
             }
         });
@@ -314,7 +327,7 @@ class QuizApp {
         }
         
         // Show explanation
-        this.explanation.innerHTML = this.formatExplanation(explanation);
+        this.explanation.innerHTML = this.formatExplanation(explanation || this.t('noExplanation'));
         this.feedback.classList.remove('hidden');
         
         // Update next button text
@@ -329,19 +342,6 @@ class QuizApp {
                 this.setupScrollDetection(explanationContainer);
             }
         }, 0);
-    }
-    
-    findButtonLetter(button) {
-        const currentQ = this.quizData[this.currentQuestion];
-        const buttonText = button.textContent; // textContent strips HTML tags
-        for (const option of currentQ.options) {
-            const optionText = option.substring(3);
-            // Compare the plain text versions
-            if (optionText === buttonText) {
-                return option.charAt(0);
-            }
-        }
-        return '';
     }
     
     formatMarkup(text) {
@@ -542,82 +542,106 @@ class QuizApp {
         this.addPrizeDrawSection();
     }
     
-    // Add prize draw section to results
+    // Add prize draw registration form to the results
     addPrizeDrawSection() {
-        // Check if prize draw should be shown
-        if (!this.showPrizeDraw) {
-            return; // Prize draw is disabled
+        if (!this.showPrizeDraw || document.getElementById('prize-draw-section')) {
+            return;
         }
-        
-        // Check if prize draw section already exists
-        let prizeDrawSection = document.getElementById('prize-draw-section');
-        if (prizeDrawSection) {
-            return; // Already exists
-        }
-        
-        // Create prize draw section
-        prizeDrawSection = document.createElement('div');
-        prizeDrawSection.id = 'prize-draw-section';
-        prizeDrawSection.style.cssText = `
-            margin-top: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-        `;
-        
-        // Create description
+
+        const section = document.createElement('div');
+        section.id = 'prize-draw-section';
+        section.className = 'prize-draw';
+
         const description = document.createElement('p');
         description.textContent = this.t('prizeDrawDescription');
-        description.style.cssText = `
-            margin: 0 0 15px 0;
-            font-size: 16px;
-        `;
-        
-        // Create prize draw button
-        const prizeDrawBtn = document.createElement('button');
-        prizeDrawBtn.textContent = this.t('prizeDraw');
-        prizeDrawBtn.style.cssText = `
-            background: white;
-            color: #667eea;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        `;
-        
-        // Add hover effect
-        prizeDrawBtn.addEventListener('mouseenter', () => {
-            prizeDrawBtn.style.transform = 'scale(1.05)';
+        section.appendChild(description);
+
+        if (this.registered || this.hasRegisteredBefore()) {
+            this.registered = true;
+            description.textContent = this.t('prizeDrawDone');
+            this.results.appendChild(section);
+            return;
+        }
+
+        const form = document.createElement('form');
+        form.noValidate = false;
+
+        const input = document.createElement('input');
+        input.type = 'email';
+        input.required = true;
+        input.autocomplete = 'email';
+        input.id = 'prize-email';
+        input.placeholder = this.t('prizeDrawEmailPlaceholder');
+        input.setAttribute('aria-label', this.t('prizeDrawEmail'));
+
+        const submit = document.createElement('button');
+        submit.type = 'submit';
+        submit.className = 'btn';
+        submit.textContent = this.t('prizeDraw');
+
+        const status = document.createElement('p');
+        status.className = 'prize-status';
+        status.setAttribute('role', 'status');
+        status.setAttribute('aria-live', 'polite');
+
+        form.append(input, submit);
+        section.append(form, status);
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submit.disabled = true;
+            status.textContent = '';
+            const result = await this.registerForPrizeDraw(input.value.trim());
+            if (result === 'ok' || result === 'duplicate') {
+                this.registered = true;
+                this.rememberRegistration();
+                form.remove();
+                description.textContent = this.t(result === 'ok' ? 'prizeDrawDone' : 'prizeDrawDuplicate');
+            } else {
+                status.textContent = this.t(result === 'invalid' ? 'prizeDrawInvalid' : 'prizeDrawError');
+                submit.disabled = false;
+            }
         });
-        prizeDrawBtn.addEventListener('mouseleave', () => {
-            prizeDrawBtn.style.transform = 'scale(1)';
-        });
-        
-        // Add click handler for mailto
-        prizeDrawBtn.addEventListener('click', () => {
-            this.openPrizeDrawEmail();
-        });
-        
-        // Assemble the section
-        prizeDrawSection.appendChild(description);
-        prizeDrawSection.appendChild(prizeDrawBtn);
-        
-        // Add to results section
-        this.results.appendChild(prizeDrawSection);
+
+        this.results.appendChild(section);
     }
-    
-    // Open email client for prize draw entry
-    openPrizeDrawEmail() {
-        const subject = 'cyberpubquiz completed';
-        const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}`;
-        
-        // Open email client
-        window.location.href = mailtoUrl;
+
+    // POST the entry to the registration endpoint.
+    // Returns 'ok' | 'duplicate' | 'invalid' | 'error'
+    async registerForPrizeDraw(email) {
+        try {
+            const response = await fetch(this.registerEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    score: this.score,
+                    total: this.quizData.length,
+                    quiz: this.quizName
+                })
+            });
+            if (response.status === 409) return 'duplicate';
+            if (response.status === 400 || response.status === 422) return 'invalid';
+            return response.ok ? 'ok' : 'error';
+        } catch (error) {
+            console.error('Prize draw registration failed:', error);
+            return 'error';
+        }
+    }
+
+    // Convenience only: the server is the real duplicate check.
+    hasRegisteredBefore() {
+        try {
+            return localStorage.getItem('eazyquiz-registered:' + this.quizName) === '1';
+        } catch (_) {
+            return false;
+        }
+    }
+
+    rememberRegistration() {
+        try {
+            localStorage.setItem('eazyquiz-registered:' + this.quizName, '1');
+        } catch (_) { /* storage unavailable */ }
     }
 
     restartQuiz() {
@@ -674,7 +698,7 @@ class QuizApp {
 }
 
 // URL Quiz Loader functionality
-// Loads quizzes directly from external URLs via URL parameters.
+// Loads quizzes (hosted on the same server) via URL parameters.
 class URLQuizLoader {
     constructor(quizApp) {
         this.supportedParams = ['quiz', 'url', 'file', 'lang', 'language', 'prizeDraw', 'prize'];
@@ -703,75 +727,53 @@ class URLQuizLoader {
             // Show loading state
             this.showURLLoading(url);
             
-            // Validate URL
-            if (!this.isValidURL(url)) {
-                throw new Error('Invalid URL format');
+            // Only quiz files hosted on this server are loaded
+            const resolved = this.resolveQuizURL(url);
+            if (!resolved) {
+                throw new Error('Quiz files must be hosted on the same server as this page');
             }
 
-            // Fetch the quiz file
-            const response = await fetch(url);
-            
+            const response = await fetch(resolved.href);
             if (!response.ok) {
                 throw new Error(`Failed to fetch quiz: ${response.status} ${response.statusText}`);
             }
 
-            // Get the content type or infer from URL
-            const contentType = response.headers.get('content-type') || '';
-            const fileExtension = this.getFileExtension(url);
-            
-            // Get the text content
+            const extension = this.getFileExtension(resolved.href);
             const content = await response.text();
-            
-            // Determine file type and parse
-            let quizData;
-            if (contentType.includes('application/json') || fileExtension === 'json') {
-                quizData = JSON.parse(content);
-            } else if (contentType.includes('application/xml') || contentType.includes('text/xml') || fileExtension === 'xml') {
-                // Use QuizParser for XML parsing
-                quizData = await QuizParser.parseXMLContent(content);
-            } else {
-                // Use QuizParser for TXT parsing
-                quizData = await QuizParser.parseTXTContent(content);
-            }
+            const quizData = QuizParser.parse(content, extension === 'json' || extension === 'xml' ? extension : 'txt');
 
-            // Validate and load the quiz
-            if (quizData && quizData.length > 0) {
-                // Update the quiz title if provided in URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const title = urlParams.get('title');
-                if (title) {
-                    this.quizApp.quizTitle.textContent = decodeURIComponent(title);
-                } else {
-                    // Try to extract filename for title
-                    const filename = this.getFilenameFromURL(url);
-                    if (filename) {
-                        this.quizApp.quizTitle.textContent = this.quizApp.formatTitle(filename.replace(/\.[^/.]+$/, ""));
-                    }
+            // Load the quiz
+            // Update the quiz title if provided in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const title = urlParams.get('title');
+            if (title) {
+                this.quizApp.quizTitle.textContent = decodeURIComponent(title);
+            } else {
+                // Try to extract filename for title
+                const filename = this.getFilenameFromURL(url);
+                if (filename) {
+                    this.quizApp.quizTitle.textContent = this.quizApp.formatTitle(filename.replace(/\.[^/.]+$/, ""));
                 }
-
-                // Set quiz data and initialize
-                this.quizApp.quizData = quizData;
-                this.quizApp.currentQuestion = 0;
-                this.quizApp.score = 0;
-
-                // Hide the Load Quiz button when quiz is loaded via URL
-                document.querySelector('.file-btn').style.display = 'none';
-                
-                // Hide loading and show quiz
-                this.hideURLLoading();
-                this.quizApp.fileFormatInfo.classList.add('hidden');
-                this.quizApp.quizContent.classList.remove('hidden');
-                this.quizApp.results.classList.add('hidden');
-                this.quizApp.questionSection.style.display = 'block';
-                
-                // Render first question
-                this.quizApp.renderQuestion();
-                
-                // Show success message
-                this.showURLSuccess(url);
-            } else {
-                throw new Error('No valid quiz questions found in the file');
             }
+
+            // Set quiz data and initialize
+            this.quizApp.quizData = quizData;
+            this.quizApp.quizName = this.getFilenameFromURL(resolved.href).replace(/\.[^/.]+$/, "");
+            this.quizApp.currentQuestion = 0;
+            this.quizApp.score = 0;
+
+            // Hide the Load Quiz button when quiz is loaded via URL
+            document.querySelector('.file-btn').style.display = 'none';
+            
+            // Hide loading and show quiz
+            this.hideURLLoading();
+            this.quizApp.fileFormatInfo.classList.add('hidden');
+            this.quizApp.quizContent.classList.remove('hidden');
+            this.quizApp.results.classList.add('hidden');
+            this.quizApp.questionSection.style.display = 'block';
+            
+            // Render first question
+            this.quizApp.renderQuestion();
 
         } catch (error) {
             console.error('Error loading quiz from URL:', error);
@@ -779,21 +781,20 @@ class URLQuizLoader {
         }
     }
 
-    // Validate URL format
-    isValidURL(string) {
+    // Resolve a (relative or absolute) quiz URL; null unless it is on this origin
+    resolveQuizURL(string) {
         try {
-            const url = new URL(string);
-            return url.protocol === 'http:' || url.protocol === 'https:';
+            const url = new URL(string, window.location.href);
+            return url.origin === window.location.origin ? url : null;
         } catch (_) {
-            return false;
+            return null;
         }
     }
 
     // Get file extension from URL
     getFileExtension(url) {
         try {
-            const pathname = new URL(url).pathname;
-            return pathname.split('.').pop().toLowerCase();
+            return new URL(url, window.location.href).pathname.split('.').pop().toLowerCase();
         } catch (_) {
             return '';
         }
@@ -802,8 +803,7 @@ class URLQuizLoader {
     // Get filename from URL
     getFilenameFromURL(url) {
         try {
-            const pathname = new URL(url).pathname;
-            return pathname.split('/').pop();
+            return new URL(url, window.location.href).pathname.split('/').pop();
         } catch (_) {
             return '';
         }
@@ -813,54 +813,29 @@ class URLQuizLoader {
     showURLLoading(url) {
         const loader = document.getElementById('quiz-loader');
         const infoSection = document.getElementById('file-format-info');
-        
-        if (loader && infoSection) {
-            // Update loader text
-            const loaderText = loader.querySelector('p');
-            if (loaderText) {
-                loaderText.textContent = this.quizApp.t('loading');
-            }
-            
-            // Add URL info
-            const urlInfo = document.createElement('div');
-            urlInfo.id = 'url-info';
-            urlInfo.style.marginTop = '10px';
-            urlInfo.style.fontSize = '12px';
-            urlInfo.style.color = '#666';
-            urlInfo.style.wordBreak = 'break-all';
-            urlInfo.textContent = url;
-            loader.appendChild(urlInfo);
-            
-            loader.classList.remove('hidden');
-            infoSection.classList.add('hidden');
+        if (!loader || !infoSection) return;
+
+        const loaderText = loader.querySelector('p');
+        if (loaderText) {
+            loaderText.textContent = this.quizApp.t('loading');
         }
+
+        const urlInfo = document.createElement('div');
+        urlInfo.id = 'url-info';
+        urlInfo.className = 'url-info';
+        urlInfo.textContent = url;
+        loader.appendChild(urlInfo);
+
+        loader.classList.remove('hidden');
+        infoSection.classList.add('hidden');
     }
 
     // Hide URL loading state
     hideURLLoading() {
         const loader = document.getElementById('quiz-loader');
         const urlInfo = document.getElementById('url-info');
-        
-        if (loader) {
-            loader.classList.add('hidden');
-        }
-        
-        if (urlInfo) {
-            urlInfo.remove();
-        }
-    }
-
-    // Show success message
-    showURLSuccess(url) {
-        // Optional: Show a brief success notification
-        console.log(`Quiz loaded successfully from: ${url}`);
-        
-        // Update browser history to clean URL (optional)
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('quiz') || urlParams.has('url') || urlParams.has('file')) {
-            const cleanUrl = window.location.pathname;
-            window.history.replaceState({}, document.title, cleanUrl);
-        }
+        if (loader) loader.classList.add('hidden');
+        if (urlInfo) urlInfo.remove();
     }
 
     // Show error message
@@ -872,18 +847,30 @@ class URLQuizLoader {
         const infoSection = document.getElementById('file-format-info');
         
         if (errorDiv && errorText) {
-            errorText.innerHTML = `
-                <strong>Failed to load quiz from URL:</strong><br>
-                <code style="background: #f5f5f5; padding: 2px 4px; border-radius: 3px; font-size: 12px; word-break: break-all;">${url}</code><br><br>
-                <strong>Error:</strong> ${message}<br><br>
-                Please check that:
-                <ul style="text-align: left; margin-top: 10px;">
-                    <li>The URL is accessible and returns a valid quiz file</li>
-                    <li>The server allows CORS requests (cross-origin resource sharing)</li>
-                    <li>The file format is supported (JSON, XML, or TXT)</li>
-                </ul>
-            `;
-            
+            errorText.textContent = '';
+            const add = (tag, text) => {
+                const el = document.createElement(tag);
+                el.textContent = text;
+                errorText.appendChild(el);
+                return el;
+            };
+            add('strong', 'Failed to load quiz from URL:');
+            errorText.appendChild(document.createElement('br'));
+            add('code', url);
+            errorText.appendChild(document.createElement('br'));
+            add('strong', 'Error: ').after(document.createTextNode(message));
+            const list = document.createElement('ul');
+            [
+                'The URL is accessible and returns a valid quiz file',
+                'The file is hosted on the same server as this page',
+                'The file format is supported (JSON, XML, or TXT)'
+            ].forEach(text => {
+                const li = document.createElement('li');
+                li.textContent = text;
+                list.appendChild(li);
+            });
+            errorText.appendChild(list);
+
             errorDiv.classList.remove('hidden');
             infoSection.classList.add('hidden');
         }
@@ -915,26 +902,20 @@ let urlQuizLoader;
 
 // Initialize the quiz application when the DOM is fully loaded.
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing quiz app...');
     
     quizApp = new QuizApp();
-    console.log('QuizApp created:', quizApp);
     
     urlQuizLoader = new URLQuizLoader(quizApp);
-    console.log('URLQuizLoader created:', urlQuizLoader);
     
     // Make them globally accessible for debugging
     window.quizApp = quizApp;
     window.urlQuizLoader = urlQuizLoader;
     
     // Check if there's a quiz in the URL parameters
-    console.log('Checking for URL quiz...');
     const hasURLQuiz = urlQuizLoader.checkForURLQuiz();
-    console.log('URL quiz found:', hasURLQuiz);
     
     // If no URL quiz, show the normal info section
     if (!hasURLQuiz) {
-        console.log('No URL quiz, showing info section');
         const infoSection = document.getElementById('file-format-info');
         if (infoSection) {
             infoSection.classList.remove('hidden');

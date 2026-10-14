@@ -24,5 +24,12 @@
     "poor": "Keep studying! Review the explanations and try again to improve your knowledge. 📚"
   },
   "prizeDraw": "Enter Prize Draw",
-  "prizeDrawDescription": "Want a chance to win? Click below to enter our prize draw!"
+  "prizeDrawDescription": "Chance to win a prize? Enter your e-mail address to join our prize draw!",
+  "noExplanation": "No explanation provided.",
+  "prizeDrawEmail": "Your e-mail address",
+  "prizeDrawEmailPlaceholder": "name@company.com",
+  "prizeDrawDone": "Thanks! You are registered for the prize draw.",
+  "prizeDrawDuplicate": "This e-mail address is already registered for the prize draw.",
+  "prizeDrawInvalid": "Please enter a valid e-mail address.",
+  "prizeDrawError": "Registration failed. Please try again later."
 }
