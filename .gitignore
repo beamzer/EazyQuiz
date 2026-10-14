@@ -3,3 +3,6 @@
 # Prize draw registrations (personal data)
 data/*.sqlite*
 data/*.csv
+
+# Organisation logos: only on the internal server, never in the public repo
+assets/

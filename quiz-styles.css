@@ -1,38 +1,38 @@
 /* quiz-styles.css */
 
 :root {
-    --primary: #0b3d91;
-    --accent: #1565c0;
-    --accent-soft: #e8f1fc;
+    --primary: #003741;
+    --accent: #00778a;
+    --accent-soft: #ebf4fa;
     --success: #1b7a3a;
     --success-bg: #e6f4ea;
     --error: #c62828;
     --error-bg: #fdecea;
-    --bg: #eef2f7;
+    --bg: #ebf4fa;
     --card: #ffffff;
     --surface: #f6f8fb;
-    --text: #1f2933;
-    --text-light: #52606d;
-    --border: #d5dde6;
-    --shadow: rgba(15, 35, 70, 0.14);
-    --radius: 12px;
+    --text: #131516;
+    --text-light: #4d5a5c;
+    --border: #ced9e5;
+    --shadow: rgba(0, 55, 65, 0.16);
+    --radius: 16px;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary: #8ab4f8;
-        --accent: #5b9cf0;
-        --accent-soft: #1b2a41;
+        --primary: #7fd0dd;
+        --accent: #3fb2c4;
+        --accent-soft: #123038;
         --success: #6fcf8a;
         --success-bg: #14301f;
         --error: #ff8a80;
         --error-bg: #3a1c1c;
-        --bg: #0f1620;
-        --card: #18212d;
-        --surface: #1f2a38;
+        --bg: #0c1a1d;
+        --card: #14262a;
+        --surface: #1a3237;
         --text: #e6ebf1;
         --text-light: #a3b0bf;
-        --border: #34414f;
+        --border: #2f4a50;
         --shadow: rgba(0, 0, 0, 0.5);
     }
 }
@@ -43,7 +43,7 @@
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Museo Sans Rounded', museo-sans-rounded, 'Nunito', 'Varela Round', 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     display: flex;
@@ -61,6 +61,28 @@ body {
     outline-offset: 2px;
 }
 
+/* Site header: dark bar, logo (tulip + name) centered on a white band */
+.site-topbar {
+    height: 10px;
+    background: #003741;
+}
+
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: 0 4px 14px var(--shadow);
+    display: flex;
+    justify-content: center;
+    padding: 14px 16px;
+}
+
+.site-logo {
+    display: block;
+    height: 48px;
+    width: auto;
+}
+
 /* Layout */
 .main-content {
     flex: 1;
@@ -76,7 +98,6 @@ body {
     width: 95%;
     border-radius: var(--radius);
     box-shadow: 0 10px 30px var(--shadow);
-    border-top: 6px solid var(--accent);
     padding: 36px;
     margin: 12px;
 }
@@ -138,8 +159,8 @@ h1 {
     padding: 14px 28px;
     background: var(--accent);
     color: #fff;
-    border: none;
-    border-radius: 8px;
+    border: 2px solid transparent;
+    border-radius: 999px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
@@ -170,14 +191,14 @@ h1 {
 }
 
 .btn-secondary {
-    background: var(--surface);
-    color: var(--text);
-    border: 2px solid var(--border);
+    background: var(--card);
+    color: var(--accent);
+    border: 2px solid var(--accent);
 }
 
 @media (prefers-color-scheme: dark) {
     .btn-secondary {
-        color: var(--text);
+        color: var(--accent);
     }
 }
 
@@ -197,7 +218,7 @@ h1 {
 
 #progress-bar {
     height: 8px;
-    background: var(--accent-soft);
+    background: var(--border);
     border-radius: 999px;
     overflow: hidden;
 }
@@ -205,7 +226,7 @@ h1 {
 #progress-fill {
     height: 100%;
     width: 0;
-    background: linear-gradient(90deg, var(--accent), var(--success));
+    background: var(--accent);
     border-radius: 999px;
     transition: width 0.4s ease;
 }
@@ -242,7 +263,7 @@ h1 {
     border: 2px solid var(--border);
     background: var(--card);
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 12px;
     text-align: left;
     font-size: 16px;
     line-height: 1.4;
@@ -443,7 +464,7 @@ h1 {
     color: var(--primary);
     background:
         radial-gradient(closest-side, var(--surface) 78%, transparent 80% 100%),
-        conic-gradient(var(--success) calc(var(--pct) * 1%), var(--accent-soft) 0);
+        conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--border) 0);
 }
 
 #score-number {
@@ -664,6 +685,10 @@ summary {
         padding: 0;
     }
 
+    .site-logo {
+        height: 38px;
+    }
+
     .quiz-card {
         width: 100%;
         margin: 0;
@@ -706,4 +731,25 @@ summary {
         animation: none !important;
         transition: none !important;
     }
+}
+
+/* Landing page */
+.landing {
+    text-align: center;
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+.landing h1 {
+    margin-bottom: 20px;
+}
+
+.landing-lead {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.landing .btn {
+    margin-top: 16px;
 }
