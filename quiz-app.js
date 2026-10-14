@@ -12,7 +12,7 @@ class QuizApp {
         this.quizName = '';         // Identifier of the loaded quiz (sent with prize draw entry)
         this.registered = false;    // True once this browser registered for the prize draw
         this.registerEndpoint = 'register.php';
-        this.EXPLANATION_DELAY_MS = 2000; // pause before the explanation appears
+        this.EXPLANATION_DELAY_MS = 1000; // pause before the explanation appears
         this.feedbackTimer = null;
         this.typingFrame = null;
         this.initializeElements();
