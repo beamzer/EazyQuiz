@@ -25,6 +25,16 @@ Example screenshot:
 
 **Or...,** put the files on a webserver and run from there
 
+## 🏢 Hosting on your own server
+
+Quizzes are **not** loaded from GitHub (or any other external site). Everything, including the quiz files, must be hosted on the same server as `index.html`:
+
+1. Clone or copy this repository to your webserver (for example `git clone https://github.com/beamzer/EazyQuiz.git`, and `git pull` for updates).
+2. Put your quiz files in `quiz-files/` on that server.
+3. Link to the quiz with a relative path: `index.html?quiz=quiz-files/your-quiz.json`.
+
+A `?quiz=` URL that points to another server is refused. This prevents attackers from using a crafted link to show their own content in your quiz. It also means the quiz keeps working on a network without internet access.
+
 
 ## :star: Share quizzes directly via URL!
 
