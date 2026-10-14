@@ -801,9 +801,6 @@ summary {
         align-items: stretch;
     }
 
-    #next-btn {
-        width: 100%;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -861,5 +858,73 @@ summary {
     #next-btn {
         background: #9fa8da;
         color: #0b1320;
+    }
+}
+
+/* Explanation heading on the left, Next button on the right of the same row */
+.feedback {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 16px;
+    align-items: center;
+}
+
+.feedback h3 {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+}
+
+.feedback #next-btn {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0 0 14px;
+}
+
+.feedback .explanation-container {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+    .feedback {
+        column-gap: 8px;
+    }
+
+    .feedback h3,
+    #next-btn {
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    #next-btn::before {
+        font-size: 18px;
+    }
+
+    .feedback h3 {
+        padding: 6px 12px 6px 8px;
+    }
+
+    #next-btn {
+        padding: 6px 12px 6px 10px;
+    }
+}
+
+/* Very narrow phones: the button goes on its own row, still right aligned */
+@media (max-width: 400px) {
+    .feedback {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback #next-btn {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: end;
+        margin: 0 0 14px;
+    }
+
+    .feedback .explanation-container {
+        grid-row: 3;
     }
 }
