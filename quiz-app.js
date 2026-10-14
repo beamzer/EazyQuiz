@@ -27,6 +27,8 @@ class QuizApp {
         this.quizContent = document.getElementById('quiz-content');
         this.quizTitle = document.getElementById('quiz-title');
         this.progress = document.getElementById('progress');
+        this.progressWrap = document.getElementById('progress-wrap');
+        this.progressFill = document.getElementById('progress-fill');
         this.questionTitle = document.getElementById('question-title');
         this.questionText = document.getElementById('question-text');
         this.optionsContainer = document.getElementById('options-container');
@@ -93,6 +95,7 @@ class QuizApp {
             
             this.translations = await response.json();
             this.language = lang;
+            document.documentElement.lang = lang;
             
             // Update UI with new language
             this.updateUILanguage();
@@ -268,6 +271,13 @@ class QuizApp {
             total: this.quizData.length
         });
         
+        this.progressWrap.classList.remove('hidden');
+        this.progressFill.style.width = `${(this.currentQuestion / this.quizData.length) * 100}%`;
+        if (this.currentQuestion > 0) {
+            this.questionTitle.focus({ preventScroll: true });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // Clear options container
         this.optionsContainer.innerHTML = '';
         
@@ -283,25 +293,7 @@ class QuizApp {
             this.optionsContainer.appendChild(button);
         });
         
-        // Hide feedback and clean up explanation container
         this.feedback.classList.add('hidden');
-
-        // Clean up the explanation container when hiding feedback
-        const explanationContainer = document.querySelector('.explanation-container');
-        if (explanationContainer) {
-            explanationContainer.scrollTop = 0;
-            explanationContainer.classList.remove('has-scroll', 'scrolled-to-bottom', 'has-scrolled');
-            // Remove scroll event listener
-            if (explanationContainer._scrollHandler) {
-                explanationContainer.removeEventListener('scroll', explanationContainer._scrollHandler);
-                explanationContainer._scrollHandler = null;
-            }
-            // Remove scroll indicator
-            const scrollIndicator = explanationContainer.querySelector('.scroll-indicator');
-            if (scrollIndicator) {
-                scrollIndicator.remove();
-            }
-        }
     }
     
     // Process the user's selected answer, provide feedback, and show explanation.
@@ -334,14 +326,9 @@ class QuizApp {
         this.nextBtn.textContent = 
             this.currentQuestion + 1 === this.quizData.length ? this.t('finishQuiz') : this.t('nextQuestion');
         
-        // Reset explanation scroll and setup scroll detection after DOM update
-        setTimeout(() => {
-            const explanationContainer = document.querySelector('.explanation-container');
-            if (explanationContainer) {
-                explanationContainer.scrollTop = 0;
-                this.setupScrollDetection(explanationContainer);
-            }
-        }, 0);
+        // Bring the explanation and the Next button into view
+        this.nextBtn.focus({ preventScroll: true });
+        this.feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
     
     formatMarkup(text) {
@@ -435,72 +422,16 @@ class QuizApp {
         // Join back but handle line breaks more carefully
         formatted = processedLines.join('\n');
         
-        // Convert line breaks to <br> but avoid adding them inside lists
-        formatted = formatted.replace(/\n(?![<\/]?[uo]l>|<li>|<\/li>)/g, '<br>');
-        
-        // Clean up any remaining newlines around list elements
+        // Drop newlines around block elements, then turn the remaining ones into <br>
         formatted = formatted
-            .replace(/\n(<\/?[uo]l>)/g, '$1')
-            .replace(/(<\/?[uo]l>)\n/g, '$1')
-            .replace(/\n(<\/?li>)/g, '$1')
-            .replace(/(<\/?li>)\n/g, '$1');
+            .replace(/\n*(<\/?(?:ul|ol|li|h[2-4])>)\n*/g, '$1')
+            .replace(/\n/g, '<br>');
 
         return this.sanitizeHTML(formatted);       
     }
 
     formatExplanation(explanation) {
         return this.formatMarkup(explanation);
-    }
-    
-    // Setup scroll detection for explanation container
-    setupScrollDetection(container) {
-        // Remove existing scroll indicator if present
-        const existingIndicator = container.querySelector('.scroll-indicator');
-        if (existingIndicator) {
-            existingIndicator.remove();
-        }
-
-        // Always reset scroll-related classes at the start
-        container.classList.remove('has-scroll', 'scrolled-to-bottom', 'has-scrolled');
-
-        // Check if content is scrollable
-        const isScrollable = container.scrollHeight > container.clientHeight;
-        
-        if (isScrollable) {
-            // Add scroll indicator
-            const scrollIndicator = document.createElement('div');
-            scrollIndicator.className = 'scroll-indicator';
-            scrollIndicator.textContent = '↓ ' + this.t('scrollForMore');
-            container.appendChild(scrollIndicator);
-            
-            // Add scroll detection class
-            container.classList.add('has-scroll');
-            
-            // Add scroll event listener
-            const SCROLL_THRESHOLD = 15; // pixels scrolled before hiding indicator
-            const scrollHandler = () => {
-                const hasScrolled = container.scrollTop > SCROLL_THRESHOLD;
-                const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 5;
-
-                // Hide indicator after scrolling past threshold
-                if (hasScrolled) {
-                    container.classList.add('has-scrolled');
-                }
-
-                if (isAtBottom) {
-                    container.classList.add('scrolled-to-bottom');
-                } else {
-                    container.classList.remove('scrolled-to-bottom');
-                }
-            };
-            
-            // Remove existing listeners to prevent duplicates
-            container.removeEventListener('scroll', container._scrollHandler);
-            container._scrollHandler = scrollHandler;
-            container.addEventListener('scroll', scrollHandler);
-            
-        }
-        // Note: scroll classes are already removed at the start of this function
     }
     
     nextQuestion() {
@@ -515,9 +446,11 @@ class QuizApp {
     // Display final score, percentage, and a tailored message.
     showResults() {
         this.questionSection.style.display = 'none';
+        this.progressWrap.classList.add('hidden');
         this.results.classList.remove('hidden');
         
         const percentage = Math.round((this.score / this.quizData.length) * 100);
+        this.scorePercentage.style.setProperty('--pct', percentage);
         
         this.scoreNumber.textContent = `${this.score} / ${this.quizData.length}`;
         this.scorePercentage.textContent = `${percentage}%`;
