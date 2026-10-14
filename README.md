@@ -48,6 +48,10 @@ You can also load a quiz directly via the URL. For security the quiz file must b
 
     index.html?quiz=quiz-files/dns-security.json&lang=nl
 
+## 🖼️ Logo
+
+The pages show an organisation logo from `assets/` (`amsterdam-umc-logo.jpg` in the header, `amsterdam-umc-tulip.png` as favicon). These files are **not** part of the repository (`assets/` is in `.gitignore`): copy them to the `assets/` directory on your server yourself. Without them the header shows only the alt text.
+
 ## 🎁 Prize draw
 
 Add `&prize=true` to the URL to show an e-mail registration form after the quiz:
