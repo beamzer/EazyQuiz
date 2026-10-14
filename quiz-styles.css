@@ -404,17 +404,32 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* "Toelichting" is a tab on top of the explanation box: same background, same text color */
 .feedback h3 {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin: 0 0 14px;
-    padding: 8px 18px 8px 12px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 12px;
+    margin: 0;
+    padding: 10px 18px 10px 20px;
+    background: var(--surface);
+    color: var(--text);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px 12px 0 0;
     font-size: 18px;
     font-weight: 700;
+}
+
+/* Concave corner where the tab flows into the box below */
+.feedback h3::after {
+    content: '';
+    position: absolute;
+    right: -12px;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle at 100% 0, transparent 11.5px, var(--surface) 12px);
+    pointer-events: none;
 }
 
 /* Light bulb icon */
@@ -423,16 +438,12 @@ h1 {
     width: 24px;
     height: 24px;
     flex: none;
-    background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4'/%3E%3Cpath d='M12 3a6 6 0 0 0-3.5 10.9c.9.7 1.5 1.6 1.5 2.6V17h4v-.5c0-1 .6-1.9 1.5-2.6A6 6 0 0 0 12 3z'/%3E%3C/svg%3E");
+    background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300778a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4'/%3E%3Cpath d='M12 3a6 6 0 0 0-3.5 10.9c.9.7 1.5 1.6 1.5 2.6V17h4v-.5c0-1 .6-1.9 1.5-2.6A6 6 0 0 0 12 3z'/%3E%3C/svg%3E");
 }
 
 @media (prefers-color-scheme: dark) {
-    .feedback h3 {
-        color: #0b1320;
-    }
-
     .feedback h3::before {
-        filter: invert(1) brightness(0.1);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233fb2c4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4'/%3E%3Cpath d='M12 3a6 6 0 0 0-3.5 10.9c.9.7 1.5 1.6 1.5 2.6V17h4v-.5c0-1 .6-1.9 1.5-2.6A6 6 0 0 0 12 3z'/%3E%3C/svg%3E");
     }
 }
 
@@ -866,7 +877,7 @@ summary {
     display: grid;
     grid-template-columns: 1fr auto;
     column-gap: 16px;
-    align-items: center;
+    align-items: end;
 }
 
 .feedback h3 {
@@ -878,7 +889,7 @@ summary {
 .feedback #next-btn {
     grid-column: 2;
     grid-row: 1;
-    margin: 0 0 14px;
+    margin: 0 0 10px;
 }
 
 .feedback .explanation-container {
@@ -903,7 +914,7 @@ summary {
     }
 
     .feedback h3 {
-        padding: 6px 12px 6px 8px;
+        padding: 8px 12px 8px 14px;
     }
 
     #next-btn {
@@ -911,7 +922,7 @@ summary {
     }
 }
 
-/* Very narrow phones: the button goes on its own row, still right aligned */
+/* Very narrow phones: the button goes on its own row above the tab, right aligned */
 @media (max-width: 400px) {
     .feedback {
         grid-template-columns: 1fr;
@@ -919,9 +930,13 @@ summary {
 
     .feedback #next-btn {
         grid-column: 1;
-        grid-row: 2;
+        grid-row: 1;
         justify-self: end;
         margin: 0 0 14px;
+    }
+
+    .feedback h3 {
+        grid-row: 2;
     }
 
     .feedback .explanation-container {
