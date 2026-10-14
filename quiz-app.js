@@ -12,6 +12,9 @@ class QuizApp {
         this.quizName = '';         // Identifier of the loaded quiz (sent with prize draw entry)
         this.registered = false;    // True once this browser registered for the prize draw
         this.registerEndpoint = 'register.php';
+        this.EXPLANATION_DELAY_MS = 2000; // pause before the explanation appears
+        this.feedbackTimer = null;
+        this.typingFrame = null;
         this.initializeElements();
         this.attachEventListeners();
         this.initializeLanguage();
@@ -293,6 +296,7 @@ class QuizApp {
             this.optionsContainer.appendChild(button);
         });
         
+        this.cancelFeedback();
         this.feedback.classList.add('hidden');
     }
     
@@ -342,17 +346,74 @@ class QuizApp {
             this.celebrate(selectedButton);
         }
         
-        // Show explanation
-        this.explanation.innerHTML = this.formatExplanation(explanation || this.t('noExplanation'));
-        this.feedback.classList.remove('hidden');
-        
         // Update next button text
         this.nextBtn.textContent = 
             this.currentQuestion + 1 === this.quizData.length ? this.t('finishQuiz') : this.t('nextQuestion');
         
+        // Let the answer indication sink in before the explanation appears
+        const html = this.formatExplanation(explanation || this.t('noExplanation'));
+        this.cancelFeedback();
+        this.feedbackTimer = setTimeout(() => this.showExplanation(html), this.EXPLANATION_DELAY_MS);
+    }
+
+    // Show the feedback block and build the explanation up gradually.
+    showExplanation(html) {
+        this.explanation.innerHTML = html;
+        this.feedback.classList.remove('hidden');
+
         // Bring the explanation and the Next button into view
         this.nextBtn.focus({ preventScroll: true });
         this.feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const walker = document.createTreeWalker(this.explanation, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        const texts = nodes.map(n => n.nodeValue);
+        const total = texts.reduce((sum, t) => sum + t.length, 0);
+        if (reduceMotion || total === 0) return;
+
+        // Keep the final height so the layout (and the Next button) does not jump while typing
+        const container = this.explanation.closest('.explanation-container');
+        container.style.minHeight = `${container.offsetHeight}px`;
+        nodes.forEach(n => { n.nodeValue = ''; });
+        this.explanation.setAttribute('aria-busy', 'true');
+
+        // Fast: roughly 125 characters per second, between 0.6 and 2.5 seconds in total
+        const duration = Math.min(2500, Math.max(600, total * 8));
+        const start = performance.now();
+        const step = (now) => {
+            let remaining = Math.floor(((now - start) / duration) * total);
+            for (let i = 0; i < nodes.length; i++) {
+                const len = texts[i].length;
+                nodes[i].nodeValue = texts[i].slice(0, Math.max(0, Math.min(len, remaining)));
+                remaining -= len;
+            }
+            if (now - start < duration) {
+                this.typingFrame = requestAnimationFrame(step);
+            } else {
+                this.finishExplanation(nodes, texts);
+            }
+        };
+        this.typingFrame = requestAnimationFrame(step);
+    }
+
+    finishExplanation(nodes, texts) {
+        nodes.forEach((n, i) => { n.nodeValue = texts[i]; });
+        this.explanation.removeAttribute('aria-busy');
+        const container = this.explanation.closest('.explanation-container');
+        if (container) container.style.minHeight = '';
+    }
+
+    // Stop a pending or running explanation reveal
+    cancelFeedback() {
+        clearTimeout(this.feedbackTimer);
+        cancelAnimationFrame(this.typingFrame);
+        this.feedbackTimer = null;
+        this.typingFrame = null;
+        this.explanation.removeAttribute('aria-busy');
+        const container = this.explanation.closest('.explanation-container');
+        if (container) container.style.minHeight = '';
     }
     
     formatMarkup(text) {
