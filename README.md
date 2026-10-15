@@ -121,6 +121,14 @@ The JSON format offers the most flexibility and is the easiest to create:
 ]
 ```
 
+#### Coloured callouts in explanations
+
+Start a line in an explanation with `[ok]`, `[bad]`, `[tip]`, `[warn]` or `[fact]` to show it as a coloured box with an icon (green, red, blue, orange, indigo). Keep explanations short: a bold headline plus two or three callouts reads better than a wall of text.
+
+```
+**Updates close holes hackers look for.**\n[ok] Install within 24-48 hours.\n[warn] WannaCry hit unpatched computers.
+```
+
 ### XML Format
 
 Well-structured XML format for those who prefer markup:

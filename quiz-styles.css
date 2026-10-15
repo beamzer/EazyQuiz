@@ -487,6 +487,41 @@ h1 {
     color: var(--accent);
 }
 
+/* Callouts in explanations: [ok] [bad] [tip] [warn] [fact] at the start of a line */
+.callout {
+    position: relative;
+    margin: 8px 0;
+    padding: 8px 12px 8px 40px;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    background: var(--accent-soft);
+    line-height: 1.5;
+}
+
+.callout::before {
+    position: absolute;
+    left: 10px;
+    top: 7px;
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+.callout.ok { border-color: var(--success); background: var(--success-bg); }
+.callout.ok::before { content: '\2705'; }
+.callout.bad { border-color: var(--error); background: var(--error-bg); }
+.callout.bad::before { content: '\274C'; }
+.callout.tip { border-color: var(--accent); background: var(--accent-soft); }
+.callout.tip::before { content: '\1F4A1'; }
+.callout.warn { border-color: #e08a00; background: #fff4e0; }
+.callout.warn::before { content: '\26A0\FE0F'; }
+.callout.fact { border-color: #3949ab; background: #e8eaf6; }
+.callout.fact::before { content: '\1F4CC'; }
+
+@media (prefers-color-scheme: dark) {
+    .callout.warn { background: #3a2b0d; border-color: #f0a830; }
+    .callout.fact { background: #1f2547; border-color: #9fa8da; }
+}
+
 /* Inline formatting in questions, options and explanations */
 .question-title strong,
 .question-text strong,

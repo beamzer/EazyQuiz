@@ -155,7 +155,8 @@ class QuizApp {
     // Sanitize HTML to prevent XSS while allowing safe formatting tags.
     // Parsed with DOMParser so nothing (e.g. <img onerror>) executes while sanitizing.
     sanitizeHTML(html) {
-        const allowedTags = new Set(['strong', 'em', 'u', 'del', 'code', 'br', 'li', 'ol', 'ul', 'h2', 'h3', 'h4', 'a', 'b']);
+        const allowedTags = new Set(['strong', 'em', 'u', 'del', 'code', 'br', 'li', 'ol', 'ul', 'h2', 'h3', 'h4', 'a', 'b', 'div']);
+        const calloutClasses = new Set(['callout ok', 'callout bad', 'callout tip', 'callout warn', 'callout fact']);
         const doc = new DOMParser().parseFromString(`<body>${html}</body>`, 'text/html');
 
         const clean = (node) => {
@@ -175,7 +176,9 @@ class QuizApp {
                     return;
                 }
                 Array.from(child.attributes).forEach(attr => {
-                    if (tag !== 'a' || attr.name !== 'href') {
+                    const keep = (tag === 'a' && attr.name === 'href') ||
+                        (tag === 'div' && attr.name === 'class' && calloutClasses.has(attr.value));
+                    if (!keep) {
                         child.removeAttribute(attr.name);
                     }
                 });
@@ -453,6 +456,13 @@ class QuizApp {
 
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i].trim();
+            const callout = line.match(/^\[(ok|bad|tip|warn|fact)\]\s*(.+)$/i);
+            if (callout) {
+                if (inBulletList) { processedLines.push('</ul>'); inBulletList = false; }
+                if (inNumberedList) { processedLines.push('</ol>'); inNumberedList = false; }
+                processedLines.push(`<div class="callout ${callout[1].toLowerCase()}">${callout[2]}</div>`);
+                continue;
+            }
             const isBulletItem = /^-\s+(.+)$/.test(line);
             const isNumberedItem = /^\d+\.\s+(.+)$/.test(line);
 
@@ -509,7 +519,7 @@ class QuizApp {
         
         // Drop newlines around block elements, then turn the remaining ones into <br>
         formatted = formatted
-            .replace(/\n*(<\/?(?:ul|ol|li|h[2-4])>)\n*/g, '$1')
+            .replace(/\n*(<\/?(?:ul|ol|li|h[2-4])>|<div class="callout \w+">|<\/div>)\n*/g, '$1')
             .replace(/\n/g, '<br>');
 
         return this.sanitizeHTML(formatted);       
