@@ -10,7 +10,7 @@
       "D) Ik installeer alleen updates als mijn apparaat heel langzaam wordt"
     ],
     "correct_answer": "B",
-    "explanation": "🛡️ **Updates dichten gaten waar hackers actief naar zoeken.**\n[ok] Installeer binnen 24-48 uur, het duurt maar 5-15 minuten.\n[fact] WannaCry (2017) trof duizenden computers die een beschikbare update niet hadden.\n[tip] Zet automatische updates aan."
+    "explanation": "🛡️ **Updates dichten gaten waar hackers actief naar zoeken.**\n[ok] Installeer binnen 24-48 uur, het duurt maar 5-15 minuten.\n[fact] In 2023 werden o.a. Boeing en de grootste bank van China geraakt via Citrix Bleed: een lek waarvoor al weken een update beschikbaar was.\n[tip] Zet automatische updates aan."
   },
   {
     "id": 2,
