@@ -1,0 +1,22 @@
+.editor { max-width: 1100px; }
+.hint { color: var(--text-light); font-size: 14px; }
+.editor-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 16px 0; }
+#status { font-size: 14px; margin-left: 8px; }
+#status.error { color: var(--error); }
+#status.ok { color: var(--success); }
+.editor-layout { display: grid; grid-template-columns: 240px 1fr; gap: 24px; }
+.question-list { list-style: none; margin: 0; padding: 0; max-height: 70vh; overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
+.question-list li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.question-list li:hover { background: var(--accent-soft); }
+.question-list li.active { background: var(--accent); color: #fff; }
+.question-form label, .question-form fieldset { display: block; margin-bottom: 16px; font-weight: 600; }
+.question-form fieldset { border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.question-form input[type=text], .question-form textarea { display: block; width: 100%; box-sizing: border-box; margin-top: 4px; padding: 8px 10px; font: inherit; font-weight: 400; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 8px; }
+.option-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.option-row .letter { font-weight: 700; width: 1.5em; }
+.option-row input[type=text] { margin: 0; flex: 1; }
+.option-row button { border: 0; background: none; cursor: pointer; font-size: 18px; color: var(--error); }
+.callout-buttons { margin: -8px 0 16px; font-size: 14px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.callout-buttons button { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 6px; padding: 4px 8px; cursor: pointer; }
+.editor-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 760px) { .editor-layout { grid-template-columns: 1fr; } .question-list { max-height: 200px; } }

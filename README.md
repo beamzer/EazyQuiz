@@ -67,6 +67,10 @@ Requirements and notes:
 - `.htaccess` files deny web access to `data/` and add security headers (Apache, `mod_headers`). With nginx, add the equivalent rules yourself.
 - The score is calculated in the browser, so it cannot be fully trusted; use it to pick participants, not as proof.
 
+## ✏️ Quiz editor
+
+Open `editor.html` to edit quiz JSON files in a form instead of by hand: open a file, change titles, questions, answers (pick the correct one with the radio button), reorder, duplicate or delete questions, and insert callouts. **Download JSON** validates the quiz and saves the file; put it in `quiz-files/` yourself. The editor works fully in the browser (nothing is uploaded) and keeps a draft in the browser's local storage.
+
 ## 💡 Easy: let AI generate the quiz for you
 You can generate a quiz about a certain topic with the use of AI, this [AI Prompt](https://github.com/beamzer/EazyQuiz/blob/main/AI-prompt.md) helps to get to quiz file directly in the right format (disclaimer: your mileage may vary depending on the model used.).
 

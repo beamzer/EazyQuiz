@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EazyQuiz Editor</title>
+    <link rel="stylesheet" href="quiz-styles.css">
+    <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <div class="site-topbar"></div>
+  <div class="main-content">
+    <div class="quiz-card editor">
+        <h1>Quiz editor</h1>
+        <p class="hint">Alles gebeurt in je browser. Er wordt niets naar de server gestuurd: open een quizbestand, pas het aan en download het daarna. Zet het gedownloade bestand zelf in <code>quiz-files/</code>.</p>
+
+        <div class="editor-toolbar">
+            <input type="file" id="file-input" accept=".json" class="file-input">
+            <label for="file-input" class="btn">Open JSON</label>
+            <button class="btn btn-secondary" id="new-btn" type="button">Nieuwe quiz</button>
+            <button class="btn" id="download-btn" type="button">Download JSON</button>
+            <span id="status" role="status"></span>
+        </div>
+
+        <div class="editor-layout" id="editor-layout">
+            <ol id="question-list" class="question-list"></ol>
+
+            <form id="question-form" class="question-form" autocomplete="off">
+                <label>Titel <input type="text" id="f-title"></label>
+                <label>Vraag <textarea id="f-question" rows="3"></textarea></label>
+
+                <fieldset>
+                    <legend>Antwoorden (kies het juiste antwoord)</legend>
+                    <div id="options"></div>
+                    <button class="btn btn-secondary" id="add-option" type="button">+ Antwoord</button>
+                </fieldset>
+
+                <label>Toelichting
+                    <textarea id="f-explanation" rows="7"></textarea>
+                </label>
+                <div class="callout-buttons">
+                    Invoegen:
+                    <button type="button" data-tag="ok">✅ ok</button>
+                    <button type="button" data-tag="bad">❌ bad</button>
+                    <button type="button" data-tag="tip">💡 tip</button>
+                    <button type="button" data-tag="warn">⚠️ warn</button>
+                    <button type="button" data-tag="fact">📌 fact</button>
+                    <span class="hint">Eerste regel: <code>**vet kopje**</code>. Callouts beginnen een regel met <code>[ok]</code>, <code>[bad]</code>, ...</span>
+                </div>
+
+                <div class="editor-actions">
+                    <button class="btn btn-secondary" id="up-btn" type="button">↑ Omhoog</button>
+                    <button class="btn btn-secondary" id="down-btn" type="button">↓ Omlaag</button>
+                    <button class="btn btn-secondary" id="dup-btn" type="button">Dupliceer</button>
+                    <button class="btn btn-secondary" id="del-btn" type="button">Verwijder</button>
+                    <button class="btn" id="add-btn" type="button">+ Nieuwe vraag</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  <script src="quiz-parser.js"></script>
+  <script src="editor.js"></script>
+</body>
+</html>
