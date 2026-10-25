@@ -171,15 +171,15 @@
   {
     "id": 14,
     "title": "Werken vanaf Publieke Plek",
-    "question": "Je werkt in een drukke trein aan je laptop met gevoelige bedrijfsinformatie op je scherm. Wat is het grootste risico?",
+    "question": "Je werkt in een drukke trein aan je laptop met gevoelige bedrijfsinformatie op je scherm. Welke beveiligingsrisico's lopen je hier?",
     "options": [
       "A) Dat iemand over je schouder meekijkt (shoulder surfing)",
       "B) Dat je laptop gestolen wordt als je naar het toilet gaat",
       "C) Dat het WiFi netwerk van de trein onveilig is",
-      "D) Alle bovenstaande zijn risico's"
+      "D) Dat je batterij sneller leegloopt"
     ],
-    "correct_answer": "D",
-    "explanation": "👀 **Alle genoemde risico's spelen in de trein.**\n[warn] Meekijkers zien je scherm, en je laptop kan gestolen worden.\n[warn] Openbaar WiFi en meeluisterende gesprekken zijn ook risico's.\n[ok] Gebruik een privacyfilter en vergrendel je laptop altijd."
+    "correct_answer": "A,B,C",
+    "explanation": "👀 **Meekijken, diefstal én onveilig WiFi: drie echte risico's.**\n[warn] Meekijkers zien je scherm, en een laptop is zo gestolen.\n[warn] Het WiFi-netwerk van de trein kan onveilig of nep zijn.\n[fact] Een lege batterij is vervelend, maar geen beveiligingsrisico.\n[ok] Gebruik een privacyfilter en vergrendel je laptop altijd."
   },
   {
     "id": 15,
