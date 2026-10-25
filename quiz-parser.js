@@ -138,7 +138,10 @@ class QuizParser {
             if (!Array.isArray(q.options) || q.options.length < 2) {
                 throw new Error(`Question ${num}: Must have at least 2 options`);
             }
-            if (typeof q.correct_answer !== 'string' || !q.correct_answer.trim()) {
+            // One letter ("B") or several ("A,C" or ["A","C"]) when multiple answers are correct
+            const rawCorrect = Array.isArray(q.correct_answer) ? q.correct_answer : String(q.correct_answer || '').split(/[\s,;&]+/);
+            const correctKeys = rawCorrect.map(k => String(k).trim().toUpperCase()).filter(Boolean);
+            if (typeof q.correct_answer !== 'string' && !Array.isArray(q.correct_answer) || correctKeys.length === 0) {
                 throw new Error(`Question ${num}: Missing or invalid correct answer`);
             }
 
@@ -155,9 +158,12 @@ class QuizParser {
                 throw new Error(`Question ${num}: Duplicate option letters`);
             }
 
-            const correct = q.correct_answer.trim().toUpperCase();
-            if (!keys.includes(correct)) {
-                throw new Error(`Question ${num}: Correct answer "${q.correct_answer}" not found in options`);
+            if (new Set(correctKeys).size !== correctKeys.length) {
+                throw new Error(`Question ${num}: Duplicate correct answers`);
+            }
+            const unknown = correctKeys.find(k => !keys.includes(k));
+            if (unknown) {
+                throw new Error(`Question ${num}: Correct answer "${unknown}" not found in options`);
             }
 
             return {
@@ -165,7 +171,8 @@ class QuizParser {
                 title: q.title || `Question ${num}`,
                 question: q.question,
                 options,
-                correct_answer: correct,
+                correct_answer: correctKeys.join(','),
+                correct_answers: correctKeys,
                 explanation: q.explanation || ''
             };
         });

@@ -279,6 +279,52 @@ h1 {
     box-shadow: 0 4px 12px var(--shadow);
 }
 
+/* Questions with several correct answers: toggle options plus a check button */
+.multi-hint {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.btn-option.multi {
+    padding-left: 52px;
+}
+
+.btn-option.multi::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+    border: 2px solid var(--text-light);
+    border-radius: 5px;
+    background: var(--card);
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #fff;
+}
+
+.btn-option.multi.selected:not(.disabled) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.btn-option.multi.selected::before {
+    /* stays visible after checking so you see what you chose */
+    content: '\2713';
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.check-btn {
+    align-self: flex-start;
+}
+
 /* Answer states: tinted background, colored border and an icon (not color alone) */
 .btn-option.correct {
     background: var(--success-bg);
@@ -324,6 +370,10 @@ h1 {
     .btn-option.wrong::after {
         color: #0b1320;
     }
+}
+
+.btn-option.missed {
+    border-style: dashed;
 }
 
 .btn-option.disabled {

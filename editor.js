@@ -6,7 +6,7 @@
     let current = 0;
     let fileName = 'quiz.json';
 
-    const blank = () => ({ title: '', question: '', options: [{ text: '' }, { text: '' }, { text: '' }, { text: '' }], correct: 0, explanation: '' });
+    const blank = () => ({ title: '', question: '', options: [{ text: '' }, { text: '' }, { text: '' }, { text: '' }], correct: [0], explanation: '' });
 
     function status(msg, cls) {
         const el = $('status');
@@ -20,7 +20,7 @@
             title: q.title || '',
             question: q.question,
             options: q.options.map(o => ({ text: o.text })),
-            correct: Math.max(0, q.options.findIndex(o => o.key === q.correct_answer)),
+            correct: q.correct_answers.map(k => q.options.findIndex(o => o.key === k)),
             explanation: q.explanation || ''
         }));
     }
@@ -31,7 +31,7 @@
             title: q.title,
             question: q.question,
             options: q.options.map((o, j) => `${LETTERS[j]}) ${o.text}`),
-            correct_answer: LETTERS[q.correct],
+            correct_answer: q.correct.slice().sort((a, b) => a - b).map(i => LETTERS[i]).join(','),
             explanation: q.explanation
         }));
     }
@@ -43,8 +43,7 @@
         q.question = $('f-question').value;
         q.explanation = $('f-explanation').value;
         q.options = Array.from(document.querySelectorAll('#options .option-row input[type=text]')).map(i => ({ text: i.value }));
-        const checked = document.querySelector('#options input[type=radio]:checked');
-        q.correct = checked ? Number(checked.value) : 0;
+        q.correct = Array.from(document.querySelectorAll('#options input[type=checkbox]:checked')).map(c => Number(c.value));
     }
 
     function renderList() {
@@ -77,10 +76,9 @@
             const row = document.createElement('div');
             row.className = 'option-row';
             const radio = document.createElement('input');
-            radio.type = 'radio';
-            radio.name = 'correct';
+            radio.type = 'checkbox';
             radio.value = j;
-            radio.checked = j === q.correct;
+            radio.checked = q.correct.includes(j);
             radio.title = 'Juiste antwoord';
             const letter = document.createElement('span');
             letter.className = 'letter';
@@ -96,8 +94,7 @@
                 if (q.options.length <= 2) return status('Minimaal 2 antwoorden', 'error');
                 saveFormToModel();
                 q.options.splice(j, 1);
-                if (q.correct >= q.options.length) q.correct = 0;
-                else if (q.correct > j) q.correct--;
+                q.correct = q.correct.filter(c => c !== j).map(c => (c > j ? c - 1 : c));
                 renderOptions();
             });
             row.append(radio, letter, text, del);
@@ -228,6 +225,7 @@
         const draft = JSON.parse(localStorage.getItem('eazyquiz-editor-draft'));
         if (draft && Array.isArray(draft.quiz) && draft.quiz.length) {
             quiz = draft.quiz;
+            quiz.forEach(q => { if (!Array.isArray(q.correct)) q.correct = [q.correct || 0]; });
             fileName = draft.fileName || fileName;
             status('Eerder concept hersteld', 'ok');
         }

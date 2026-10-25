@@ -30,5 +30,7 @@
   "prizeDrawDone": "Thanks! You are registered for the prize draw.",
   "prizeDrawDuplicate": "This e-mail address is already registered for the prize draw.",
   "prizeDrawInvalid": "Please enter a valid e-mail address.",
-  "prizeDrawError": "Registration failed. Please try again later."
+  "prizeDrawError": "Registration failed. Please try again later.",
+  "multiAnswerHint": "Several answers are correct: choose {count}",
+  "checkAnswer": "Check answer"
 }

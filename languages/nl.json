@@ -30,5 +30,7 @@
   "prizeDrawDone": "Bedankt! Je doet mee aan de prijstrekking.",
   "prizeDrawDuplicate": "Dit e-mailadres is al geregistreerd voor de prijstrekking.",
   "prizeDrawInvalid": "Vul een geldig e-mailadres in.",
-  "prizeDrawError": "Registreren is mislukt. Probeer het later opnieuw."
+  "prizeDrawError": "Registreren is mislukt. Probeer het later opnieuw.",
+  "multiAnswerHint": "Meerdere antwoorden zijn goed: kies er {count}",
+  "checkAnswer": "Controleer antwoord"
 }

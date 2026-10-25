@@ -287,17 +287,44 @@ class QuizApp {
         // Clear options container
         this.optionsContainer.innerHTML = '';
         
+        const multi = q.correct_answers.length > 1;
+        if (multi) {
+            const hint = document.createElement('p');
+            hint.className = 'multi-hint';
+            hint.textContent = this.t('multiAnswerHint', { count: q.correct_answers.length });
+            this.optionsContainer.appendChild(hint);
+        }
+
         // Render options in random order; the letters stay attached to the options
         this.shuffle(q.options).forEach(option => {
             const button = document.createElement('button');
-            button.className = 'btn-option';
+            button.className = multi ? 'btn-option multi' : 'btn-option';
             button.dataset.key = option.key;
             button.innerHTML = this.formatMarkup(option.text);
-            button.addEventListener('click', () =>
-                this.handleAnswer(button, option.key, q.correct_answer, q.explanation)
-            );
+            if (multi) {
+                button.setAttribute('aria-pressed', 'false');
+                button.addEventListener('click', () => {
+                    const on = button.classList.toggle('selected');
+                    button.setAttribute('aria-pressed', String(on));
+                    checkBtn.disabled = !this.optionsContainer.querySelector('.btn-option.selected');
+                });
+            } else {
+                button.addEventListener('click', () =>
+                    this.handleAnswer(button, option.key, q.correct_answer, q.explanation)
+                );
+            }
             this.optionsContainer.appendChild(button);
         });
+
+        let checkBtn;
+        if (multi) {
+            checkBtn = document.createElement('button');
+            checkBtn.className = 'btn check-btn';
+            checkBtn.textContent = this.t('checkAnswer');
+            checkBtn.disabled = true;
+            checkBtn.addEventListener('click', () => this.handleMultiAnswer(q));
+            this.optionsContainer.appendChild(checkBtn);
+        }
         
         this.cancelFeedback();
         this.feedback.classList.add('hidden');
@@ -349,10 +376,44 @@ class QuizApp {
             this.celebrate(selectedButton);
         }
         
-        // Update next button text
-        this.nextBtn.textContent = 
+        this.scheduleExplanation(explanation);
+    }
+
+    // Questions with several correct answers: all of them, and only them, must be selected.
+    handleMultiAnswer(q) {
+        const buttons = Array.from(this.optionsContainer.querySelectorAll('.btn-option'));
+        const selected = buttons.filter(b => b.classList.contains('selected')).map(b => b.dataset.key);
+        const isCorrect = selected.length === q.correct_answers.length &&
+            selected.every(k => q.correct_answers.includes(k));
+
+        buttons.forEach(button => {
+            const key = button.dataset.key;
+            const chosen = selected.includes(key);
+            const shouldBe = q.correct_answers.includes(key);
+            button.classList.add('disabled');
+            button.disabled = true;
+            if (shouldBe) {
+                button.classList.add('correct');
+                if (!chosen) button.classList.add('missed');
+            } else if (chosen) {
+                button.classList.add('wrong');
+            }
+        });
+        const checkBtn = this.optionsContainer.querySelector('.check-btn');
+        if (checkBtn) checkBtn.classList.add('hidden');
+
+        if (isCorrect) {
+            this.score++;
+            this.celebrate(buttons.find(b => b.classList.contains('selected')));
+        }
+        this.scheduleExplanation(q.explanation);
+    }
+
+    // Set the next button text and show the explanation after a short delay
+    scheduleExplanation(explanation) {
+        this.nextBtn.textContent =
             this.currentQuestion + 1 === this.quizData.length ? this.t('finishQuiz') : this.t('nextQuestion');
-        
+
         // Let the answer indication sink in before the explanation appears
         const html = this.formatExplanation(explanation || this.t('noExplanation'));
         this.cancelFeedback();

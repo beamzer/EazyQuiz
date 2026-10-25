@@ -125,6 +125,14 @@ The JSON format offers the most flexibility and is the easiest to create:
 ]
 ```
 
+#### Questions with several correct answers
+
+List all correct letters in `correct_answer`, separated by commas (`"A,C"`) or as an array (`["A","C"]`; in XML and TXT use `A,C`). The quiz then shows checkboxes and a "Check answer" button. The question only scores when exactly the correct options are chosen. Questions with one letter work as before.
+
+```json
+{ "question": "Which are strong passwords?", "options": ["A) ...", "B) ...", "C) ..."], "correct_answer": "A,C", "explanation": "..." }
+```
+
 #### Coloured callouts in explanations
 
 Start a line in an explanation with `[ok]`, `[bad]`, `[tip]`, `[warn]` or `[fact]` to show it as a coloured box with an icon (green, red, blue, orange, indigo). Keep explanations short: a bold headline plus two or three callouts reads better than a wall of text.
