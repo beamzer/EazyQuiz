@@ -6,3 +6,6 @@ data/*.csv
 
 # Organisation logos: only on the internal server, never in the public repo
 assets/
+
+# Windows download markers
+*:Zone.Identifier
