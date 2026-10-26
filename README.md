@@ -72,7 +72,7 @@ Requirements and notes:
 Open `editor.html` to edit quiz JSON files in a form instead of by hand: open a file, change titles, questions, answers (tick the correct one; tick several for multiple correct answers), reorder, duplicate or delete questions, and insert callouts. **Download JSON** validates the quiz and saves the file; put it in `quiz-files/` yourself. The editor works fully in the browser (nothing is uploaded) and keeps a draft in the browser's local storage. See a [screenshot of the editor](EazyQuiz-editor.png).
 
 ## 💡 Easy: let AI generate the quiz for you
-You can generate a quiz about a certain topic with the use of AI, this [AI Prompt](https://github.com/beamzer/EazyQuiz/blob/main/AI-prompt.md) helps to get to quiz file directly in the right format (disclaimer: your mileage may vary depending on the model used.).
+You can generate a quiz about a certain topic with the use of AI. These prompts produce a quiz file in the right format, with short, colourful explanations and optional multiple-answer questions: [Dutch prompt](AI-prompts/quiz-prompt-nl.md) and [English prompt](AI-prompts/quiz-prompt-en.md). Fill in the topic, audience and number of questions, save the result in `quiz-files/`, then check and edit it in `editor.html` (disclaimer: your mileage may vary depending on the model used, and always fact-check the result).
 
 
 ## 📁 Project Structure
