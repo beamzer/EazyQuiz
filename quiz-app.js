@@ -300,7 +300,7 @@ class QuizApp {
             const button = document.createElement('button');
             button.className = multi ? 'btn-option multi' : 'btn-option';
             button.dataset.key = option.key;
-            button.innerHTML = this.formatMarkup(option.text);
+            button.innerHTML = this.formatMarkup(option.text, { links: false });
             if (multi) {
                 button.setAttribute('aria-pressed', 'false');
                 button.addEventListener('click', () => {
@@ -480,9 +480,13 @@ class QuizApp {
         if (container) container.style.minHeight = '';
     }
     
-    formatMarkup(text) {
+    // options.links = false renders links as plain text (an answer button must not contain a link)
+    formatMarkup(text, options = {}) {
         if (!text) return '';
-        
+
+        // Bare URLs become links too (not those already in [text](url) form)
+        text = text.replace(/(?<![\]("=>\w])(https?:\/\/[^\s<)]*[^\s<).,;:!?])/g, '[$1]($1)');
+
         let formatted = text
             // Headers: ### text -> <h4>text</h4>
             .replace(/^### (.+)$/gm, '<h4>$1</h4>')
@@ -583,7 +587,11 @@ class QuizApp {
             .replace(/\n*(<\/?(?:ul|ol|li|h[2-4])>|<div class="callout \w+">|<\/div>)\n*/g, '$1')
             .replace(/\n/g, '<br>');
 
-        return this.sanitizeHTML(formatted);       
+        const html = this.sanitizeHTML(formatted);
+        if (options.links === false) {
+            return html.replace(/<a\b[^>]*>([\s\S]*?)<\/a>/g, '$1');
+        }
+        return html;
     }
 
     formatExplanation(explanation) {

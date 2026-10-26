@@ -14,6 +14,19 @@
   },
   {
     "id": 2,
+    "title": "Werken vanaf Publieke Plek",
+    "question": "Je werkt in een drukke trein aan je laptop met gevoelige bedrijfsinformatie op je scherm. Welke beveiligingsrisico's lopen je hier?",
+    "options": [
+      "A) Dat iemand over je schouder meekijkt (shoulder surfing)",
+      "B) Dat je laptop gestolen wordt als je naar het toilet gaat",
+      "C) Dat het WiFi netwerk van de trein onveilig is",
+      "D) Dat je batterij sneller leegloopt"
+    ],
+    "correct_answer": "A,B,C",
+    "explanation": "👀 **Meekijken, diefstal én onveilig WiFi: drie echte risico's.**\n[warn] Meekijkers zien je scherm, en een laptop is zo gestolen.\n[warn] Het WiFi-netwerk van de trein kan onveilig of nep zijn.\n[fact] Een lege batterij is vervelend, maar geen beveiligingsrisico.\n[ok] Overweeg een privacyfilter tegen meekijken.\n[ok] Vergrendel je laptop altijd als je er niet achter zit"
+  },
+  {
+    "id": 3,
     "title": "Verdachte E-mail Herkennen",
     "question": "Je ontvangt een e-mail van 'je bank' waarin staat dat je account geblokkeerd wordt als je niet binnen 24 uur op de link klikt om je gegevens te verifiëren. De e-mail ziet er professioneel uit. Wat doe je?",
     "options": [
@@ -26,7 +39,7 @@
     "explanation": "🎣 **Klassieke phishing: nepmail + tijdsdruk.**\n[ok] Bel je bank zelf via het nummer op je pas.\n[bad] Klik nooit op links in zo'n mail, en download geen bijlagen.\n[warn] Let op: \"binnen 24 uur\", \"Beste klant\", een afzender die net niet klopt.\n[tip] Melden: [Fraudehelpdesk](https://www.fraudehelpdesk.nl/valse-mail-melden-bij-een-bedrijf/)"
   },
   {
-    "id": 3,
+    "id": 4,
     "title": "Wachtwoorden Beheren",
     "question": "Je hebt nu 47 online accounts. Hoe beheer je je wachtwoorden het veiligst?",
     "options": [
@@ -39,7 +52,7 @@
     "explanation": "🔑 **Eén uniek wachtwoord per account, via een wachtwoordmanager.**\n[ok] Jij onthoudt één sterk hoofdwachtwoord, de manager doet de rest.\n[bad] Overal hetzelfde wachtwoord: één lek en al je accounts zijn open.\n[tip] Zet 2FA aan op de wachtwoordmanager zelf."
   },
   {
-    "id": 4,
+    "id": 5,
     "title": "Twee-Factor Authenticatie (2FA)",
     "question": "Bij steeds meer websites kun je twee-factor authenticatie aanzetten. Wat doet dit precies voor je beveiliging?",
     "options": [
@@ -52,7 +65,7 @@
     "explanation": "🔐 **2FA: een gestolen wachtwoord alleen is niet genoeg.**\n[ok] Iets wat je weet (wachtwoord) + iets wat je hebt (telefoon).\n[tip] Begin met je e-mailaccount: dat is de sleutel tot al je andere accounts.\n[fact] Authenticator-app is veiliger dan een sms-code."
   },
   {
-    "id": 5,
+    "id": 6,
     "title": "Openbare WiFi Gebruiken",
     "question": "Je zit in een koffiebar en wilt even snel je bankzaken regelen via de gratis WiFi. Is dit veilig?",
     "options": [
@@ -65,7 +78,7 @@
     "explanation": "📶 **Openbare WiFi: gebruik mobiele data voor gevoelige zaken.**\n[ok] Bankzaken, werkmail en overheid: via 4G/5G.\n[warn] Nep-WiFi-netwerken (\"evil twin\") sturen je naar valse sites.\n[fact] Nieuws, video en chat-apps zijn prima op openbare WiFi."
   },
   {
-    "id": 6,
+    "id": 7,
     "title": "Scherm Vergrendelen",
     "question": "Je loopt even weg van je computer thuis om koffie te halen. Moet je je scherm vergrendelen?",
     "options": [
@@ -78,7 +91,7 @@
     "explanation": "🔒 **Vergrendel altijd, ook thuis: het gaat om de gewoonte.**\n[ok] Windows + L (of Ctrl+Cmd+Q op Mac), binnen één seconde.\n[warn] Wie het thuis niet doet, vergeet het ook op kantoor of in het café."
   },
   {
-    "id": 7,
+    "id": 8,
     "title": "Verdachte Telefoontje",
     "question": "Je wordt gebeld door iemand die zegt van 'Microsoft support' te zijn. Ze zeggen dat je computer een virus heeft en ze willen je helpen het op te lossen via een remote verbinding. Wat doe je?",
     "options": [
@@ -91,7 +104,7 @@
     "explanation": "📞 **Microsoft belt je nooit ongevraagd.**\n[ok] Ophangen. Geen remote verbinding toestaan.\n[bad] Geef nooit toegang tot je computer, of betaalgegevens, aan een beller.\n[tip] Al meegewerkt? Verbreek de verbinding, wijzig je wachtwoorden en meld het."
   },
   {
-    "id": 8,
+    "id": 9,
     "title": "App Permissies",
     "question": "Je download een zaklamp-app op je smartphone. De app vraagt toegang tot je contacten, locatie en camera. Wat doe je?",
     "options": [
@@ -104,7 +117,7 @@
     "explanation": "📱 **Een zaklamp-app heeft geen contacten, locatie of camera nodig.**\n[ok] Weiger de rechten, of kies een andere app.\n[warn] Vraagt een app meer dan hij nodig heeft, dan verdient hij zijn geld met jouw data.\n[tip] Je zaklamp zit al in je telefoon."
   },
   {
-    "id": 9,
+    "id": 10,
     "title": "Backup van Belangrijke Bestanden",
     "question": "Hoeveel backup kopieën moet je minimaal hebben van je belangrijke bestanden (foto's, documenten, etc.)?",
     "options": [
@@ -117,7 +130,7 @@
     "explanation": "💾 **Minimaal twee backups: één lokaal en één in de cloud.**\n[ok] Bijvoorbeeld een externe schijf + een cloudopslag.\n[warn] Brand, diefstal of ransomware raken je lokale kopie ook.\n[tip] Check af en toe of je backup echt terug te zetten is."
   },
   {
-    "id": 10,
+    "id": 11,
     "title": "Verdachte Website Herkennen",
     "question": "Je zoekt online naar een populair programma om te downloaden. Hoe weet je zeker dat je op de echte website bent en niet op een nep-site?",
     "options": [
@@ -130,7 +143,7 @@
     "explanation": "🌐 **Download alleen van de officiële website van de maker.**\n[ok] Typ het adres zelf in, of gebruik de officiële app store.\n[warn] Let op: advertenties bovenaan Google en adressen die net anders gespeld zijn.\n[tip] Controleer het slotje én de domeinnaam."
   },
   {
-    "id": 11,
+    "id": 12,
     "title": "Sociale Media Privacy",
     "question": "Je post een foto op sociale media van je nieuwe bankpas met de tekst 'Eindelijk mijn nieuwe design kaart binnen!'. Is dit een probleem?",
     "options": [
@@ -143,7 +156,7 @@
     "explanation": "💳 **Op een foto van je bankpas staat alles wat een crimineel nodig heeft.**\n[bad] Deel nooit foto's van bankpassen, tickets of sleutels.\n[warn] Kaartnummer, naam en vervaldatum zijn genoeg om mee te betalen.\n[tip] Wil je pronken? Maak een foto van de verpakking."
   },
   {
-    "id": 12,
+    "id": 13,
     "title": "USB Stick Gevonden",
     "question": "Je vindt een USB-stick op de parkeerplaats bij je werk. Wat doe je?",
     "options": [
@@ -156,7 +169,7 @@
     "explanation": "🔌 **Een gevonden USB-stick kan malware bevatten.**\n[bad] Steek hem nooit in een computer, ook niet \"om te kijken van wie hij is\".\n[ok] Lever hem in bij de beveiliging of de servicedesk.\n[fact] Criminelen laten ze bewust achter om bedrijven binnen te komen."
   },
   {
-    "id": 13,
+    "id": 14,
     "title": "Verdachte Browser Pop-up",
     "question": "Tijdens het browsen verschijnt er opeens een groot waarschuwingsvenster: 'WAARSCHUWING! Je computer is geïnfecteerd met 5 virussen! Klik hier om nu te scannen!'. Wat doe je?",
     "options": [
@@ -167,19 +180,6 @@
     ],
     "correct_answer": "B",
     "explanation": "🚨 **Een nep-waarschuwing die je bang wil maken.**\n[ok] Sluit het tabblad of de browser, klik nergens in het venster.\n[bad] Bel nooit een nummer en installeer niets uit zo'n pop-up.\n[tip] Lukt sluiten niet? Gebruik Taakbeheer en meld het bij de servicedesk."
-  },
-  {
-    "id": 14,
-    "title": "Werken vanaf Publieke Plek",
-    "question": "Je werkt in een drukke trein aan je laptop met gevoelige bedrijfsinformatie op je scherm. Welke beveiligingsrisico's lopen je hier?",
-    "options": [
-      "A) Dat iemand over je schouder meekijkt (shoulder surfing)",
-      "B) Dat je laptop gestolen wordt als je naar het toilet gaat",
-      "C) Dat het WiFi netwerk van de trein onveilig is",
-      "D) Dat je batterij sneller leegloopt"
-    ],
-    "correct_answer": "A,B,C",
-    "explanation": "👀 **Meekijken, diefstal én onveilig WiFi: drie echte risico's.**\n[warn] Meekijkers zien je scherm, en een laptop is zo gestolen.\n[warn] Het WiFi-netwerk van de trein kan onveilig of nep zijn.\n[fact] Een lege batterij is vervelend, maar geen beveiligingsrisico.\n[ok] Gebruik een privacyfilter en vergrendel je laptop altijd."
   },
   {
     "id": 15,

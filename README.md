@@ -125,6 +125,10 @@ The JSON format offers the most flexibility and is the easiest to create:
 ]
 ```
 
+#### Links
+
+In questions and explanations use `[text](https://...)`, or just paste a bare `https://...` address: it becomes a clickable link that opens in a new tab. Links in the answer options are shown as plain text, because the whole option is a button.
+
 #### Questions with several correct answers
 
 List all correct letters in `correct_answer`, separated by commas (`"A,C"`) or as an array (`["A","C"]`; in XML and TXT use `A,C`). The quiz then shows checkboxes and a "Check answer" button. The question only scores when exactly the correct options are chosen. Questions with one letter work as before.
