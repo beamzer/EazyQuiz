@@ -4,3 +4,24 @@
     Header set X-Content-Type-Options "nosniff"
     Header set Referrer-Policy "no-referrer"
 </IfModule>
+
+# Block hidden files and folders (.git, .gitignore, .env, ...)
+<IfModule mod_authz_core.c>
+    <FilesMatch "^\.">
+        Require all denied
+    </FilesMatch>
+
+    # Block the .git directory and anything inside it (FilesMatch only matches file names)
+    RedirectMatch 404 /\.git
+
+    # Windows download markers, backups and repo/dev files that should not be served
+    <FilesMatch "(:Zone\.Identifier|~|\.(bak|orig|swp|sqlite3?|csv|log|sh|md))$">
+        Require all denied
+    </FilesMatch>
+    <FilesMatch "^(LICENSE|AI-prompts?)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+# Never list directory contents
+Options -Indexes
