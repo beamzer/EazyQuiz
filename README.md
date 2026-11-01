@@ -58,8 +58,6 @@ Add `&prize=true` to the URL to show an e-mail registration form after the quiz:
 
     index.html?quiz=quiz-files/security-awareness.json&lang=nl&prize=true
 
-To test the form without playing the quiz, add `&jump=results`: the quiz opens directly on the results page (score 0).
-
 Entries are posted to `register.php` and stored in `data/prizedraw.sqlite` (one entry per e-mail address and quiz; a second attempt gets a "already registered" message).
 
 Requirements and notes:
