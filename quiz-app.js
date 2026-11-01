@@ -239,7 +239,6 @@ class QuizApp {
         this.quizContent.classList.remove('hidden');
         this.results.classList.add('hidden');
         this.questionSection.style.display = 'block';
-        
         this.renderQuestion();
     }
     
@@ -869,6 +868,11 @@ class URLQuizLoader {
             this.quizApp.results.classList.add('hidden');
             this.quizApp.questionSection.style.display = 'block';
             
+            // &jump=results goes straight to the results page (to test the prize draw form); score stays 0
+            if (urlParams.get('jump') === 'results') {
+                this.quizApp.currentQuestion = quizData.length;
+            }
+
             // Render first question
             this.quizApp.renderQuestion();
 
