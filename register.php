@@ -7,6 +7,19 @@
 const ALLOWED_DOMAINS = [];       // e.g. ['example.com']
 const DB_FILE = __DIR__ . '/data/prizedraw.sqlite';
 
+// Close the prize draw: set PRIZE_DRAW_OPEN to false, or set CLOSES_AT to a date/time ('' = no end date).
+// The quiz page then shows "prize draw closed" instead of the form, and new entries are refused.
+const PRIZE_DRAW_OPEN = true;
+const CLOSES_AT = '';              // e.g. '2026-11-30 23:59'
+date_default_timezone_set('Europe/Amsterdam');
+
+function prizeDrawIsOpen(): bool {
+    if (!PRIZE_DRAW_OPEN) return false;
+    if (CLOSES_AT === '') return true;
+    $end = strtotime(CLOSES_AT);
+    return $end === false || time() < $end;
+}
+
 header('Content-Type: application/json');
 header('Cache-Control: no-store');
 
@@ -16,9 +29,19 @@ function respond(int $status, string $result): void {
     exit;
 }
 
+// GET: status for the quiz page ({"open": true|false})
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    echo json_encode(['open' => prizeDrawIsOpen()]);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Allow: POST');
+    header('Allow: GET, POST');
     respond(405, 'method_not_allowed');
+}
+
+if (!prizeDrawIsOpen()) {
+    respond(403, 'closed');
 }
 
 $input = json_decode(file_get_contents('php://input', false, null, 0, 4096), true);

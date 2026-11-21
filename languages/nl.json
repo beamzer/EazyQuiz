@@ -32,5 +32,6 @@
   "prizeDrawInvalid": "Vul een geldig e-mailadres in.",
   "prizeDrawError": "Registreren is mislukt. Probeer het later opnieuw.",
   "multiAnswerHint": "Meerdere antwoorden zijn goed: kies er {count}",
-  "checkAnswer": "Controleer antwoord"
+  "checkAnswer": "Controleer antwoord",
+  "prizeDrawClosed": "De prijstrekking is gesloten. Bedankt voor het meedoen aan de quiz!"
 }

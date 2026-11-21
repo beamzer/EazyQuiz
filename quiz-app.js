@@ -689,7 +689,10 @@ class QuizApp {
             submit.disabled = true;
             status.textContent = '';
             const result = await this.registerForPrizeDraw(input.value.trim());
-            if (result === 'ok' || result === 'duplicate') {
+            if (result === 'closed') {
+                form.remove();
+                description.textContent = this.t('prizeDrawClosed');
+            } else if (result === 'ok' || result === 'duplicate') {
                 this.registered = true;
                 this.rememberRegistration();
                 form.remove();
@@ -700,11 +703,31 @@ class QuizApp {
             }
         });
 
+        // Hidden until the server says whether the prize draw is still open
+        section.hidden = true;
         this.results.appendChild(section);
+        this.isPrizeDrawOpen().then(open => {
+            if (!open) {
+                form.remove();
+                description.textContent = this.t('prizeDrawClosed');
+            }
+            section.hidden = false;
+        });
+    }
+
+    // Ask the server whether entries are still accepted. If it cannot be reached, show the form anyway.
+    async isPrizeDrawOpen() {
+        try {
+            const response = await fetch(this.registerEndpoint, { cache: 'no-store' });
+            const data = await response.json();
+            return data.open !== false;
+        } catch (_) {
+            return true;
+        }
     }
 
     // POST the entry to the registration endpoint.
-    // Returns 'ok' | 'duplicate' | 'invalid' | 'error'
+    // Returns 'ok' | 'duplicate' | 'invalid' | 'closed' | 'error'
     async registerForPrizeDraw(email) {
         try {
             const response = await fetch(this.registerEndpoint, {
@@ -717,6 +740,7 @@ class QuizApp {
                     quiz: this.quizName
                 })
             });
+            if (response.status === 403) return 'closed';
             if (response.status === 409) return 'duplicate';
             if (response.status === 400 || response.status === 422) return 'invalid';
             return response.ok ? 'ok' : 'error';

@@ -60,6 +60,8 @@ Add `&prize=true` to the URL to show an e-mail registration form after the quiz:
 
 Entries are posted to `register.php` and stored in `data/prizedraw.sqlite` (one entry per e-mail address and quiz; a second attempt gets a "already registered" message).
 
+To close the prize draw, set `PRIZE_DRAW_OPEN = false` in `register.php`, or set `CLOSES_AT` (for example `'2026-11-30 23:59'`) to close it automatically. The quiz page then shows "the prize draw is closed" instead of the form (text: `prizeDrawClosed` in `languages/*.json`), and `register.php` refuses new entries. No redeploy of the JavaScript is needed.
+
 Requirements and notes:
 
 - PHP with `pdo_sqlite`; the `data/` directory must be writable by the web server user.

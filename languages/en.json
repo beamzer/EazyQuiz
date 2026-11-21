@@ -32,5 +32,6 @@
   "prizeDrawInvalid": "Please enter a valid e-mail address.",
   "prizeDrawError": "Registration failed. Please try again later.",
   "multiAnswerHint": "Several answers are correct: choose {count}",
-  "checkAnswer": "Check answer"
+  "checkAnswer": "Check answer",
+  "prizeDrawClosed": "The prize draw is closed. Thanks for taking the quiz!"
 }
